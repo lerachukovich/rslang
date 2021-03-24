@@ -1,16 +1,16 @@
 const {
   BAD_REQUEST,
   UNPROCESSABLE_ENTITY,
-  FORBIDDEN
+  FORBIDDEN,
 } = require('http-status-codes');
 
-const errorResponse = errors => {
+const errorResponse = (errors) => {
   return {
     status: 'failed',
-    errors: errors.map(err => {
+    errors: errors.map((err) => {
       const { path, message } = err;
       return { path, message };
-    })
+    }),
   };
 };
 

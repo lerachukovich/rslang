@@ -3,7 +3,7 @@ Joi.objectId = require('joi-objectid')(Joi);
 const {
   MAX_OPTIONAL_PROPERTIES,
   MAX_SYMBOLS_PER_OBJECT,
-  MIN_PASSWORD_LENGTH
+  MIN_PASSWORD_LENGTH,
 } = require('../../common/config');
 
 const optionalScheme = Joi.object()
@@ -13,14 +13,14 @@ const optionalScheme = Joi.object()
     Joi.number(),
     Joi.boolean(),
     Joi.date(),
-    Joi.object()
+    Joi.object(),
   ])
   .custom(optionalValidator, 'optional object validation')
-  .error(errors => {
+  .error((errors) => {
     errors
-      .filter(err => err.code === 'object.length')
+      .filter((err) => err.code === 'object.length')
       .forEach(
-        err =>
+        (err) =>
           (err.message = `Optional field exceeds the limit of ${MAX_SYMBOLS_PER_OBJECT} symbols per object`)
       );
     return errors;
@@ -34,32 +34,26 @@ const schemas = {
     .keys({
       name: Joi.string().max(200),
       email: Joi.string().email({ tlds: { allow: false } }),
-      password: Joi.string().min(MIN_PASSWORD_LENGTH)
+      password: Joi.string().min(MIN_PASSWORD_LENGTH),
     }),
   userWord: Joi.object()
     .options({ abortEarly: false, allowUnknown: false })
     .keys({
       difficulty: Joi.string().max(50),
-      optional: optionalScheme
+      optional: optionalScheme,
     }),
   statistics: Joi.object()
     .options({ abortEarly: false, allowUnknown: false })
     .keys({
-      learnedWords: Joi.number()
-        .integer()
-        .min(0)
-        .max(100000),
-      optional: optionalScheme
+      learnedWords: Joi.number().integer().min(0).max(100000),
+      optional: optionalScheme,
     }),
   settings: Joi.object()
     .options({ abortEarly: false, allowUnknown: false })
     .keys({
-      wordsPerDay: Joi.number()
-        .integer()
-        .min(1)
-        .max(1000),
-      optional: optionalScheme
-    })
+      wordsPerDay: Joi.number().integer().min(1).max(1000),
+      optional: optionalScheme,
+    }),
 };
 
 function optionalValidator(value, helpers) {

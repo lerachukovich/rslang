@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const {
   JWT_SECRET_KEY,
-  JWT_REFRESH_SECRET_KEY
+  JWT_REFRESH_SECRET_KEY,
 } = require('../../common/config');
 const { AUTHORIZATION_ERROR } = require('../../errors/appErrors');
 

@@ -5,10 +5,10 @@ const Token = new Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectID,
-      required: true
+      required: true,
     },
     tokenId: { type: String, required: true },
-    expire: { type: Number, required: true }
+    expire: { type: Number, required: true },
   },
   { collection: 'tokens' }
 );

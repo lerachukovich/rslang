@@ -9,14 +9,14 @@ const User = new Schema(
     email: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
     password: {
       type: String,
       required: true,
       trim: true,
-      minlength: 8
-    }
+      minlength: 8,
+    },
   },
   { collection: 'users' }
 );

@@ -4,14 +4,12 @@ import M from 'materialize-css/dist/js/materialize.min';
 
 const Navbar = () => {
   useEffect(() => {
-    // document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.sidenav');
-    var instances = M.Sidenav.init(elems, {
+    let elems = document.querySelectorAll('.sidenav');
+    M.Sidenav.init(elems, {
       edge: 'left',
       draggable: true,
       preventScrolling: true
     });
-    // });
   }, []);
 
   const closeHandler = () => {

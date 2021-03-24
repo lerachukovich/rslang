@@ -9,8 +9,8 @@ const UserWordsSchema = new Schema(
     difficulty: { type: String, required: false },
     optional: {
       type: Object,
-      required: false
-    }
+      required: false,
+    },
   },
   { collection: 'userWords' }
 );
