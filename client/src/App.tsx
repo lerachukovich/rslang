@@ -1,12 +1,20 @@
-import React from 'react'
-import logo from './logo.svg'
-import 'materialize-css'
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import useRoutes from './routes';
+import Navbar from './components/Navbar/Navbar.components';
+import 'materialize-css';
+
 
 function App() {
+  const routes = useRoutes(false);
+  const isAuthenticated = false;
   return (
-    <div className="container">
-      <h1>Hello</h1>
-    </div>
+    <Router>
+      {isAuthenticated && <Navbar/>}
+      <div className="container">
+        {routes}
+      </div>
+    </Router>
   );
 }
 

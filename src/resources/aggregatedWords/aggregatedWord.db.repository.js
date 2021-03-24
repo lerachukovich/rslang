@@ -14,22 +14,22 @@ const lookup = {
           $expr: {
             $and: [
               { $eq: ['$userId', null] },
-              { $eq: ['$wordId', '$$word_id'] }
-            ]
-          }
-        }
-      }
+              { $eq: ['$wordId', '$$word_id'] },
+            ],
+          },
+        },
+      },
     ],
-    as: 'userWord'
-  }
+    as: 'userWord',
+  },
 };
 
 const pipeline = [
   {
     $unwind: {
       path: '$userWord',
-      preserveNullAndEmptyArrays: true
-    }
+      preserveNullAndEmptyArrays: true,
+    },
   },
   {
     $unset: [
@@ -37,9 +37,9 @@ const pipeline = [
       'userWord._id',
       'userWord.wordId',
       'userWord.userId',
-      'userWord.__v'
-    ]
-  }
+      'userWord.__v',
+    ],
+  },
 ];
 
 const getAll = async (userId, group, page, perPage, filter) => {
@@ -52,16 +52,16 @@ const getAll = async (userId, group, page, perPage, filter) => {
   if (group || group === 0) {
     matches.push({
       $match: {
-        group
-      }
+        group,
+      },
     });
   }
 
   if (filter) {
     matches.push({
       $match: {
-        ...filter
-      }
+        ...filter,
+      },
     });
   }
   const facet = {
@@ -69,10 +69,10 @@ const getAll = async (userId, group, page, perPage, filter) => {
       paginatedResults: [{ $skip: page * perPage }, { $limit: perPage }],
       totalCount: [
         {
-          $count: 'count'
-        }
-      ]
-    }
+          $count: 'count',
+        },
+      ],
+    },
   };
   return await Word.aggregate([lookup, ...pipeline, ...matches, facet]);
 };
@@ -84,8 +84,8 @@ const get = async (wordId, userId) => {
 
   const match = {
     $match: {
-      _id: mongoose.Types.ObjectId(wordId)
-    }
+      _id: mongoose.Types.ObjectId(wordId),
+    },
   };
 
   const userWord = await Word.aggregate([match, lookup, ...pipeline]);

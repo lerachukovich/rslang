@@ -1,0 +1,51 @@
+import React from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import StartLearnPage from './pages/StartLearn.page';
+import VocabularyPage from './pages/Vacabulary.page';
+import GamePage from './pages/Game.page';
+import StatisticPage from './pages/Statistic.page';
+import CreditsPage from './pages/Crefdits.page';
+import SettingsPage from './pages/Settings.page';
+import PromoPage from './pages/Promo.page';
+
+
+const useRoutes = (isAuthenticated: boolean) => {
+  if (isAuthenticated) {
+    return (
+      <Switch>
+        <Route path="/learning" exact>
+          <StartLearnPage/>
+        </Route>
+        <Route path="/vocabulary" exact>
+          <VocabularyPage/>
+        </Route>
+        <Route path="/games" exact>
+          <GamePage/>
+        </Route>
+        <Route path="/statistic" exact>
+          <StatisticPage/>
+        </Route>
+        <Route path="/credits" exact>
+          <CreditsPage/>
+        </Route>
+        <Route path="/settings" exact>
+          <SettingsPage/>
+        </Route>
+        <Redirect to="/learning"/>
+      </Switch>
+    );
+  }
+
+  return (
+    <Switch>
+      <Route path="/" exact>
+        <PromoPage/>
+      </Route>
+      <Redirect to="/"/>
+    </Switch>
+  );
+};
+
+export default useRoutes;
+
+

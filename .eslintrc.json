@@ -33,11 +33,7 @@
     ],
     "rules": {
         "no-debugger": 1,
-        // Possible errors
-        "comma-dangle": [
-            2,
-            "never"
-        ],
+        // Possible errors,
         "no-cond-assign": [
             2,
             "always"
