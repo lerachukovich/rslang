@@ -7,7 +7,7 @@ const userWordService = require('./userWord.service');
 
 router.get('/', async (req, res) => {
   const userWords = await userWordService.getAll(req.userId);
-  res.status(OK).send(userWords.map(w => w.toResponse()));
+  res.status(OK).send(userWords.map((w) => w.toResponse()));
 });
 
 router.get('/:wordId', validator(wordId, 'params'), async (req, res) => {

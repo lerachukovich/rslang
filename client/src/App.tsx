@@ -6,8 +6,8 @@ import 'materialize-css';
 
 
 function App() {
-  const routes = useRoutes(false);
-  const isAuthenticated = false;
+  const routes = useRoutes(true);
+  const isAuthenticated = true;
   return (
     <Router>
       {isAuthenticated && <Navbar/>}

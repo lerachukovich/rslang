@@ -1,6 +1,6 @@
 const wordRepo = require('./userWord.db.repository');
 
-const getAll = async userId => wordRepo.getAll(userId);
+const getAll = async (userId) => wordRepo.getAll(userId);
 
 const get = async (wordId, userId) => wordRepo.get(wordId, userId);
 

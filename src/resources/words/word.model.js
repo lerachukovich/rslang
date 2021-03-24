@@ -16,7 +16,7 @@ const WordsSchema = new Schema(
     transcription: { type: String, required: false, max: 100 },
     wordTranslate: String,
     textMeaningTranslate: String,
-    textExampleTranslate: String
+    textExampleTranslate: String,
   },
   { collection: 'words' }
 );

@@ -10,7 +10,7 @@ const get = async (userId, tokenId) => {
   return token;
 };
 
-const upsert = async token =>
+const upsert = async (token) =>
   Token.findOneAndUpdate(
     { userId: token.userId },
     { $set: token },

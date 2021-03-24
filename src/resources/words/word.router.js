@@ -17,9 +17,9 @@ router.route('/').get(async (req, res) => {
 
   const words = await wordService.getAll({
     page,
-    group
+    group,
   });
-  res.status(OK).send(words.map(word => word.toResponse()));
+  res.status(OK).send(words.map((word) => word.toResponse()));
 });
 
 router.route('/:id').get(async (req, res) => {

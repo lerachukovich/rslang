@@ -4,7 +4,7 @@ const {
   UNAUTHORIZED,
   FORBIDDEN,
   BAD_REQUEST,
-  getStatusText
+  getStatusText,
 } = require('http-status-codes');
 
 class AppError extends Error {
@@ -55,5 +55,5 @@ module.exports = {
   BAD_REQUEST_ERROR: BadRequestError,
   AUTHORIZATION_ERROR: AuthorizationError,
   AUTHENTICATION_ERROR: AuthenticationError,
-  ENTITY_EXISTS: EntityExistsError
+  ENTITY_EXISTS: EntityExistsError,
 };

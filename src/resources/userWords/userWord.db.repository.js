@@ -3,7 +3,7 @@ const { NOT_FOUND_ERROR, ENTITY_EXISTS } = require('../../errors/appErrors');
 const ENTITY_NAME = 'user word';
 const MONGO_ENTITY_EXISTS_ERROR_CODE = 11000;
 
-const getAll = async userId => UserWord.find({ userId });
+const getAll = async (userId) => UserWord.find({ userId });
 
 const get = async (wordId, userId) => {
   const userWord = await UserWord.findOne({ wordId, userId });

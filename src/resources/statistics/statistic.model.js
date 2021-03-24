@@ -6,15 +6,15 @@ const StatisticSchema = new Schema(
   {
     userId: {
       type: String,
-      required: true
+      required: true,
     },
     learnedWords: {
-      type: Number
+      type: Number,
     },
     optional: {
       type: Object,
-      required: false
-    }
+      required: false,
+    },
   },
   { collection: 'statistic' }
 );

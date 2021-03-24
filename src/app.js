@@ -48,7 +48,7 @@ app.use(
   morgan(
     ':method :status :url :userId size req :req[content-length] res :res[content-length] - :response-time ms',
     {
-      stream: winston.stream
+      stream: winston.stream,
     }
   )
 );

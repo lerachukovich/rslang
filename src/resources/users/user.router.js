@@ -5,7 +5,7 @@ const userService = require('./user.service');
 const { id, user } = require('../../utils/validation/schemas');
 const {
   validator,
-  userIdValidator
+  userIdValidator,
 } = require('../../utils/validation/validator');
 
 router.post('/', validator(user, 'body'), async (req, res) => {
