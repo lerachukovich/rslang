@@ -7,9 +7,10 @@ import StatisticPage from './pages/Statistic.page';
 import CreditsPage from './pages/Crefdits.page';
 import SettingsPage from './pages/Settings.page';
 import PromoPage from './pages/Promo.page';
+import AuthPage from './pages/Auth.page';
 
 
-const useRoutes = (isAuthenticated: boolean) => {
+const useRoutes = (isAuthenticated) => {
   if (isAuthenticated) {
     return (
       <Switch>
@@ -30,6 +31,9 @@ const useRoutes = (isAuthenticated: boolean) => {
         </Route>
         <Route path="/settings" exact>
           <SettingsPage/>
+        </Route>
+        <Route path="/auth">
+          <AuthPage />
         </Route>
         <Redirect to="/learning"/>
       </Switch>
