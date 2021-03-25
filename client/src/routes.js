@@ -14,6 +14,9 @@ const useRoutes = (isAuthenticated) => {
   if (isAuthenticated) {
     return (
       <Switch>
+          <Route path="/promo" exact>
+              <PromoPage/>
+          </Route>
         <Route path="/learning" exact>
           <StartLearnPage/>
         </Route>
@@ -35,7 +38,8 @@ const useRoutes = (isAuthenticated) => {
         <Route path="/auth">
           <AuthPage />
         </Route>
-        <Redirect to="/learning"/>
+        {/*<Redirect to="/learning"/>*/}
+          <Redirect to="/promo"/>
       </Switch>
     );
   }
