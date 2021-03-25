@@ -1,8 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import useRoutes from './routes';
-import Navbar from './components/Navbar/Navbar.components';
+import useRoutes from './routes.js';
+import Navbar from './components/Navbar/Navbar.components.js';
 import 'materialize-css';
+import Header from "./components/Header/Header.component.js";
+import Footer from "./components/Footer/Footer.component";
 
 
 function App() {
@@ -10,10 +12,12 @@ function App() {
   const isAuthenticated = true;
   return (
     <Router>
+        <Header />
       {isAuthenticated && <Navbar/>}
       <div className="container">
         {routes}
       </div>
+        <Footer />
     </Router>
   );
 }

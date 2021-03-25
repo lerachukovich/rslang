@@ -1,15 +1,15 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import StartLearnPage from './pages/StartLearn.page';
-import VocabularyPage from './pages/Vacabulary.page';
-import GamePage from './pages/Game.page';
-import StatisticPage from './pages/Statistic.page';
-import CreditsPage from './pages/Crefdits.page';
-import SettingsPage from './pages/Settings.page';
-import PromoPage from './pages/Promo.page';
+import StartLearnPage from './pages/StartLearn.page.js';
+import VocabularyPage from './pages/Vocabulary.page.js';
+import GamePage from './pages/Game.page.js';
+import StatisticPage from './pages/Statistic.page.js';
+import CreditsPage from './pages/Credits.page.js';
+import SettingsPage from './pages/Settings.page.js';
+import PromoPage from './pages/Promo.page.js';
 
 
-const useRoutes = (isAuthenticated: boolean) => {
+const useRoutes = (isAuthenticated) => {
   if (isAuthenticated) {
     return (
       <Switch>
