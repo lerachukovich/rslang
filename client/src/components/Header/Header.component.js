@@ -27,6 +27,7 @@ const Header = () => {
                         <li><NavLink className="menu dropdown-trigger" to="#" data-target="dropdown1">Наши игры<i
                             className="material-icons right">arrow_drop_down</i></NavLink></li>
                         <li><NavLink to="#">Статистика</NavLink></li>
+                        <li><NavLink to='/auth/login'>Войти</NavLink></li>
                     </ul>
                 </div>
             </nav>

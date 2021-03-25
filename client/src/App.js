@@ -6,6 +6,8 @@ import 'materialize-css';
 
 import { useAuth } from './hooks/auth.hook';
 import { AuthContext } from './context/AuthContext';
+import Header from "./components/Header/Header.component";
+import Footer from "./components/Footer/Footer.component";
 
 function App() {
   const {login, logout, token, userId, name, photo} = useAuth();
@@ -18,10 +20,12 @@ function App() {
       login, logout, token, userId, name, photo, isAuthenticated
     }}>
       <Router>
+        <Header />
         {isAuthenticated && <Navbar/>}
         <div className="container">
           {routes}
         </div>
+        <Footer />
       </Router>
     </AuthContext.Provider>
   );
