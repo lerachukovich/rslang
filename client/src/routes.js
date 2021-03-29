@@ -2,12 +2,13 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import StartLearnPage from './pages/StartLearn.page';
 import VocabularyPage from './pages/Vacabulary.page';
-import GamePage from './pages/Game.page';
+import GamesPage from './pages/Games.page';
 import StatisticPage from './pages/Statistic.page';
 import CreditsPage from './pages/Crefdits.page';
 import SettingsPage from './pages/Settings.page';
 import PromoPage from './pages/Promo.page';
 import AuthPage from './pages/Auth.page';
+import SprintGame from "./pages/SprintGame.page";
 
 
 const useRoutes = (isAuthenticated) => {
@@ -24,7 +25,7 @@ const useRoutes = (isAuthenticated) => {
           <VocabularyPage/>
         </Route>
         <Route path="/games" exact>
-          <GamePage/>
+          <GamesPage/>
         </Route>
         <Route path="/statistic" exact>
           <StatisticPage/>
@@ -38,6 +39,9 @@ const useRoutes = (isAuthenticated) => {
         <Route path="/auth">
           <AuthPage />
         </Route>
+          <Route path="/sprint">
+              <SprintGame />
+          </Route>
         {/*<Redirect to="/learning"/>*/}
           <Redirect to="/promo"/>
       </Switch>
