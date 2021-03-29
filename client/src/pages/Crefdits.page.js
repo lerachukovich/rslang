@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
+import '../styles/Credits.page.scss';
+import DeveloperCard from "../components/CreditsPageComponents/Card.component";
 
 const CreditsPage = () => {
   return(
-    <div>
-      <h1>This is Credits page</h1>
+    <div className='developers'>
+      <h1 className='dev-title'>Наши разработчики</h1>
+        <DeveloperCard />
     </div>
   )
 }

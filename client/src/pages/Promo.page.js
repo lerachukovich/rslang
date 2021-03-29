@@ -15,7 +15,7 @@ const PromoPage = () => {
                         изучение языка легким и увлекательным.
                     </p>
                 </div>
-                <img className='top-img' src={top} alt="image"/>
+                <img className='top-img' src={top} alt="illustration"/>
             </div>
             <div className="features">
                 <h2 className='title'>Почему мы?</h2>
