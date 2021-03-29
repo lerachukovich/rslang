@@ -1,0 +1,20 @@
+.cards-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  .promo-card {
+    width: 45%;
+    text-align: center;
+    box-shadow: rgba(16, 112, 177, 0.2)  5px 20px 50px;
+    margin-bottom: 50px;
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .card-text {
+    font-size: 1.1rem;
+  }
+}
+
+
