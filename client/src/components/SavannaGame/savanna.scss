@@ -1,0 +1,55 @@
+.savanna-wrapper {
+  height: calc(100vh - 181px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-image: url("../../assets/free-mountain-vector-01.jpg");
+  background-size: 100% 200%;
+  transition: 0.5s ease-in-out;
+  background-position: 0 100%;
+}
+
+.savanna__hearts-container {
+  position: relative;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  justify-content: flex-end;
+}
+
+.savanna__heart {
+  width: 30px;
+  height: 30px;
+  margin: 3px;
+  background-image: url("../../assets/heart.svg");
+  background-size: 100% 100%;
+  opacity: 1;
+
+}
+
+.savanna__word-container {
+
+  text-align: center;
+  //transform: translateY(60px); // Use transform for replacing in component (style)
+  & b {
+    text-transform: uppercase;
+    font-size: 1.8rem;
+    font-weight: 300;
+    letter-spacing: 0.3rem;
+    text-shadow: 1px 1px 2px #000000, 0 0 1rem #282c34;
+    color: rgba(255, 255, 255, 0.8)
+  }
+}
+
+.savanna__word-panel {
+  margin: 0 auto;
+  position: relative;
+  top: 200px;
+}
+
+.preloader-wrapper {
+  margin: 0 auto!important;
+}
+
+

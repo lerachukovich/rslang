@@ -8,15 +8,17 @@ import CreditsPage from './pages/Crefdits.page';
 import SettingsPage from './pages/Settings.page';
 import PromoPage from './pages/Promo.page';
 import AuthPage from './pages/Auth.page';
+import SavannaPromo from './pages/SavannaPromo.page';
+import SavannaPlay from './components/SavannaGame/SavannaPlay.page';
 
 
 const useRoutes = (isAuthenticated) => {
   if (isAuthenticated) {
     return (
       <Switch>
-          <Route path="/promo" exact>
-              <PromoPage/>
-          </Route>
+        <Route path="/promo" exact>
+          <PromoPage/>
+        </Route>
         <Route path="/learning" exact>
           <StartLearnPage/>
         </Route>
@@ -36,10 +38,15 @@ const useRoutes = (isAuthenticated) => {
           <SettingsPage/>
         </Route>
         <Route path="/auth">
-          <AuthPage />
+          <AuthPage/>
         </Route>
-        {/*<Redirect to="/learning"/>*/}
-          <Redirect to="/promo"/>
+        <Route path='/games/savanna/play' exact>
+          <SavannaPlay/>
+        </Route>
+        <Route path="/games/savanna" exact>
+          <SavannaPromo/>
+        </Route>
+        <Redirect to="/promo"/>
       </Switch>
     );
   }

@@ -19,7 +19,7 @@ const useHttp = () => {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.message || 'Oops, ssomething goes wrong:(');
+                throw new Error(data.message || 'Oops, something goes wrong:(');
             }
 
             setLoading(false);
