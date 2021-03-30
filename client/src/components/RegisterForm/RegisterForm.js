@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import './RegisterForm.scss';
 import {Link, useHistory} from 'react-router-dom';
 import useHttp from '../../hooks/http.hook';
