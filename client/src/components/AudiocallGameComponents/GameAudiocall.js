@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import {NavLink} from 'react-router-dom';
+import {NavLink, useHistory} from 'react-router-dom';
 import useHttp from '../../hooks/http.hook';
 import GameElement from './GameElement';
 
@@ -7,7 +7,12 @@ const GameAudiocall = () => {
     const [level, setLevel] = useState(0);
     const [data, setData] = useState([]);
     const {request} = useHttp();
-    const [currentSample, setCurrentSample] = useState([])
+    const [currentSample, setCurrentSample] = useState([]);
+    const history = useHistory();
+    const [answers, setAnswers] = useState({
+        correct: [],
+        mistake: []
+    })
 
     useEffect(() => {
         getWords();
@@ -21,6 +26,7 @@ const GameAudiocall = () => {
 
     useEffect(() => {
         if (level !== 0) setCurrentSample(getCurrentWords())
+        if (level === 20) return history.push('/games/audiocall/statistic', answers);
     }, [level])
 
     const getCurrentWords = () => {
@@ -50,8 +56,8 @@ const GameAudiocall = () => {
     )
 
     const handleClick = (isCorrect) => {
+        isCorrect ? setAnswers({...answers, correct: [...answers.correct, currentSample[0]]}) : setAnswers({...answers, mistake: [...answers.mistake, currentSample[0]]});
         setLevel(prev => prev + 1);
-        isCorrect ? console.log('correct') : console.log('not correct')
     }
 
     return (
