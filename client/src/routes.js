@@ -11,6 +11,7 @@ import AuthPage from './pages/Auth.page';
 import SprintGame from "./pages/SprintGame.page";
 import Audiocall from './components/AudiocallGameComponents/Audiocall';
 import GameAudiocall from './components/AudiocallGameComponents/GameAudiocall';
+import Statistic from './components/AudiocallGameComponents/Statistic';
 
 
 const useRoutes = (isAuthenticated) => {
@@ -34,6 +35,9 @@ const useRoutes = (isAuthenticated) => {
         </Route>
         <Route path="/games/audiocall/playing" exact>
           <GameAudiocall />
+        </Route>
+        <Route path="/games/audiocall/statistic" exact>
+          <Statistic />
         </Route>
         <Route path="/statistic" exact>
           <StatisticPage/>
