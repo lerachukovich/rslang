@@ -2,72 +2,22 @@ import React, { useEffect, useState, useCallback } from 'react';
 import useHttp from '../../hooks/http.hook';
 import MathHelper from '../../helper/Math.helper';
 import Spinner from '../Spinner/Spinner';
+import Word from './Savanna.word.component';
+import WordControl from './Savanna.word-control.component';
+import Heart from './Savanna.heart.component';
+import SuccessCristal from './Savanna.succes-cristall.component';
 import './savanna.scss';
-
-const Heart = () => {
-  return (
-    <div className={'savanna__heart'}>
-
-    </div>
-  );
-};
-
-const Word = ({ value }) => {
-  const [wordPosition, setWordPosition] = useState(0);
-  const [currentWord, setCurrentWord] = useState('');
-  const [intervalId, setIntervalId] = useState(null);
-  const MAX_WORD_POSITION = 500;
-
-  useEffect(() => {
-    setCurrentWord(value.currentWord);
-    setWordPosition(0);
-    const wordInterval = setInterval(() => {
-      setWordPosition(prevState => prevState + 0.5);
-    }, 1);
-    setIntervalId(wordInterval);
-    clearInterval(intervalId);
-  }, [value.currentWord]);
-
-  useEffect(() => {
-    if (wordPosition === MAX_WORD_POSITION) {
-      clearInterval(intervalId);
-      value.healthHandler();
-      value.refreshFieldHandler();
-    }
-  }, [wordPosition]);
-
-  return (
-    <div className={'savanna__word-container'} style={{ transform: `translateY(${wordPosition}%)` }}>
-      <b>{currentWord}</b>
-    </div>
-  );
-};
-
-const WordControl = ({ value }) => {
-  const [currentSet, setCurrentSet] = useState([]);
-
-  useEffect(() => {
-    setCurrentSet(value.currentFourWord);
-  }, [value.currentFourWord])
-
-  return (
-    <div className="savanna__word-panel">
-      {currentSet.map((it, ind) => (
-        <button onClick={value.chooseHandler} className={'waves-light btn-large'} key={ind} data={it.wordTranslate}>{ind + 1} : {it.wordTranslate}</button>
-      ))}
-    </div>
-  );
-};
 
 const SavannaPlay = () => {
   const GAME_CONFIG = {
     attempts: 10,
+    lives: 5
   };
   const WORDS_LIMIT = {
     maxPages: 29,
-    maxGroup: 5,
+    maxGroup: 5
   };
-  let [lives, setLives] = useState(5);
+  let [lives, setLives] = useState(GAME_CONFIG.lives);
   const hearts = [];
   const [wordCollection, setWordCollection] = useState(null);
   const { loading, request } = useHttp();
@@ -75,7 +25,10 @@ const SavannaPlay = () => {
   const [currentFourWord, setCurrentFourWord] = useState(null);
   const [isGameOver, setGameOver] = useState(false);
   const [isEnd, setEnd] = useState(false);
-  const [backgroundPosition, setBackGroundPosition] = useState(100)
+  const [backgroundPosition, setBackGroundPosition] = useState(100);
+  const [btnColorClass, setBtnColorClass] = useState('waves-light btn-large  cyan darken-3');
+  const [choiceFromKey, setChoiceFromKey] = useState('');
+  const [cristalSize, setCristalSize] = useState(10);
   let [currentStep, setCurrentStep] = useState(0);
 
   for (let i = 0; i < lives; i += 1) {
@@ -90,7 +43,7 @@ const SavannaPlay = () => {
       } catch (e) {
       }
       ;
-    },
+    }
   );
 
   useEffect(() => {
@@ -101,28 +54,35 @@ const SavannaPlay = () => {
     const tmp = [];
     tmp.push(wordCollection[currentStep]);
     for (let i = 0; i < 3; i += 1) {
-      tmp.push(wordCollection[MathHelper.getRandomNumber(currentStep, 19)])
+      tmp.push(wordCollection[MathHelper.getRandomNumber(currentStep + 1, 19)]);
     }
     const res = MathHelper.shuffleArray(tmp);
     setCurrentFourWord(res);
-    console.log(currentFourWord);
     return res;
-  }
+  };
 
   const getCurrentWord = (currentStep) => {
     setCurrentWord(wordCollection[currentStep].word);
     return wordCollection[currentStep].word;
-  }
+  };
 
   useEffect(() => {
     if (!wordCollection) {
-      return
+      return;
     } else {
       setCurrentFourWord(generateFourWord(currentStep));
       setCurrentWord(getCurrentWord(currentStep));
     }
-  }, [wordCollection])
+  }, [wordCollection]);
 
+  useEffect(() => {
+
+    window.addEventListener('keydown', keyHandler);
+
+    return () => {
+      window.removeEventListener('keydown', keyHandler);
+    };
+  }, []);
 
   const refreshFieldHandler = () => {
     setCurrentStep(currentStep += 1);
@@ -131,19 +91,59 @@ const SavannaPlay = () => {
     }
     setCurrentFourWord(generateFourWord(currentStep));
     setCurrentWord(getCurrentWord(currentStep));
-  }
+  };
 
-  const chooseHandler = (e) => {
+  const successTurn = () => {
+    refreshFieldHandler();
+    setBackGroundPosition(prevState => prevState - 10);
+    setCristalSize(prevState =>
+      prevState + 20
+    );
+  };
+
+  const failureTurn = () => {
+    setBtnColorClass('btn-large red darken-1');
+    healthHandler();
+    refreshFieldHandler();
+    setTimeout(() => {
+      setBtnColorClass('waves-light btn-large  cyan darken-3');
+    }, 200);
+  };
+
+  const chooseHandler = (e, key) => {
+    console.log(wordCollection);
     const id1 = wordCollection.filter(it => it.word === currentWord);
-    const id2 = wordCollection.filter(it => it.wordTranslate === e.target.getAttribute('data'));
-    if (id1[0].id === id2[0].id) {
-      refreshFieldHandler();
-      setBackGroundPosition(prevState => prevState - 10);
+    let id2;
+    if (!e) {
+      const buttonCollection = [...document.querySelectorAll('.btn-large')];
+      const wordTranslate = buttonCollection.filter(it => it.getAttribute('dataId') === key)[0].getAttribute('data');
+      id2 = wordCollection.filter(it => it.wordTranslate === wordTranslate);
+      console.log(id1[0].id === id2[0].id);
     } else {
-      healthHandler();
-      refreshFieldHandler();
+      id2 = wordCollection.filter(it => it.wordTranslate === e.target.getAttribute('data'));
     }
-  }
+    if (id1[0].id === id2[0].id) {
+      successTurn();
+    } else {
+      failureTurn();
+    }
+    setChoiceFromKey('');
+  };
+
+  const keyHandler = useCallback( (e) => {
+    if (e.key === '1' || e.key === '2' || e.key === '3' || e.key === '4') {
+        setChoiceFromKey(e.key);
+    } else {
+      return
+    }
+  }, [currentStep]);
+
+  useEffect(() => {
+    if (!wordCollection || !choiceFromKey) {
+      return
+    }
+    chooseHandler(null, choiceFromKey );
+  }, [choiceFromKey]);
 
   useEffect(() => {
     for (let i = 0; i < lives; i += 1) {
@@ -155,28 +155,30 @@ const SavannaPlay = () => {
   }, [lives]);
 
   const healthHandler = () => {
-    setLives( prevState => prevState - 1);
+    setLives(prevState => prevState - 1);
   };
 
   if (isGameOver) {
     return (
       <h1>Game Over</h1>
-    )
+    );
   } else if (isEnd) {
     return (
       <h1>U win</h1>
-    )
-  }
-  else {
+    );
+  } else {
     return (
-      <div className={'savanna-wrapper'} style={{backgroundPosition: `0 ${backgroundPosition}%`}}>
+      <div className={'savanna-wrapper'} style={{ backgroundPosition: `0 ${backgroundPosition}%` }}>
         <div className="savanna__hearts-container">
           {hearts}
         </div>
 
-        {currentWord && <Word value={{ healthHandler, refreshFieldHandler, wordCollection, currentWord, currentStep }}/>}
-        {!wordCollection && <Spinner className={'savanna__spinner'} />}
-        {currentFourWord && <WordControl value={{wordCollection, currentFourWord, currentStep, chooseHandler}} />}
+        {currentWord &&
+        <Word value={{ healthHandler, refreshFieldHandler, wordCollection, currentWord, currentStep }}/>}
+        {!wordCollection && <Spinner className={'savanna__spinner'}/>}
+        {currentFourWord &&
+        <WordControl value={{ btnColorClass, wordCollection, currentFourWord, currentStep, chooseHandler }}/>}
+        {!loading && <SuccessCristal value={cristalSize}/>}
       </div>
     );
   }

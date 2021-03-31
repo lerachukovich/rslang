@@ -29,9 +29,7 @@
 }
 
 .savanna__word-container {
-
   text-align: center;
-  //transform: translateY(60px); // Use transform for replacing in component (style)
   & b {
     text-transform: uppercase;
     font-size: 1.8rem;
@@ -46,10 +44,68 @@
   margin: 0 auto;
   position: relative;
   top: 200px;
+  min-width: 300px;
+  & button {
+    margin: 10px;
+  }
 }
 
 .preloader-wrapper {
   margin: 0 auto!important;
+}
+
+
+// Cristal
+
+$color: #fd7000;
+$size: 1rem;
+$time: 1;
+
+.dank-ass-loader {
+  position: relative;
+  display: flex;
+  margin: 0 auto;
+  bottom: -50%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+  overflow: hidden;
+  transition: 0.2s ease-in-out;
+  .row-cr {
+    display: flex;
+  }
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+  margin: 0 (-$size / 2);
+  border-left: $size solid transparent;
+  border-right: $size solid transparent;
+  border-bottom: ($size * 1.8) solid $color;
+  animation: blink $time + s infinite;
+
+  &.down {
+    transform: rotate(180deg);
+  }
+
+  @for $i from 1 through 18 {
+    &.outer-#{$i} {
+      animation-delay: -($time / 18) * $i + s;
+    }
+  }
+
+  @for $i from 1 through 6 {
+    &.inner-#{$i} {
+      animation-delay: -($time / 6) * $i + s;
+    }
+  }
+}
+
+@keyframes blink {
+  0% { opacity: 0.1; }
+  30% { opacity: 1; }
+  100% { opacity: 0.1; }
 }
 
 
