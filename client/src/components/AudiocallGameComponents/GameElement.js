@@ -1,4 +1,5 @@
 import React, { useEffect, useState} from 'react';
+import Tada from 'react-reveal/Tada';
 
 const GameElement = ({sample, level, handleClick, readyNext}) => {
     const answer = sample[0];
@@ -32,7 +33,13 @@ const GameElement = ({sample, level, handleClick, readyNext}) => {
                 sampleWords.map((item, index) => {
                     if (item.wordTranslate === answer.wordTranslate) {
                         return (
-                            <button key={index} className={`btn btn-large waves-effect ${readyNext && 'green darken-3'}`} onClick={handleClick.bind(null, true)}>{item.wordTranslate}</button>
+                            <Tada spy={handleClick}>
+                                <button key={index} className={`btn btn-large waves-effect ${readyNext && 'green darken-3'}`} onClick={() => {
+                                    handleClick(true);
+                                }}>
+                                    {item.wordTranslate}
+                                </button>
+                            </Tada>
                         )
                     } else return (
                         <button key={index} className={`btn btn-large waves-effect ${item.isMistake && 'red'}`} onClick={() => {
