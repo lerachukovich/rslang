@@ -8,8 +8,87 @@
 
 .login-form {
     width: 40%;
+    width: 45%;
+    text-align: center;
+    box-shadow: rgba(16, 112, 177, 0.2)  10px 20px 50px;
+    margin-bottom: 50px;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.card-body {
+    background-color: rgba(16, 112, 177, 0.4);
+    border-radius: 20px;
+    padding: 2rem;
+
+    // & *, & *::placeholder {
+    //     color: white;
+    // }
+
+    input, input::placeholder, label {
+        color: white;
+        font-size: 1rem;
+    }
 }
 
 .login-btn {
     background: rgba(228, 222, 222, 0.5) !important;
+}
+
+.btn-active {
+    background-color: rgba(16, 112, 177, 0.4);
+    border-radius: 10px 10px 0 0;
+    box-shadow: none;
+    outline: none;
+    border: none;
+    padding: 1rem 2rem;
+    color: white;
+    font-size: 2rem;
+
+    &:hover {
+        background-color: rgba(40, 108, 153, 0.4);
+        outline: none;
+        border: none;
+        cursor: pointer;
+    }
+}
+
+.btn-active.btn {
+    border-radius: 5px;
+    width: 2rem;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-inactive {
+    background-color: rgba(16, 112, 177, 0.2);
+    border-radius: 10px 10px 0 0;    
+    box-shadow: none;
+    outline: none;
+    border: none;
+    padding: 1rem 2rem;
+    color: white;
+    font-size: 2rem;
+
+    &:hover {
+        background-color: rgba(16, 112, 177, 0.2);
+        outline: none;
+        border: none;
+        cursor: pointer;
+    }
+}
+
+.form-submit {
+    background-color: rgba(16, 112, 177, 0.5);
+    padding: 1rem 2rem;
+    border: 1px solid white;
+    color: white;
+    border-radius: 10px; 
+    outline: none;
+
+    &:hover {
+        cursor: pointer;        
+    }
 }

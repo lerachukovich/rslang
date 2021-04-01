@@ -3,12 +3,16 @@ import './RegisterForm.scss';
 import {Link, useHistory} from 'react-router-dom';
 import useHttp from '../../hooks/http.hook';
 import {AuthContext} from '../../context/AuthContext';
+import RubberBand from 'react-reveal/RubberBand';
+import Pulse from 'react-reveal/Pulse';
+import Fade from 'react-reveal/Fade';
 
 const RegisterForm = () => {
     const history = useHistory();
     const auth = useContext(AuthContext);
     const {loading, request, error, clearError} = useHttp();
     const [image, setImage] = useState('');
+    const [isShowPulse, setIsShowPulse] = useState(false);
 
     const [form, setForm] = useState({
         name: '',
@@ -51,76 +55,83 @@ const RegisterForm = () => {
     }
 
     return (
-        <>
-        <div className="register-page-wrapper">
-            <div className="card text-white bg-primary mb-3 register-form">
-                <div className="card-header">
-                    <button type="button" className="btn btn-secondary">Register</button>
-                    <Link to="/auth/login">
-                        <button
-                            type="button"
-                            className="btn disabled btn-white"
-                            disabled={loading} >
-                                Login</button>
-                    </Link>
+        <Fade>
+            <div className="register-page-wrapper">
+                <div className="card text-white bg-primary mb-3 register-form">
+                    <div className="card-header">
+                        <button type="button" className="btn-active">Регистрация</button>
+                        <Link to="/auth/login">
+                            <button
+                                type="button"
+                                className="btn-inactive"
+                                disabled={loading} >
+                                    Войти</button>
+                        </Link>
+                    </div>
+                    <div className="card-body">
+                        <form
+                            onSubmit={registerHandler}
+                            encType='multipart/form-data' >
+                            <div className="form-group">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    name="name"
+                                    aria-describedby="emailHelp"
+                                    placeholder="Введите имя"
+                                    onChange={changeHandler} />
+                            </div>
+                            <div className="form-group">
+                                <input
+                                    type="email"
+                                    className="form-control"
+                                    name="email"
+                                    aria-describedby="emailHelp"
+                                    placeholder="Введите email"
+                                    onChange={changeHandler} />
+                            </div>
+                            <div className="form-group">
+                                    <div className="file-field input-field">
+                                        <div className="btn btn-active">
+                                            <span>Файл</span>
+                                            <input 
+                                                type="file"
+                                                name="photo"
+                                                className="form-control-file"
+                                                aria-describedby="emailHelp"
+                                                accept=".png, .jpg, .jpeg"
+                                                onChange={(e) => setImage(e.target.files[0])} />
+                                        </div>
+                                        <div className="file-path-wrapper">
+                                            <input className="file-path validate" type="text" placeholder="Выберите аватар"/>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div className="form-group">
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    name="password"
+                                    placeholder="Введите пароль"
+                                    onChange={changeHandler} />
+                            </div>
+                            <RubberBand>
+                                <Pulse spy={isShowPulse}>
+                                    <div className="form-group" onMouseEnter={() => setIsShowPulse(true)} onMouseLeave={() => setIsShowPulse(false)}>
+                                        <input
+                                            type="submit"
+                                            className="form-control form-submit"
+                                            id="btn"
+                                            value="Зарегистрировать"
+                                            disabled={loading}  />
+                                    </div>
+                                </Pulse>
+                            </RubberBand>
+                        </form>
+                    </div>
                 </div>
-                <div className="card-body">
-                    <form
-                        onSubmit={registerHandler}
-                        encType='multipart/form-data' >
-                        <div className="form-group">
-                            <label htmlFor="name">Name</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="name"
-                                aria-describedby="emailHelp"
-                                placeholder="Enter your name"
-                                onChange={changeHandler} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="email">Email address</label>
-                            <input
-                                type="email"
-                                className="form-control"
-                                name="email"
-                                aria-describedby="emailHelp"
-                                placeholder="Enter email"
-                                onChange={changeHandler} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="photo">Avatar img</label>
-                            <input
-                                type="file"
-                                name="photo"
-                                className="form-control-file"
-                                aria-describedby="emailHelp"
-                                accept=".png, .jpg, .jpeg"
-                                onChange={(e) => setImage(e.target.files[0])} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="password">Password</label>
-                            <input
-                                type="password"
-                                className="form-control"
-                                name="password"
-                                placeholder="Password"
-                                onChange={changeHandler} />
-                        </div>
-                        <div className="form-group">
-                            <input
-                                type="submit"
-                                className="form-control btn-dark"
-                                id="btn"
-                                disabled={loading}  />
-                        </div>
-                    </form>
-                </div>
-
             </div>
-
-        </div>
-        </>
+        </Fade>
     )
 }
 
