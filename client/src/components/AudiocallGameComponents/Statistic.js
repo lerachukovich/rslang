@@ -15,7 +15,8 @@ const Statistic = () => {
         state.correct.map((item, idx) => {
             return (
                 <li className="collection-item" key={idx}>
-                    <a className="btn-floating btn-small" onClick={playSound.bind(null, item.audio)}><i class="material-icons">volume_up</i></a>
+                    <a className="btn-floating btn-small" onClick={playSound.bind(null, item.audio)}><i className="material-icons">volume_up</i></a>
+                    <span>{item.transcription}</span>
                     <span>{item.wordTranslate}</span>
                 </li>
             )
@@ -26,7 +27,8 @@ const Statistic = () => {
         state.mistake.map((item, idx) => {
             return (
                 <li className="collection-item" key={idx}>
-                    <a className="btn-floating btn-small" onClick={playSound.bind(null, item.audio)}><i class="material-icons">volume_up</i></a>
+                    <a className="btn-floating btn-small" onClick={playSound.bind(null, item.audio)}><i className="material-icons">volume_up</i></a>
+                    <span>{item.transcription}</span>
                     <span> {item.wordTranslate}</span>                   
                 </li>
             )
