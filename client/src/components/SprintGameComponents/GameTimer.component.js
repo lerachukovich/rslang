@@ -7,7 +7,7 @@ const GameTimer = () => {
         setGameTimer(gameTimer > 0 ? gameTimer - 1 : gameTimer)
     }
 
-    setTimeout(timerOn, 1000);
+    // setTimeout(timerOn, 1000);
 
     return (
         <h1>{gameTimer}</h1>

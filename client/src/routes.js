@@ -8,7 +8,8 @@ import CreditsPage from './pages/Crefdits.page';
 import SettingsPage from './pages/Settings.page';
 import PromoPage from './pages/Promo.page';
 import AuthPage from './pages/Auth.page';
-import SprintGame from "./pages/SprintGame.page";
+import SprintGame from "./components/SprintGameComponents/Sprint.component";
+import GameField from "./components/SprintGameComponents/GameField.component";
 import Audiocall from './components/AudiocallGameComponents/Audiocall';
 import GameAudiocall from './components/AudiocallGameComponents/GameAudiocall';
 import Statistic from './components/AudiocallGameComponents/Statistic';
@@ -42,6 +43,12 @@ const useRoutes = (isAuthenticated) => {
         <Route path="/statistic" exact>
           <StatisticPage/>
         </Route>
+          <Route path="/games/sprint" exact>
+              <SprintGame />
+          </Route>
+          <Route path="/games/sprint/playing" exact>
+              <GameField />
+          </Route>
         <Route path="/credits" exact>
           <CreditsPage/>
         </Route>
@@ -51,10 +58,6 @@ const useRoutes = (isAuthenticated) => {
         <Route path="/auth">
           <AuthPage />
         </Route>
-          <Route path="/sprint">
-              <SprintGame />
-          </Route>
-        {/*<Redirect to="/learning"/>*/}
           <Redirect to="/promo"/>
       </Switch>
     );
