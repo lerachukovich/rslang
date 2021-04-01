@@ -12,7 +12,8 @@ const GameAudiocall = () => {
     const [answers, setAnswers] = useState({
         correct: [],
         mistake: []
-    })
+    });
+    const [readyNext, setReadyNext] = useState(false);
 
     useEffect(() => {
         getWords();
@@ -31,7 +32,7 @@ const GameAudiocall = () => {
 
     const getCurrentWords = () => {
         const arr = [data[level]];
-        while (arr.length !== 5) {
+        while (arr.length !== 4) {
             const item = data[Math.floor(Math.random() * data.length)];
             if (!arr.includes(item)) {
                 arr.push(item);
@@ -56,8 +57,15 @@ const GameAudiocall = () => {
     )
 
     const handleClick = (isCorrect) => {
+        if (readyNext) return;
         isCorrect ? setAnswers({...answers, correct: [...answers.correct, currentSample[0]]}) : setAnswers({...answers, mistake: [...answers.mistake, currentSample[0]]});
+
+        setReadyNext(true);
+    }
+
+    const goNext = () => {
         setLevel(prev => prev + 1);
+        setReadyNext(false);
     }
 
     return (
@@ -71,7 +79,8 @@ const GameAudiocall = () => {
                             <GameElement 
                                 sample={currentSample} 
                                 level={level}
-                                handleClick={handleClick}/>
+                                handleClick={handleClick}
+                                readyNext={readyNext}/>
                                 )
                         }
                     </div>
@@ -81,9 +90,17 @@ const GameAudiocall = () => {
                                 <i className="material-icons left">arrow_back</i>                                
                             </button>
                         </NavLink>
-                        <button className="btn" onClick={() => {
-                            handleClick(false);           
-                        }}>Я не знаю</button>
+                        {
+                            readyNext ? (
+                                <button className="btn" onClick={goNext}>
+                                    <i className="material-icons">forward</i>
+                                </button>
+                            ) : (
+                                <button className="btn" onClick={() => {
+                                    handleClick(false);           
+                                }}>Я не знаю</button>
+                            )
+                        }
                     </div>
                 </div>
             </div>
