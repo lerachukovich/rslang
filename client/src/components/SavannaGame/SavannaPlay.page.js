@@ -7,6 +7,13 @@ import WordControl from './Savanna.word-control.component';
 import Heart from './Savanna.heart.component';
 import SuccessCristal from './Savanna.succes-cristall.component';
 import FinalScreen from './Savanna.final-screen';
+import useSound from 'use-sound';
+import error from '../../assets/audio/error.mp3';
+import correct from '../../assets/audio/correct.mp3';
+import bg1 from '../../assets/savanna-bg/savannabg-1.jpg';
+import bg2 from '../../assets/savanna-bg/savannabg-2.jpg';
+import bg3 from '../../assets/savanna-bg/savannabg-3.jpg';
+import bg4 from '../../assets/savanna-bg/savannabg-4.jpg';
 import './savanna.scss';
 
 const SavannaPlay = () => {
@@ -20,8 +27,10 @@ const SavannaPlay = () => {
     maxGroup: 5,
     maxWordAmount: 19
   };
+
   let [lives, setLives] = useState(GAME_CONFIG.lives);
   const hearts = [];
+  const backgrounds = [bg1, bg2, bg3, bg4];
   const [wordCollection, setWordCollection] = useState(null);
   const { loading, request } = useHttp();
   const [currentWord, setCurrentWord] = useState(null);
@@ -32,7 +41,12 @@ const SavannaPlay = () => {
   const [choiceFromKey, setChoiceFromKey] = useState('');
   const [cristalSize, setCristalSize] = useState(10);
   let [currentStep, setCurrentStep] = useState(0);
+  const [correctSound] = useSound(correct);
+  const [errorSound] = useSound(error);
   const [answers, setAnswers] = useState({ correct: [], unCorrect: [] });
+  const [currentBackground, setCurrentBackground] = useState(backgrounds[MathHelper.getRandomNumber(1, backgrounds.length - 1)]);
+  const [isSound, setIsSound] = useState(false);
+  const [soundBtnClass, setSoundButtonClass] = useState('savanna__sound-control btn');
 
   for (let i = 0; i < lives; i += 1) {
     hearts.push(<Heart key={i}/>);
@@ -48,10 +62,6 @@ const SavannaPlay = () => {
       ;
     }
   );
-
-  useEffect(() => {
-    getWords();
-  }, []);
 
   const generateFourWord = (currentStep) => {
     let tmp = [];
@@ -71,24 +81,6 @@ const SavannaPlay = () => {
     return wordCollection[currentStep].word;
   };
 
-  useEffect(() => {
-    if (!wordCollection) {
-      return;
-    } else {
-      setCurrentFourWord(generateFourWord(currentStep));
-      setCurrentWord(getCurrentWord(currentStep));
-    }
-  }, [wordCollection]);
-
-  useEffect(() => {
-
-    window.addEventListener('keydown', keyHandler);
-
-    return () => {
-      window.removeEventListener('keydown', keyHandler);
-    };
-  }, []);
-
   const refreshFieldHandler = () => {
     setCurrentStep(currentStep += 1);
     if (currentStep === GAME_CONFIG.attempts || lives < 1) {
@@ -106,7 +98,7 @@ const SavannaPlay = () => {
       prevState + 20
     );
     setAnswers(prevState => ({ ...answers, correct: [...prevState.correct, el] }));
-    console.log(answers);
+    if (isSound) correctSound();
   };
 
   const failureTurn = (el) => {
@@ -125,7 +117,7 @@ const SavannaPlay = () => {
       setBtnColorClass('waves-light btn-large  cyan darken-3');
     }, 200);
     setAnswers(prevState => ({ ...answers, unCorrect: [...prevState.unCorrect, el] }));
-    console.log(answers);
+    if (isSound) errorSound();
   };
 
   const chooseHandler = (e, key) => {
@@ -149,6 +141,29 @@ const SavannaPlay = () => {
     }
     setChoiceFromKey('');
   };
+
+  useEffect(() => {
+    getWords();
+  }, []);
+
+  useEffect(() => {
+    if (!wordCollection) {
+      return;
+    } else {
+      setCurrentFourWord(generateFourWord(currentStep));
+      setCurrentWord(getCurrentWord(currentStep));
+    }
+  }, [wordCollection]);
+
+  useEffect(() => {
+
+    window.addEventListener('keydown', keyHandler);
+
+    return () => {
+      window.removeEventListener('keydown', keyHandler);
+    };
+  }, []);
+
 
   const keyHandler = useCallback((e) => {
     if (e.key === '1' || e.key === '2' || e.key === '3' || e.key === '4') {
@@ -175,18 +190,35 @@ const SavannaPlay = () => {
     setLives(prevState => prevState - 1);
   };
 
+  const soundHandler = (url) => {
+    const audio = new Audio(`/${url}`)
+    audio.play()
+  };
+
+  const soundControlHandler = () => {
+    setIsSound(!isSound);
+    if (!isSound) {
+      setSoundButtonClass('savanna__sound-control btn red lighten-2')
+    } else {
+      setSoundButtonClass('savanna__sound-control btn')
+    }
+  }
+
   if (isEnd) {
     return (
-      <div className={'savanna-wrapper'} style={{ backgroundPosition: `0 ${backgroundPosition}%` }}>
-        <FinalScreen value={{answers}}/>
+      <div className={'savanna-wrapper'} style={{ backgroundPosition: `0 ${backgroundPosition}%`,
+                                                  backgroundImage: `url(${currentBackground})`}}>
+        <FinalScreen value={{answers, soundHandler}}/>
       </div>
     );
   } else {
     return (
-      <div className={'savanna-wrapper'} style={{ backgroundPosition: `0 ${backgroundPosition}%` }}>
+      <div className={'savanna-wrapper'} style={{ backgroundPosition: `0 ${backgroundPosition}%`,
+                                                  backgroundImage: `url(${currentBackground})`}}>
         <div className="savanna__hearts-container">
           {hearts}
         </div>
+        <button className={soundBtnClass} onClick={soundControlHandler}><i className={"material-icons"}>music_note</i></button>
 
         {currentWord &&
         <Word value={{ healthHandler, refreshFieldHandler, wordCollection, currentWord, currentStep }}/>}
