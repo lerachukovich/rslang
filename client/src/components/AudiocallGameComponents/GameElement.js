@@ -29,8 +29,9 @@ const GameElement = ({sample, level, handleClick, readyNext}) => {
     }
 
     const boardHandle = (e) => {
-        const elements = document.querySelector('.card-words').childNodes;
-        elements.forEach(elem => {
+        const elements = document.querySelector('.card-words') || null;
+        if (!elements) return;
+        elements.childNodes.forEach(elem => {
             if (elem.id === e.key) elem.click();
         })
     }

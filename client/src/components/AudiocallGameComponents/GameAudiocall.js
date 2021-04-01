@@ -32,7 +32,7 @@ const GameAudiocall = () => {
     useEffect(() => {
         if (level !== 0) setCurrentSample(getCurrentWords())
         // if (level === 20) return history.push('/games/audiocall/statistic', answers);
-        if (level === 20) setIsEnd(true);
+        if (level === 10) setIsEnd(true);
     }, [level])
 
     const getCurrentWords = () => {
