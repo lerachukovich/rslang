@@ -1,4 +1,4 @@
-import React, {createRef, useEffect, useRef, useState} from 'react';
+import React, { useEffect, useState} from 'react';
 
 const GameElement = ({sample, level, handleClick, readyNext}) => {
     const answer = sample[0];
@@ -23,11 +23,11 @@ const GameElement = ({sample, level, handleClick, readyNext}) => {
     return (
         <>
         <div className="card-content">
-            <button className="btn-floating btn-large waves-effect" onClick={playSound.bind(null, answer.audio)}>
+            <button className="btn-floating btn-large pulse" onClick={playSound.bind(null, answer.audio)}>
                 <i className="material-icons large">volume_up</i>
             </button>
         </div>
-        <div className="card-action">
+        <div className="card-action card-words">
             {
                 sampleWords.map((item, index) => {
                     if (item.wordTranslate === answer.wordTranslate) {
