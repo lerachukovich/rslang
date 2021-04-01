@@ -1,10 +1,9 @@
-import React, { createRef, useEffect, useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import Tada from 'react-reveal/Tada';
 
 const GameElement = ({sample, level, handleClick, readyNext}) => {
     const answer = sample[0];
     const [sampleWords, setSampleWords] = useState([]);
-    const Ref = createRef();
 
     useEffect(() => {
         playSound(answer.audio);
@@ -12,7 +11,7 @@ const GameElement = ({sample, level, handleClick, readyNext}) => {
     }, [sample])
 
     useEffect(() => {
-        window.addEventListener('keydown', (e) => boardHandle(e, Ref));
+        window.addEventListener('keydown', (e) => boardHandle(e));
         return () => {
             window.removeEventListener('keydown', boardHandle)
         }
@@ -43,7 +42,7 @@ const GameElement = ({sample, level, handleClick, readyNext}) => {
                 <i className="material-icons large">volume_up</i>
             </button>
         </div>
-        <div ref={Ref} className="card-action card-words">
+        <div className="card-action card-words">
             {
                 sampleWords.map((item, index) => {
                     if (item.wordTranslate === answer.wordTranslate) {

@@ -3,11 +3,14 @@ import './LoginForm.scss';
 import {Link, useHistory} from 'react-router-dom';
 import useHtt from '../../hooks/http.hook';
 import {AuthContext} from '../../context/AuthContext';
+import RubberBand from 'react-reveal/RubberBand';
+import Pulse from 'react-reveal/Pulse';
 
 const LoginForm = () => {
     const history = useHistory();
     const auth = useContext(AuthContext);
     const {loading, request, error, clearError} = useHtt();
+    const [isShowPulse, setIsShowPulse] = useState(false);
 
     const [form, setForm] = useState({
         email: '',
@@ -31,6 +34,8 @@ const LoginForm = () => {
         }
     }
 
+    const pulseFC = () => {}
+
     return (
         <>
         <div className="login-page-wrapper">
@@ -39,43 +44,46 @@ const LoginForm = () => {
                     <Link to="/auth/register">
                         <button
                             type="button"
-                            className="btn disabled btn-white"
+                            className="btn-inactive"
                             disabled={loading} >
-                                Register</button>
+                                Регистрация</button>
                     </Link>
-                    <button type="button" className="btn btn-secondary">Login</button>
+                    <button type="button" className="btn-active">Вход</button>
                 </div>
                 <div className="card-body">
                     <form
                         onSubmit={loginHandler}>
                         <div className="form-group">
-                            <label htmlFor="email">Email address</label>
                             <input
                                 type="email"
                                 className="form-control"
                                 name="email"
                                 aria-describedby="emailHelp"
-                                placeholder="Enter email"
+                                placeholder="Введите email"
                                 value={form.email}
                                 onChange={changeHandler} />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="password">Password</label>
                             <input
                                 type="password"
                                 className="form-control"
                                 name="password"
-                                placeholder="Password"
+                                placeholder="Введите пароль"
                                 value={form.password}
                                 onChange={changeHandler} />
                         </div>
-                        <div className="form-group">
-                            <input
-                                type="submit"
-                                className="form-control btn-dark"
-                                id="btn"
-                                disabled={loading} />
-                        </div>
+                        <RubberBand>
+                            <Pulse spy={isShowPulse}>
+                                <div className="form-group" onMouseEnter={() => setIsShowPulse(true)} onMouseLeave={() => setIsShowPulse(false)}>
+                                    <input
+                                        type="submit"
+                                        className="form-control form-submit"
+                                        value="Войти"
+                                        id="btn"
+                                        disabled={loading} />
+                                </div>
+                            </Pulse>
+                        </RubberBand>
                     </form>
                 </div>
 
