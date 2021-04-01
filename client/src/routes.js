@@ -13,15 +13,17 @@ import GameField from "./components/SprintGameComponents/GameField.component";
 import Audiocall from './components/AudiocallGameComponents/Audiocall';
 import GameAudiocall from './components/AudiocallGameComponents/GameAudiocall';
 import Statistic from './components/AudiocallGameComponents/Statistic';
+import SavannaPromo from './pages/SavannaPromo.page';
+import SavannaPlay from './components/SavannaGame/SavannaPlay.page';
 
 
 const useRoutes = (isAuthenticated) => {
   if (isAuthenticated) {
     return (
       <Switch>
-          <Route path="/promo" exact>
-              <PromoPage/>
-          </Route>
+        <Route path="/promo" exact>
+          <PromoPage/>
+        </Route>
         <Route path="/learning" exact>
           <StartLearnPage/>
         </Route>
@@ -56,7 +58,13 @@ const useRoutes = (isAuthenticated) => {
           <SettingsPage/>
         </Route>
         <Route path="/auth">
-          <AuthPage />
+          <AuthPage/>
+        </Route>
+        <Route path='/games/savanna/play' exact>
+          <SavannaPlay/>
+        </Route>
+        <Route path="/games/savanna" exact>
+          <SavannaPromo/>
         </Route>
           <Redirect to="/promo"/>
       </Switch>
