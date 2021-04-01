@@ -13,7 +13,7 @@ const GameElement = ({sample, level, handleClick, readyNext}) => {
     useEffect(() => {
         window.addEventListener('keydown', (e) => boardHandle(e));
         return () => {
-            window.removeEventListener('keydown', (e) => boardHandle(e, Ref))
+            window.removeEventListener('keydown', (e) => boardHandle(e))
         }
     }, [])
 
