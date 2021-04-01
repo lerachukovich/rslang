@@ -75,7 +75,6 @@ const GameAudiocall = () => {
     }
 
     return (
-        <>
         <Flip left when={show}>
             <div className="row animate__animated animate__bounce">
                 <div className="col s12 m12">
@@ -113,7 +112,6 @@ const GameAudiocall = () => {
                 </div>
             </div>
         </Flip>
-        </>
     )
 }
 
