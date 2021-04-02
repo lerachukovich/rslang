@@ -15,6 +15,7 @@ import bg2 from '../../assets/savanna-bg/savannabg-2.jpg';
 import bg3 from '../../assets/savanna-bg/savannabg-3.jpg';
 import bg4 from '../../assets/savanna-bg/savannabg-4.jpg';
 import './savanna.scss';
+import GameLevel from './Savanna.level';
 
 const SavannaPlay = () => {
   const GAME_CONFIG = {
@@ -27,7 +28,8 @@ const SavannaPlay = () => {
     maxGroup: 5,
     maxWordAmount: 19
   };
-
+  const [isGameBegin, setIsGameBegin] = useState(false);
+  const [level, setLevel] = useState('');
   let [lives, setLives] = useState(GAME_CONFIG.lives);
   const hearts = [];
   const backgrounds = [bg1, bg2, bg3, bg4];
@@ -55,7 +57,7 @@ const SavannaPlay = () => {
   const getWords = useCallback(
     async () => {
       try {
-        const data = await request(`/words/?page=${MathHelper.getRandomNumber(0, WORDS_LIMIT.maxPages)}&group=${MathHelper.getRandomNumber(0, WORDS_LIMIT.maxGroup)}`, 'GET', null);
+        const data = await request(`/words/?page=${MathHelper.getRandomNumber(0, WORDS_LIMIT.maxPages)}&group=${level}`, 'GET', null);
         setWordCollection(MathHelper.shuffleArray(data));
       } catch (e) {
       }
@@ -85,6 +87,7 @@ const SavannaPlay = () => {
     setCurrentStep(currentStep += 1);
     if (currentStep === GAME_CONFIG.attempts || lives < 1) {
       setEnd(true);
+      setIsGameBegin(false);
       window.removeEventListener('keydown', keyHandler);
     }
     setCurrentFourWord(generateFourWord(currentStep));
@@ -142,9 +145,9 @@ const SavannaPlay = () => {
     setChoiceFromKey('');
   };
 
-  useEffect(() => {
-    getWords();
-  }, []);
+  // useEffect(() => {
+  //   getWords();
+  // }, []);
 
   useEffect(() => {
     if (!wordCollection) {
@@ -191,34 +194,60 @@ const SavannaPlay = () => {
   };
 
   const soundHandler = (url) => {
-    const audio = new Audio(`/${url}`)
-    audio.play()
+    const audio = new Audio(`/${url}`);
+    audio.play();
   };
 
   const soundControlHandler = () => {
     setIsSound(!isSound);
     if (!isSound) {
-      setSoundButtonClass('savanna__sound-control btn red lighten-2')
+      setSoundButtonClass('savanna__sound-control btn red lighten-2');
     } else {
-      setSoundButtonClass('savanna__sound-control btn')
+      setSoundButtonClass('savanna__sound-control btn');
     }
-  }
+  };
+
+  const getLevel = (e) => {
+    setLevel(e.target.getAttribute('datalevel'));
+  };
+
+  useEffect(() => {
+    if (!level) {
+      return
+    }
+    getWords(level);
+    setIsGameBegin(true);
+  }, [level]);
 
   if (isEnd) {
     return (
-      <div className={'savanna-wrapper'} style={{ backgroundPosition: `0 ${backgroundPosition}%`,
-                                                  backgroundImage: `url(${currentBackground})`}}>
-        <FinalScreen value={{answers, soundHandler}}/>
+      <div className={'savanna-wrapper'} style={{
+        backgroundPosition: `0 ${backgroundPosition}%`,
+        backgroundImage: `url(${currentBackground})`
+      }}>
+        <FinalScreen value={{ answers, soundHandler }}/>
+      </div>
+    );
+  } else if (!isGameBegin) {
+    return (
+      <div className={'savanna-wrapper'} style={{
+        backgroundPosition: `0 ${backgroundPosition}%`,
+        backgroundImage: `url(${currentBackground})`
+      }}>
+        <GameLevel value={{ getLevel }}/>
       </div>
     );
   } else {
     return (
-      <div className={'savanna-wrapper'} style={{ backgroundPosition: `0 ${backgroundPosition}%`,
-                                                  backgroundImage: `url(${currentBackground})`}}>
+      <div className={'savanna-wrapper'} style={{
+        backgroundPosition: `0 ${backgroundPosition}%`,
+        backgroundImage: `url(${currentBackground})`
+      }}>
         <div className="savanna__hearts-container">
           {hearts}
         </div>
-        <button className={soundBtnClass} onClick={soundControlHandler}><i className={"material-icons"}>music_note</i></button>
+        <button className={soundBtnClass} onClick={soundControlHandler}><i className={'material-icons'}>music_note</i>
+        </button>
 
         {currentWord &&
         <Word value={{ healthHandler, refreshFieldHandler, wordCollection, currentWord, currentStep }}/>}
