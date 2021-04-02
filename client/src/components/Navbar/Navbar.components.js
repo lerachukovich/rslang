@@ -1,9 +1,11 @@
 import { NavLink } from 'react-router-dom';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import M from 'materialize-css/dist/js/materialize.min';
+import {AuthContext} from '../../context/AuthContext';
 import './Navbar.component.scss'
 
 const Navbar = () => {
+  const auth = useContext(AuthContext);
   useEffect(() => {
     let elems = document.querySelectorAll('.sidenav');
     M.Sidenav.init(elems, {
@@ -85,8 +87,31 @@ const Navbar = () => {
         {/*  </NavLink>*/}
         {/*</li>*/}
       </ul>
-      <button data-target="slide-out" className="sidenav-trigger btn"><i
-        className="material-icons">menu</i></button>
+      <div className="header-block">
+        <div className="auth-block">        
+          {auth.isAuthenticated && auth.photo && (
+            <div>
+              <span>{auth.name}</span>
+              <img className="responsive-img circle" src={auth.photo} alt="avatar" />
+            </div>
+          )}
+          <span>
+            {auth.isAuthenticated ? (
+              <NavLink
+                className="waves-effect nav-log"
+                onClick={auth.logout}
+                to='/auth/login'>Выход</NavLink>
+            ) : (
+              <NavLink
+                className="waves-effect nav-log"
+                to='/auth/login'>Войти</NavLink>
+            )}
+          </span>
+        </div>
+        <button data-target="slide-out" className="sidenav-trigger btn">
+          <i className="material-icons">menu</i>
+        </button>
+      </div>
     </div>
   );
 };

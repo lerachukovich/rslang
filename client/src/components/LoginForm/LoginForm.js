@@ -35,8 +35,8 @@ const LoginForm = () => {
             const data = await request('/signin', 'POST', {...form});
             console.log(data);
             // auth.login(data.token, data.userId, data.image, data.name);
-            // history.push('/');
             auth.login(data.token, data.userId, data.photo, data.name)
+            history.push('/');
         } catch (e) {     
         }
     }
