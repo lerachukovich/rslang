@@ -1,0 +1,25 @@
+.register-page-wrapper {
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.register-form {
+    width: 40%;
+    width: 45%;
+    text-align: center;
+    box-shadow: rgba(16, 112, 177, 0.2)  5px 20px 50px;
+    margin-bottom: 50px;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.register-prime {
+    background: rgba(228, 222, 222, 0.5) !important;
+}
+
+.btn-white {
+    color: white !important;
+}
