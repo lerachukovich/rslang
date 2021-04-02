@@ -33,18 +33,12 @@ const Navbar = () => {
         </li>
         <li>
           <NavLink
-              onClick={closeHandler}
-              className="waves-effect"
-              to='/auth/login'>Войти</NavLink>
+            onClick={closeHandler}
+            className="waves-effect"
+            to="/textbook">
+            Учебник
+          </NavLink>
         </li>
-        {/*<li>*/}
-        {/*  <NavLink*/}
-        {/*    onClick={closeHandler}*/}
-        {/*    className="waves-effect"*/}
-        {/*    to="/learning">*/}
-        {/*    Изучение*/}
-        {/*  </NavLink>*/}
-        {/*</li>*/}
         {/*<li>*/}
         {/*  <NavLink*/}
         {/*    onClick={closeHandler}*/}
@@ -75,6 +69,12 @@ const Navbar = () => {
             to="/credits">
             Разработчики
           </NavLink>
+        </li>
+        <li>
+          <NavLink
+            onClick={closeHandler}
+            className="waves-effect"
+            to='/auth/login'>Войти</NavLink>
         </li>
         {/*<li>*/}
         {/*  <NavLink*/}
