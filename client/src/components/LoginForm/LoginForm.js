@@ -3,6 +3,7 @@ import './LoginForm.scss';
 import {Link, useHistory} from 'react-router-dom';
 import useHtt from '../../hooks/http.hook';
 import {AuthContext} from '../../context/AuthContext';
+import useMessage from '../../hooks/message.hook';
 import RubberBand from 'react-reveal/RubberBand';
 import Pulse from 'react-reveal/Pulse';
 import Fade from 'react-reveal/Fade';
@@ -10,6 +11,7 @@ import Fade from 'react-reveal/Fade';
 const LoginForm = () => {
     const history = useHistory();
     const auth = useContext(AuthContext);
+    const message = useMessage();
     const {loading, request, error, clearError} = useHtt();
     const [isShowPulse, setIsShowPulse] = useState(false);
 
@@ -17,6 +19,11 @@ const LoginForm = () => {
         email: '',
         password: ''
     })
+    
+    useEffect(() => {
+        message(error);
+        clearError();
+      }, [error, message, clearError]);
 
     const changeHandler = (e) => {
         setForm({...form, [e.target.name]: e.target.value})
@@ -30,8 +37,7 @@ const LoginForm = () => {
             // auth.login(data.token, data.userId, data.image, data.name);
             // history.push('/');
             auth.login(data.token, data.userId, data.photo, data.name)
-        } catch (e) {      
-            console.log(e);      
+        } catch (e) {     
         }
     }
 
