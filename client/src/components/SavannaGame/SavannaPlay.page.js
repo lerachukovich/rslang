@@ -6,7 +6,7 @@ import Word from './Savanna.word.component';
 import WordControl from './Savanna.word-control.component';
 import Heart from './Savanna.heart.component';
 import SuccessCristal from './Savanna.succes-cristall.component';
-import FinalScreen from './Savanna.final-screen';
+import FinalScreen from './Savanna.final-screen.component';
 import useSound from 'use-sound';
 import error from '../../assets/audio/error.mp3';
 import correct from '../../assets/audio/correct.mp3';
@@ -15,7 +15,7 @@ import bg2 from '../../assets/savanna-bg/savannabg-2.jpg';
 import bg3 from '../../assets/savanna-bg/savannabg-3.jpg';
 import bg4 from '../../assets/savanna-bg/savannabg-4.jpg';
 import './savanna.scss';
-import GameLevel from './Savanna.level';
+import GameLevel from './Savanna.level.component';
 
 const SavannaPlay = () => {
   const GAME_CONFIG = {

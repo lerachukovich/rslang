@@ -15,6 +15,7 @@ import GameAudiocall from './components/AudiocallGameComponents/GameAudiocall';
 import Statistic from './components/AudiocallGameComponents/Statistic';
 import SavannaPromo from './pages/SavannaPromo.page';
 import SavannaPlay from './components/SavannaGame/SavannaPlay.page';
+import TextBook from './pages/StartLearn.page';
 
 
 const useRoutes = (isAuthenticated) => {
@@ -24,8 +25,8 @@ const useRoutes = (isAuthenticated) => {
         <Route path="/promo" exact>
           <PromoPage/>
         </Route>
-        <Route path="/learning" exact>
-          <StartLearnPage/>
+        <Route path="/textbook" exact>
+          <TextBook/>
         </Route>
         <Route path="/vocabulary" exact>
           <VocabularyPage/>
