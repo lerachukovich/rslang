@@ -10,8 +10,7 @@ import Footer from "./components/Footer/Footer.component";
 
 function App() {
   const {login, logout, token, userId, name, photo} = useAuth();
-  // const isAuthenticated = !!token;
-  const isAuthenticated = true;
+  const isAuthenticated = !!token;
 
   const routes = useRoutes(true);
   return (
@@ -19,7 +18,7 @@ function App() {
       login, logout, token, userId, name, photo, isAuthenticated
     }}>
       <Router>
-        {isAuthenticated && <Navbar/>}
+        <Navbar/>
         <div className={'main-wrapper'}>
           {routes}
         </div>
