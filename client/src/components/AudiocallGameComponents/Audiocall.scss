@@ -1,12 +1,46 @@
-.card {
-    &-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    &-words {
-        width: 80%;
-        display: flex;
-        justify-content: space-around;
-    }
+.audiocall-wrapper {
+    height: 60%;
+    width: 80%;
+    margin: auto;
+    .card-main-audiocall {
+        .card {
+            &-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            &-words {
+                width: 80%;
+                display: flex;
+                justify-content: space-around;
+            }
+            &-audiocall {
+                display: flex;
+                justify-content: center;
+                width: 80%;
+                height: 40%;
+                &-content {
+                    div {
+                        display: flex;
+                        justify-content: flex-start;
+                        align-items: flex-start;
+                        div {
+                            display: flex;
+                            flex-direction: column;
+                        }   
+                        span {
+                            padding: 0.2rem;
+                        }
+                        i:hover {
+                            cursor: pointer;
+                            color: yellow;
+                        }
+                    }
+                }
+            }
+            &-image {
+                max-width: 100%;
+            }
+        }
+    }    
 }

@@ -1,8 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import './RegisterForm.scss';
 import {Link, useHistory} from 'react-router-dom';
 import useHttp from '../../hooks/http.hook';
 import {AuthContext} from '../../context/AuthContext';
+import useMessage from '../../hooks/message.hook';
 import RubberBand from 'react-reveal/RubberBand';
 import Pulse from 'react-reveal/Pulse';
 import Fade from 'react-reveal/Fade';
@@ -10,6 +11,7 @@ import Fade from 'react-reveal/Fade';
 const RegisterForm = () => {
     const history = useHistory();
     const auth = useContext(AuthContext);
+    const message = useMessage();
     const {loading, request, error, clearError} = useHttp();
     const [image, setImage] = useState('');
     const [isShowPulse, setIsShowPulse] = useState(false);
@@ -20,6 +22,11 @@ const RegisterForm = () => {
         password: '',
         photo: ''
     });
+
+    useEffect(() => {
+        message(error);
+        clearError();
+      }, [error, message, clearError]);
 
     const changeHandler = (e) => {
         setForm({...form, [e.target.name]: e.target.value})
@@ -50,7 +57,6 @@ const RegisterForm = () => {
             })
             console.log('data', data)
         } catch (e) {
-            console.log(e);
         }
     }
 
