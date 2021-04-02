@@ -4,6 +4,7 @@ import useHttp from '../../hooks/http.hook';
 import GameElement from './GameElement';
 import FinalScreen from './FinalScreen';
 import Flip from 'react-reveal/Flip';
+import Roll from 'react-reveal/Roll';
 
 const GameAudiocall = () => {
     const [level, setLevel] = useState(0);
@@ -85,43 +86,45 @@ const GameAudiocall = () => {
         )
     } else {
         return (
-            <Flip left when={show}>
-                <div className="row audiocall-wrapper">
-                    <div className="col s12 m12 card-main-audiocall">
-                        <div className="card blue-grey darken-1">
-                            <div className="card-content white-text">
-                                {
-                                    currentSample.length > 0 && (
-                                    <GameElement 
-                                        sample={currentSample} 
-                                        level={level}
-                                        handleClick={handleClick}
-                                        readyNext={readyNext}/>
-                                        )
-                                }
-                            </div>
-                            <div className="card-action">
-                                <NavLink to='/games/audiocall'>
-                                    <button className="btn waves-effect waves-light red lighten-2" type="submit" name="action">Выход
-                                        <i className="material-icons left">arrow_back</i>                                
-                                    </button>
-                                </NavLink>
-                                {
-                                    readyNext ? (
-                                        <button className="btn" onClick={goNext}>
-                                            <i className="material-icons">forward</i>
+            <Roll right>
+                <Flip left when={show}>
+                    <div className="row audiocall-wrapper">
+                        <div className="col s12 m12 card-main-audiocall">
+                            <div className="card blue-grey darken-1">
+                                <div className="card-content white-text">
+                                    {
+                                        currentSample.length > 0 && (
+                                        <GameElement 
+                                            sample={currentSample} 
+                                            level={level}
+                                            handleClick={handleClick}
+                                            readyNext={readyNext}/>
+                                            )
+                                    }
+                                </div>
+                                <div className="card-action">
+                                    <NavLink to='/games/audiocall'>
+                                        <button className="btn waves-effect waves-light red lighten-2" type="submit" name="action">Выход
+                                            <i className="material-icons left">arrow_back</i>                                
                                         </button>
-                                    ) : (
-                                        <button className="btn" onClick={() => {
-                                            handleClick(false);           
-                                        }}>Я не знаю</button>
-                                    )
-                                }
+                                    </NavLink>
+                                    {
+                                        readyNext ? (
+                                            <button className="btn" onClick={goNext}>
+                                                <i className="material-icons">forward</i>
+                                            </button>
+                                        ) : (
+                                            <button className="btn" onClick={() => {
+                                                handleClick(false);           
+                                            }}>Я не знаю</button>
+                                        )
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </Flip>
+                </Flip>
+            </Roll>
         )
     }
 }
