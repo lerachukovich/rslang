@@ -1,3 +1,34 @@
 .text-book__wrapper {
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 181px);
+  justify-content: flex-start;
+  align-items: center;
+  background-size: 100% 100%;
+  background-position: center;
+  transition: 0.5s ease-in-out;
+  background-position: 0 50%;
+  background-image: url("../assets/savanna-bg/savannabg-2.jpg");
 }
+
+.text-book__title {
+  text-align: center;
+  color: #fcfcfc;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
+  margin: 0;
+}
+
+.text-book__words-list {
+  max-height: 70vh;
+  overflow-y: scroll;
+}
+
+.text-book__pagination-container {
+  position: fixed;
+  bottom: 120px;
+}
+
+
+
+
