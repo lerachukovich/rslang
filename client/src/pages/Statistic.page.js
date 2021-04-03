@@ -1,11 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react';
+import StatisticNotAuth from '../components/Statistic/Statistic.notAuth';
+import {AuthContext} from '../context/AuthContext';
 
 const StatisticPage = () => {
-  return(
-    <div>
-      <h1>This is Statistic page</h1>
-    </div>
-  )
+  const auth = useContext(AuthContext);
+
+  if (auth.isAuthenticated) {
+    return (
+      <div>Statistic for auth</div>
+    )
+  } else {
+    return (
+      <StatisticNotAuth />
+    )
+  }
 }
 
 export default StatisticPage

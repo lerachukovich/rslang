@@ -40,9 +40,6 @@ const useRoutes = (isAuthenticated) => {
         <Route path="/games/audiocall/playing" exact>
           <GameAudiocall />
         </Route>
-        <Route path="/games/audiocall/statistic" exact>
-          <Statistic />
-        </Route>
         <Route path="/statistic" exact>
           <StatisticPage/>
         </Route>

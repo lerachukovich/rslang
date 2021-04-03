@@ -4,6 +4,7 @@ import useHttp from '../../hooks/http.hook';
 import GameElement from './GameElement';
 import FinalScreen from './FinalScreen';
 import MathHelper from '../../helper/Math.helper';
+import Storage from '../../helper/Storage';
 import Flip from 'react-reveal/Flip';
 import Roll from 'react-reveal/Roll';
 
@@ -29,7 +30,6 @@ const GameAudiocall = () => {
     const [readyNext, setReadyNext] = useState(false);
     const [show, setShow] = useState(true);
     const [isEnd, setIsEnd] = useState(false);
-    console.log(state)
     const [getLevel, setGetLevel] = useState(state || 0);
 
     useEffect(() => {
@@ -74,9 +74,22 @@ const GameAudiocall = () => {
         [request]
     )
 
+    const unique = (arr, item) => {
+        for (let i of arr) {
+            if (i.word === item.word) return arr
+        }
+        return [...arr, item]
+    }
+
     const handleClick = (isCorrect) => {
         if (readyNext) return;
-        isCorrect ? setAnswers({...answers, correct: [...answers.correct, currentSample[0]]}) : setAnswers({...answers, mistake: [...answers.mistake, currentSample[0]]});
+        if (isCorrect) {
+            setAnswers({...answers, correct: [...answers.correct, currentSample[0]]});
+
+            Storage.setStorage('statistic', unique(Storage.getStorage('statistic'), currentSample[0]));
+        } else {
+            setAnswers({...answers, mistake: [...answers.mistake, currentSample[0]]});
+        }
 
         setReadyNext(true);
     }
