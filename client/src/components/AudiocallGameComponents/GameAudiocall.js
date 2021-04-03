@@ -3,10 +3,20 @@ import {NavLink, useHistory} from 'react-router-dom';
 import useHttp from '../../hooks/http.hook';
 import GameElement from './GameElement';
 import FinalScreen from './FinalScreen';
+import MathHelper from '../../helper/Math.helper';
 import Flip from 'react-reveal/Flip';
 import Roll from 'react-reveal/Roll';
 
+
+const WORDS_LIMIT = {
+    maxPages: 29,
+    maxGroup: 5,
+    maxWordAmount: 19
+  };
+
 const GameAudiocall = () => {
+    const props = useHistory();
+    const {state} = props.location;
     const [level, setLevel] = useState(0);
     const [data, setData] = useState([]);
     const {request} = useHttp();
@@ -19,6 +29,8 @@ const GameAudiocall = () => {
     const [readyNext, setReadyNext] = useState(false);
     const [show, setShow] = useState(true);
     const [isEnd, setIsEnd] = useState(false);
+    console.log(state)
+    const [getLevel, setGetLevel] = useState(state || 0);
 
     useEffect(() => {
         getWords();
@@ -50,7 +62,7 @@ const GameAudiocall = () => {
     const getWords = useCallback(
         async () => {
             try {
-                const words = await request('/words', 'GET', null, {
+                const words = await request(`/words/?page=${MathHelper.getRandomNumber(0, WORDS_LIMIT.maxPages)}&group=${getLevel}`, 'GET', null, {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 })
