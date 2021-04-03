@@ -10,6 +10,7 @@ const GameElement = ({sample, level, handleClick, readyNext}) => {
     const [isPlaySoundSecond, setIsPlaySoundSecond] = useState(false)
 
     useEffect(() => {
+        console.log(answer.wordTranslate)
         playSound(answer.audio);
         setSampleWords(shuffle(sample));
     }, [sample])
