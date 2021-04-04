@@ -180,7 +180,7 @@ const TextBook = () => {
         </div>
 
         <div className="text-book_game-container">
-          <Link className={'text-book__game__item'} to={'/games/audiocall/playing'}>
+          <Link className={'text-book__game__item'} to={{pathname: '/games/audiocall/playing', wordsCollection: currentCollection}}>
             Аудио
           </Link>
           <Link className={'text-book__game__item'} to={'/games/sprint/playing'}>

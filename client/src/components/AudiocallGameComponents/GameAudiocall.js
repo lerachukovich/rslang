@@ -17,9 +17,9 @@ const WORDS_LIMIT = {
 
 const GameAudiocall = () => {
     const props = useHistory();
-    const {state} = props.location;
+    const {state, wordsCollection} = props.location;
     const [level, setLevel] = useState(0);
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(wordsCollection || []);
     const {request} = useHttp();
     const [currentSample, setCurrentSample] = useState([]);
     const history = useHistory();
@@ -33,7 +33,7 @@ const GameAudiocall = () => {
     const [getLevel, setGetLevel] = useState(state || 0);
 
     useEffect(() => {
-        getWords();
+        if (data.length === 0) getWords();
     }, [])
 
     useEffect(() => {
@@ -74,19 +74,11 @@ const GameAudiocall = () => {
         [request]
     )
 
-    // const unique = (arr, item) => {
-    //     for (let i of arr) {
-    //         if (i.word === item.word) return arr
-    //     }
-    //     return [...arr, item]
-    // }
-
     const handleClick = (isCorrect) => {
         if (readyNext) return;
         if (isCorrect) {
             setAnswers({...answers, correct: [...answers.correct, currentSample[0]]});
 
-            // Storage.setStorage('statistic', unique(Storage.getStorage('statistic'), currentSample[0]));
             Storage.setSettingStorage(currentSample[0]);
         } else {
             setAnswers({...answers, mistake: [...answers.mistake, currentSample[0]]});
