@@ -1,4 +1,28 @@
+@mixin container() {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+$mobile-widths: "max-width: 767px";
+$tablet-widths: "max-width: 1279px";
+
+.text-book_spinner-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 55vh;
+}
+
+.text-book__error {
+  color: rgba(255, 255, 255, 0.6);
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
+  font-size: 1.5rem;
+}
+
 .text-book__wrapper {
+  @include container();
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -14,21 +38,242 @@
 
 .text-book__title {
   text-align: center;
+  font-size: 2.8rem;
   color: #fcfcfc;
   text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
   margin: 0;
+  margin-bottom: 1rem;
+}
+
+.text-book__button-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 1rem;
 }
 
 .text-book__words-list {
-  max-height: 70vh;
+  max-height: 55vh;
+  width: 70%;
   overflow-y: scroll;
+  background-color: rgba(255, 255, 255, 0.4) !important;
+  padding: 10px;
+  border-radius: 10px;
+  backdrop-filter: blur(4px);
+
+  &::-webkit-scrollbar {
+    width: 20px;
+  }
+
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 20px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #0da4f6;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #61dafb;
+  }
+}
+
+.text-book__bottom-controls {
+  position: fixed;
+  bottom: 120px;
+  width: 70%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .text-book__pagination-container {
-  position: fixed;
-  bottom: 120px;
+  display: flex;
+  width: 200px;
+  justify-content: space-between;
+}
+
+.text-book_game-container {
+  display: flex;
+  width: 35%;
+  justify-content: space-between;
+}
+
+.text-book__game__item {
+  display: flex;
+  font-size: 0.8rem;
+  width: 70px;
+  height: 70px;
+  background-color: #cccccc;
+  color: #fcfcfc;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  padding: 1rem;
+  border: 2px solid #fcfcfc;
+  transition: 0.3s ease-out;
+}
+
+.text-book__game__item:nth-child(1) {
+  background-color: #0da4f6;
+
+  &:hover {
+    background-color: #57b8ec;
+  }
+}
+
+.text-book__game__item:nth-child(2) {
+  background-color: #0f790f;
+
+  &:hover {
+    background-color: #6b9b6b;
+  }
+}
+
+.text-book__game__item:nth-child(3) {
+  background-color: #ee6e73;
+
+  &:hover {
+    background-color: #ee9699;
+  }
+}
+
+.text-book__game__item:nth-child(4) {
+  background-color: #641088;
+
+  &:hover {
+    background-color: #6f3786;
+  }
 }
 
 
+.text-book__word-container {
+  display: flex;
+  padding: 10px;
+  background-color: #fcfcfc;
+  margin-bottom: 1%;
+  border-radius: 10px;
+  align-items: start;
+  gap: 1rem;
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+}
 
+.text__book__words-list__word-img {
+  width: 20%;
+  height: 100px;
+  overflow: hidden;
 
+  & img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.text-book__words-list__word-translate {
+  width: 15%;
+}
+
+.text-book__words-list__word-meaning,
+.text-book__words-list__word-example {
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100px !important;
+  justify-content: space-around;
+
+  & span {
+    display: block;
+    padding-bottom: 5px;
+    font-size: 0.9rem;
+  }
+}
+
+.text-book__words-list .btn {
+  align-self: center;
+  margin-right: 13px;
+  padding: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: #0da4f6;
+}
+
+@media ($tablet-widths) {
+  .text-book__wrapper {
+    height: 100vh;
+  }
+
+  .text-book__title {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+
+  .text-book__words-list {
+    width: 90%;
+    max-height: 60vh;
+    margin-bottom: 1rem;
+  }
+
+  .text-book__word-container {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .text__book__words-list__word-img {
+    width: 80%;
+    height: 80%;
+  }
+
+  .text-book__words-list__word-translate {
+    width: 100%;
+    border-bottom: 1px solid #cccccc;
+  }
+
+  .text-book__words-list__word-translate {
+    text-align: center;
+  }
+
+  .text-book__words-list__word-meaning,
+  .text-book__words-list__word-example {
+    width: 100%;
+    border-bottom: 1px solid #cccccc;
+    min-height: 50px !important;
+    text-align: center;
+
+    & span {
+      font-size: 0.7rem;
+    }
+  }
+
+  .text-book__bottom-controls {
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    bottom: unset;
+  }
+
+  .text-book__pagination-container {
+    margin-bottom: 2rem;
+  }
+
+  .text-book_game-container {
+    display: flex;
+    width: 90%;
+
+    & .text-book__game__item {
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  .text-book_spinner-wrapper {
+    height: 60vh;
+  }
+}
