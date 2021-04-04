@@ -15,7 +15,11 @@ import GameAudiocall from './components/AudiocallGameComponents/GameAudiocall';
 import Statistic from './components/AudiocallGameComponents/Statistic';
 import SavannaPromo from './pages/SavannaPromo.page';
 import SavannaPlay from './components/SavannaGame/SavannaPlay.page';
+//import TextBook from './pages/StartLearn.page';
+import OwnGamePromo from './components/OwnGameComponents/OwnGame.promo.component';
+import OwnGameMain from './components/OwnGameComponents/OwnGame.main.component';
 import TextBook from './pages/TextBook/TextBook';
+
 
 
 const useRoutes = (isAuthenticated) => {
@@ -63,6 +67,12 @@ const useRoutes = (isAuthenticated) => {
         </Route>
         <Route path="/games/savanna" exact>
           <SavannaPromo/>
+        </Route>
+        <Route path='/games/owngame/play' exact>
+          <OwnGameMain/>
+        </Route>
+        <Route path="/games/owngame" exact>
+          <OwnGamePromo/>
         </Route>
           <Redirect to="/promo"/>
       </Switch>
