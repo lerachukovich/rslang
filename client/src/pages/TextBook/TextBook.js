@@ -85,20 +85,24 @@ const TextBook = () => {
     }
   };
 
-
-
+  if (error) {
     return (
-      <div className={"text-book__wrapper"}>
+      <div className={'text-book__wrapper'}>
+        <div className="text-book_spinner-wrapper">
+          <span className={"text-book__error"}>😬 Ой, кажется что-то пошло не так, попробуйте обновить позже...</span>
+        </div>
+      </div>
+    )
+  }
 
-
-        <h1 className={"text-book__title"}>Учебник 📕</h1>
-
-
-        <div className="text-book__button-container">
+  return (
+    <div className={'text-book__wrapper'}>
+      <h1 className={'text-book__title'}>Учебник 📕</h1>
+      <div className="text-book__button-container">
         {new Array(5).fill().map((it, ind) => (
             <button
               key={ind}
-              className={'level-btn waves-light btn-large'}
+              className={'level-btn waves-light btn'}
               onClick={chooseGroupHandler}
               datalevel={ind}>
               Сложность: {ind + 1}
@@ -107,58 +111,55 @@ const TextBook = () => {
         )}
       </div>
 
+      {loading &&
+      <div className={"text-book_spinner-wrapper"}>
+        <Spinner className={"text-book__spinner"}/>
+      </div>
+      }
+      {!loading &&
+      <div className="text-book__words-list">
+        <ul>
+          {currentCollection && currentCollection.map((it, ind) => (
+              <li key={ind} className={'text-book__word-container'}>
+                <div className="text__book__words-list__word-img">
+                  <img src={`../` + it.image} alt={it.wordTranslate}/>
+                </div>
 
+                <div className="text-book__words-list__word-translate">
+                  {ind + 1} : {it.word} - {it.wordTranslate} - {it.transcription}
+                </div>
 
-        {loading && <Spinner />}
-        {!loading && <div className="text-book__words-list">
-          {/*{loading && <Spinner/>}*/}
-          <ul>
-            {currentCollection && currentCollection.map((it, ind) => (
-                <li key={ind}>
-                  <div className="text__book__words-list__word-img">
-                    <img src={`../` + it.image} alt={it.wordTranslate}/>
-                  </div>
-                  <div className="text-book__words-list__word-translate">
-                    {!isSoundPlay && <button
-                      className={'btn'}
-                      onClick={() => soundHandler([new Audio(it.audio),
-                        new Audio(it.audioExample),
-                        new Audio(it.audioMeaning)])}>
-                      Sound
-                    </button>}
-                    {isSoundPlay && <button
-                      className={'btn disabled'}
-                      disabled>
-                      Sound
-                    </button>}
-                    {ind + 1} : {it.word} - {it.wordTranslate} - {it.transcription}
-                  </div>
-                  <div>{`${it.textMeaning}`} - {it.textMeaningTranslate}</div>
-                  <div>{it.textExample} - {it.textExampleTranslate}</div>
-                </li>
-              )
-            )}
+                <div className={'text-book__words-list__word-meaning'}>
+                  <span dangerouslySetInnerHTML={{ __html: it.textMeaningTranslate }}/>
 
+                  <span dangerouslySetInnerHTML={{ __html: it.textMeaning }}/>
+                </div>
 
-          </ul>
-          <div className="text-book_game-container">
-            <Link to={'/games/audiocall/playing'}>
-              Аудио-вызов
-            </Link>
-            <Link to={'/games/sprint/playing'}>
-              Спринт
-            </Link>
+                <div className={'text-book__words-list__word-example'}>
+                  <span dangerouslySetInnerHTML={{ __html: it.textExample }}/>
 
-            <Link to={'/games/savanna/play'}>
-              Саванна
-            </Link>
-            <Link to={'/'}>
-              Какая-то загадочная игра
-            </Link>
-          </div>
-        </div>}
+                  <span dangerouslySetInnerHTML={{ __html: it.textExampleTranslate }}/>
+                </div>
+                {!isSoundPlay && <button
+                  className={'btn'}
+                  onClick={() => soundHandler([new Audio(it.audio),
+                    new Audio(it.audioExample),
+                    new Audio(it.audioMeaning)])}
+                  title={'Listen'}>
+                  <i className={'material-icons'}>surround_sound</i>
+                </button>}
+                {isSoundPlay && <button
+                  className={'btn disabled'}
+                  disabled>
+                  <i className={'material-icons'}>surround_sound</i>
+                </button>}
+              </li>
+            )
+          )}
+        </ul>
+      </div>}
 
-
+      <div className={'text-book__bottom-controls'}>
         <div className={'text-book__pagination-container'}>
           {!loading && <button className="text-book__pagination-btn btn"
                                onClick={prevPageHandler}>
@@ -177,8 +178,25 @@ const TextBook = () => {
             Вперед
           </button>}
         </div>
+
+        <div className="text-book_game-container">
+          <Link className={'text-book__game__item'} to={'/games/audiocall/playing'}>
+            Аудио
+          </Link>
+          <Link className={'text-book__game__item'} to={'/games/sprint/playing'}>
+            Спринт
+          </Link>
+
+          <Link className={'text-book__game__item'} to={'/games/savanna/play'}>
+            Саванна
+          </Link>
+          <Link className={'text-book__game__item'} to={'/'}>
+            ??????
+          </Link>
+        </div>
       </div>
-    );
+    </div>
+  );
 };
 
 export default TextBook;
