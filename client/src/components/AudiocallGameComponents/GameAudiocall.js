@@ -74,19 +74,20 @@ const GameAudiocall = () => {
         [request]
     )
 
-    const unique = (arr, item) => {
-        for (let i of arr) {
-            if (i.word === item.word) return arr
-        }
-        return [...arr, item]
-    }
+    // const unique = (arr, item) => {
+    //     for (let i of arr) {
+    //         if (i.word === item.word) return arr
+    //     }
+    //     return [...arr, item]
+    // }
 
     const handleClick = (isCorrect) => {
         if (readyNext) return;
         if (isCorrect) {
             setAnswers({...answers, correct: [...answers.correct, currentSample[0]]});
 
-            Storage.setStorage('statistic', unique(Storage.getStorage('statistic'), currentSample[0]));
+            // Storage.setStorage('statistic', unique(Storage.getStorage('statistic'), currentSample[0]));
+            Storage.setSettingStorage(currentSample[0]);
         } else {
             setAnswers({...answers, mistake: [...answers.mistake, currentSample[0]]});
         }
