@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import StartLearnPage from './pages/StartLearn.page';
+import StartLearnPage from './pages/TextBook/TextBook';
 import VocabularyPage from './pages/Vacabulary.page';
 import GamesPage from './pages/Games.page';
 import StatisticPage from './pages/Statistic.page';
@@ -15,9 +15,11 @@ import GameAudiocall from './components/AudiocallGameComponents/GameAudiocall';
 import Statistic from './components/AudiocallGameComponents/Statistic';
 import SavannaPromo from './pages/SavannaPromo.page';
 import SavannaPlay from './components/SavannaGame/SavannaPlay.page';
-import TextBook from './pages/StartLearn.page';
+//import TextBook from './pages/StartLearn.page';
 import OwnGamePromo from './components/OwnGameComponents/OwnGame.promo.component';
 import OwnGameMain from './components/OwnGameComponents/OwnGame.main.component';
+import TextBook from './pages/TextBook/TextBook';
+
 
 
 const useRoutes = (isAuthenticated) => {
@@ -41,9 +43,6 @@ const useRoutes = (isAuthenticated) => {
         </Route>
         <Route path="/games/audiocall/playing" exact>
           <GameAudiocall />
-        </Route>
-        <Route path="/games/audiocall/statistic" exact>
-          <Statistic />
         </Route>
         <Route path="/statistic" exact>
           <StatisticPage/>

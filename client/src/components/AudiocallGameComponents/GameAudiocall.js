@@ -3,12 +3,23 @@ import {NavLink, useHistory} from 'react-router-dom';
 import useHttp from '../../hooks/http.hook';
 import GameElement from './GameElement';
 import FinalScreen from './FinalScreen';
+import MathHelper from '../../helper/Math.helper';
+import Storage from '../../helper/Storage';
 import Flip from 'react-reveal/Flip';
 import Roll from 'react-reveal/Roll';
 
+
+const WORDS_LIMIT = {
+    maxPages: 29,
+    maxGroup: 5,
+    maxWordAmount: 19
+  };
+
 const GameAudiocall = () => {
+    const props = useHistory();
+    const {state, wordsCollection} = props.location;
     const [level, setLevel] = useState(0);
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(wordsCollection || []);
     const {request} = useHttp();
     const [currentSample, setCurrentSample] = useState([]);
     const history = useHistory();
@@ -19,9 +30,10 @@ const GameAudiocall = () => {
     const [readyNext, setReadyNext] = useState(false);
     const [show, setShow] = useState(true);
     const [isEnd, setIsEnd] = useState(false);
+    const [getLevel, setGetLevel] = useState(state || 0);
 
     useEffect(() => {
-        getWords();
+        if (data.length === 0) getWords();
     }, [])
 
     useEffect(() => {
@@ -50,7 +62,7 @@ const GameAudiocall = () => {
     const getWords = useCallback(
         async () => {
             try {
-                const words = await request('/words', 'GET', null, {
+                const words = await request(`/words/?page=${MathHelper.getRandomNumber(0, WORDS_LIMIT.maxPages)}&group=${getLevel}`, 'GET', null, {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 })
@@ -64,7 +76,13 @@ const GameAudiocall = () => {
 
     const handleClick = (isCorrect) => {
         if (readyNext) return;
-        isCorrect ? setAnswers({...answers, correct: [...answers.correct, currentSample[0]]}) : setAnswers({...answers, mistake: [...answers.mistake, currentSample[0]]});
+        if (isCorrect) {
+            setAnswers({...answers, correct: [...answers.correct, currentSample[0]]});
+
+            Storage.setSettingStorage(currentSample[0]);
+        } else {
+            setAnswers({...answers, mistake: [...answers.mistake, currentSample[0]]});
+        }
 
         setReadyNext(true);
     }

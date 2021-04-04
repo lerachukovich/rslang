@@ -41,6 +41,10 @@
             &-image {
                 max-width: 100%;
             }
+            &-get_level {
+                display: flex;
+                flex-direction: column;
+            }
         }
     }    
 }

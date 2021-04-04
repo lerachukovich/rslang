@@ -1,0 +1,43 @@
+.sprint-container {
+  font-family: 'Nunito', sans-serif;
+  background: url("../.././assets/savanna-bg/savannabg-1.jpg");
+}
+
+.game-card {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.game-container {
+  position: relative;
+  border-radius: 20px;
+  width: 70%;
+  margin: 50px auto 0;
+  padding: 100px 0;
+  text-align: center;
+  //background: brown;
+  //box-shadow: rgba(16, 112, 177, 0.2)  5px 20px 50px;
+
+}
+
+.game-text {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.card-action {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.word {
+  color: #fff;
+  font-size: 2rem;
+}
+
+.timer {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  margin: 0;
+}
