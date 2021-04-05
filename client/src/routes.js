@@ -8,13 +8,13 @@ import CreditsPage from './pages/Crefdits.page';
 import SettingsPage from './pages/Settings.page';
 import PromoPage from './pages/Promo.page';
 import AuthPage from './pages/Auth.page';
-import SprintGame from "./components/SprintGameComponents/Sprint.component";
 import GameField from "./components/SprintGameComponents/GameField.component";
 import Audiocall from './components/AudiocallGameComponents/Audiocall';
 import GameAudiocall from './components/AudiocallGameComponents/GameAudiocall';
 import Statistic from './components/AudiocallGameComponents/Statistic';
 import SavannaPromo from './pages/SavannaPromo.page';
 import SavannaPlay from './components/SavannaGame/SavannaPlay.page';
+import SprintWelcome from "./components/SprintGameComponents/SprintWelcome.component";
 
 
 const useRoutes = (isAuthenticated) => {
@@ -46,7 +46,7 @@ const useRoutes = (isAuthenticated) => {
           <StatisticPage/>
         </Route>
           <Route path="/games/sprint" exact>
-              <SprintGame />
+              <SprintWelcome />
           </Route>
           <Route path="/games/sprint/playing" exact>
               <GameField />

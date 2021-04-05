@@ -1,6 +1,7 @@
 .sprint-container {
   font-family: 'Nunito', sans-serif;
-  background: url("../.././assets/savanna-bg/savannabg-1.jpg");
+  background: url("../.././assets/sprint-bg1.svg");
+  background-size: cover;
 }
 
 .game-card {
@@ -11,13 +12,12 @@
 .game-container {
   position: relative;
   border-radius: 20px;
-  width: 70%;
+  width: 50%;
   margin: 50px auto 0;
   padding: 100px 0;
   text-align: center;
-  //background: brown;
-  //box-shadow: rgba(16, 112, 177, 0.2)  5px 20px 50px;
-
+  background: #fff;
+  box-shadow: rgba(16, 112, 177, 0.2)  5px 20px 50px;
 }
 
 .game-text {
@@ -30,8 +30,14 @@
   justify-content: space-evenly;
 }
 
+.card-content-sprint {
+  padding-top: 100px;
+  display: flex;
+  justify-content: center;
+}
+
 .word {
-  color: #fff;
+  //color: #fff;
   font-size: 2rem;
 }
 
@@ -40,4 +46,51 @@
   top: 10px;
   right: 10px;
   margin: 0;
+  color: #fff;
+  background: black;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sprint {
+  width: 40%;
+  background-color: #ffffff;
+  padding: 20px;
+  margin: 70px auto;
+  border-radius: 10px;
+  box-shadow: rgba(16, 112, 177, 0.2)  5px 20px 50px;
+}
+
+.final-btn {
+  display: block;
+  margin: 0 auto;
+}
+
+
+.empty {
+  margin-top: 100px;
+}
+
+.pulse {
+  overflow: visible;
+  position: relative;
+}
+
+.pulse::before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: inherit;
+  border-radius: inherit;
+  transition: opacity .3s, transform .3s;
+  animation: pulse-animation 1s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+  z-index: -1;
 }
