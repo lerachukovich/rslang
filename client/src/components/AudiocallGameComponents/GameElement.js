@@ -8,6 +8,7 @@ const GameElement = ({sample, level, handleClick, readyNext}) => {
     const [sampleWords, setSampleWords] = useState([]);
     const [isPlaySound, setIsPlaySound] = useState(false)
     const [isPlaySoundSecond, setIsPlaySoundSecond] = useState(false)
+    const [tadaAnim, setTadaAnim] = useState(true);
 
     useEffect(() => {
         playSound(answer.audio);
@@ -93,8 +94,9 @@ const GameElement = ({sample, level, handleClick, readyNext}) => {
                 sampleWords.map((item, index) => {
                     if (item.wordTranslate === answer.wordTranslate) {
                         return (
-                            <Tada spy={handleClick}>
+                            <Tada spy={tadaAnim}>
                                 <button key={index} id={index + 1} className={`btn btn-large waves-effect ${readyNext && 'green darken-3'}`} onClick={() => {
+                                    setTadaAnim(!tadaAnim);
                                     handleClick(true);
                                 }}>
                                     {index + 1} {item.wordTranslate}
@@ -104,6 +106,7 @@ const GameElement = ({sample, level, handleClick, readyNext}) => {
                     } else return (
                         <button key={index} id={index + 1} className={`btn btn-large waves-effect ${item.isMistake && 'red'}`} onClick={() => {
                             item.isMistake = true;
+                            setTadaAnim(!tadaAnim);
                             handleClick(false)
                         }}>{index + 1} {item.wordTranslate}</button>
                         )
