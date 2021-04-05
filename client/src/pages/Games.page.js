@@ -29,7 +29,7 @@ const GamesPage = () => {
             name: 'Спринт',
             text: 'Игра "Спринт" помогает взбодриться и вспомнить любые слова из твоего словаря, независимо от стадии их изученности.',
             img_source: img3,
-            url: '/games/sprint/playing'
+            url: '/games/sprint'
         },
         {
             name: 'Своя игра',

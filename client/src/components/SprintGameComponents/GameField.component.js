@@ -1,7 +1,11 @@
-import React, {useCallback, useEffect, useLayoutEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import useHttp from "../../hooks/http.hook";
+import useSound from "use-sound";
 import {NavLink} from "react-router-dom";
-import './Sprint.scss'
+import './Sprint.scss';
+import error from '../../assets/audio/error.mp3';
+import correct from '../../assets/audio/correct.mp3';
+import GameResult from "./Result";
 
 const GameField = () => {
     const {request} = useHttp();
@@ -11,8 +15,16 @@ const GameField = () => {
     const [currentWord, setCurrentWord] = useState('');
     const [currentTranslate, setCurrentTranslate] = useState('');
     const [score, setScore] = useState(0);
-    const [endGame, setEndGame] = useState(false);
     const [gameTimer, setGameTimer] = useState(60);
+    const [endGame, setEndGame] = useState(false);
+
+    const [answers, setAnswers] = useState({
+        correct: [],
+        wrong: []
+    })
+
+    const [correctSound] = useSound(correct);
+    const [errorSound] = useSound(error);
 
 
     useEffect(() => {
@@ -21,21 +33,20 @@ const GameField = () => {
     }, [])
 
     useEffect(() => {
-        if(index === data.length - 1) setEndGame(true);
+        if (index === data.length - 1) setEndGame(true);
     }, [index]);
 
-    useEffect( () =>{
-           if (Array.isArray(data) && data.length){
-               let result = [[],[]];
-               data.map(el => {
-                   result[0].push(el.word);
-                   result[1].push(el.wordTranslate);
-               })
-               // console.log('result', result, "data", data);
-               setWords(result)
-           }
+    useEffect(() => {
+            if (Array.isArray(data) && data.length) {
+                let result = [[], []];
+                data.map(el => {
+                    result[0].push(el.word);
+                    result[1].push(el.wordTranslate);
+                })
+                setWords(result)
+            }
         }
-    ,[data])
+        , [data])
 
     const getWords = useCallback(
         async () => {
@@ -53,14 +64,14 @@ const GameField = () => {
     )
 
     const showWord = () => {
-        if(Date.now() % 2) {
+        if (Date.now() % 2) {
             setCurrentWord(words[0][index]);
             setCurrentTranslate(words[1][index]);
         } else {
             setCurrentWord(words[0][index])
-            setCurrentTranslate(words[1][index]);
+            setCurrentTranslate(words[1][index + 1]);
         }
-        console.log("foo",words)
+        console.log("foo", words)
     }
 
     const handleClick = (userAnswer) => {
@@ -69,10 +80,17 @@ const GameField = () => {
     }
 
     const isCorrect = (answer) => {
-        if (words[1][words[0].indexOf(currentWord)] === currentTranslate && answer){
-            setScore(prev => prev + 10);
+        if (words[1][words[0].indexOf(currentWord)] === currentTranslate && answer) {
+            setScore(score + 10);
+            correctSound();
+            setAnswers({...answers, correct: [...answers.correct, [currentWord, currentTranslate]]})
         } else if (words[1][words[0].indexOf(currentWord)] !== currentTranslate && !answer) {
-            setScore(prev => prev + 10);
+            setScore(score + 10);
+            correctSound();
+            setAnswers({...answers, correct: [...answers.correct, [currentWord, currentTranslate]]})
+        } else {
+            errorSound();
+            setAnswers({...answers, wrong: [...answers.wrong, [currentWord, currentTranslate]]})
         }
     }
 
@@ -83,58 +101,50 @@ const GameField = () => {
         }, 1000)
     }
 
-    if(endGame) {
+    if (endGame) {
         return (
-            <div>
-                <p>END GAME</p>
-                <p> Ты набрал {score} очков!</p>
-                <NavLink to='/games'>
-                    <button className="btn waves-effect waves-light" type="submit" name="action">Вернуться к играм
-                        <i className="material-icons left">arrow_back</i>
-                    </button>
-                </NavLink>
-            </div>
+            <GameResult score={score} value={answers}/>
         )
     } else {
         return (
             <div className='sprint-container'>
-            <div className='game-card'>
-                <div className='card-content'>
-                    <h4>Игра Спринт</h4>
-                    <p className='game-text'>У тебя есть ровно одна минута, чтобы проверить свои знания. Угадывай перевод слов и зарабатывай очки!</p>
-                </div>
-                <div className='card-action'>
-                    <NavLink to='/games'>
-                        <button className="btn waves-effect waves-light" type="submit" name="action">Выход
-                            <i className="material-icons left">arrow_back</i>
-                        </button>
-                    </NavLink>
+                <div className='game-card'>
+                    <div className='card-content-sprint'>
+                        <NavLink to='/games'>
+                            <button className="btn waves-effect waves-light exit" type="submit" name="action">Выход
+                                <i className="material-icons left">arrow_back</i>
+                            </button>
+                        </NavLink>
                         <button onClick={() => {
                             tick();
                             showWord();
-                        }} className="btn waves-effect waves-light" type="submit" name="action">Начать игру
+                            setIndex(prev => prev + 1)
+                        }} className="btn waves-effect waves-light" type="submit" name="action">Старт
                             <i className="material-icons right">exit_to_app</i>
                         </button>
+                    </div>
                 </div>
-            </div>
-            <div className='game-container'>
-                <h3 className='score'>Твой счет: {score}</h3>
-                <h3 className='timer'>{gameTimer}</h3>
-                <p className='word'>{currentWord}</p>
-                <p className='word'>{currentTranslate} </p>
+                <div className='game-container'>
+                    <h3 className='score'>Твой счет: {score}</h3>
+                    <h3 className='timer'>{gameTimer}</h3>
+                    <p className='word'>{currentWord}</p>
+                    <p className='word'>{currentTranslate} </p>
 
-                <div className="buttons">
-                    <button onClick={() => {
-                        handleClick(true);
-                        setIndex(prev => ++prev);
-                    }} className='btn btn-large waves-effect green'>Правильно</button>
-                    <button onClick={() => {
-                        handleClick(false);
-                        setIndex(prev => ++prev);
-                    }} className='btn btn-large waves-effect red'>Не правильно</button>
+                    <div className="buttons">
+                        <button onClick={() => {
+                            handleClick(true);
+                            setIndex(prev => ++prev);
+                        }} className='btn btn-large waves-effect green'>Правильно
+                        </button>
+                        <button onClick={() => {
+                            handleClick(false);
+                            setIndex(prev => ++prev);
+                        }} className='btn btn-large waves-effect red'>Не правильно
+                        </button>
+                    </div>
                 </div>
+                <div className={'empty'}>.</div>
             </div>
-                </div>
         )
     }
 
