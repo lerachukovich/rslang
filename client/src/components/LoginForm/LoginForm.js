@@ -33,15 +33,12 @@ const LoginForm = () => {
         e.preventDefault();
         try {
             const data = await request('/signin', 'POST', {...form});
-            console.log(data);
             // auth.login(data.token, data.userId, data.image, data.name);
             auth.login(data.token, data.userId, data.photo, data.name)
             history.push('/');
         } catch (e) {     
         }
     }
-
-    const pulseFC = () => {}
 
     return (
         <Fade>

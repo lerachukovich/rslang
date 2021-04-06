@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Storage from '../../helper/Storage';
+import './Statistic.scss';
 
-const StatisticNotAuth = () => {
+const StatisticToday = () => {
     const [words, setWords] = useState(Storage.getStorage('statistic') || []);
     
     const playSound = url => {
@@ -12,7 +13,7 @@ const StatisticNotAuth = () => {
     console.log(words)
 
     return (
-        <div className="statistic-wrapper">
+        <div>
             {words.length === 0 ? (
                 <h1>Сегодня Вы ещё ничего не изучили</h1>
             ) : (
@@ -39,4 +40,4 @@ const StatisticNotAuth = () => {
     )
 }
 
-export default StatisticNotAuth;
+export default StatisticToday;
