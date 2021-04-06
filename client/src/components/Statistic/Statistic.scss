@@ -1,7 +1,31 @@
 .statistic {
     &-wrapper {
+        width: 60%;
+        margin: auto;
         display: flex;
         flex-direction: column;
         justify-content: center;
+        height: calc(100vh - 181px);
+
+        .react-tabs {
+            height: 95%;
+            ul.react-tabs__tab-list {
+                display: flex;
+                justify-content: space-around;
+                margin: 0.5rem 0 0;
+                li {
+                    width: 30%;
+                    text-align: center;
+                    font-size: 1.5rem;
+                }
+                li.react-tabs__tab--selected {
+                    // background-color: rgba(155, 155, 155, 0.5);                 
+                }
+            }
+            .react-tabs__tab-panel {
+                padding: 0;
+                // background-color: rgba(155, 155, 155, 0.5);
+            }
+        }
     }
 }

@@ -19,7 +19,7 @@ const useHttp = () => {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error('Wrong data!');
+                throw new Error(data.message || 'Wrong data!');
             }
 
             setLoading(false);
