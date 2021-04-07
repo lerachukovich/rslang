@@ -30,9 +30,8 @@ $tablet-widths: "max-width: 1279px";
   background-size: 100% 100%;
   opacity: 1;
 }
-
-.savanna__sound-control {
-  position: absolute;
+.savanna-wrapper .savanna__sound-control.btn {
+  position: absolute!important;
   left: 10%;
   top: 15%;
   background-color: #0da4f6;
@@ -59,7 +58,7 @@ $tablet-widths: "max-width: 1279px";
 .savanna__word-panel {
   margin: 0 auto;
   position: relative;
-  top: 200px;
+  top: 200px!important;
   min-width: 300px;
   & button {
     margin: 10px;
@@ -83,17 +82,26 @@ $tablet-widths: "max-width: 1279px";
 
 .savanna__final-screen-wrapper {
   width: 40%;
+  min-height: 400px;
   background-color: #ffffff;
   padding: 20px;
   margin: 0 auto;
   margin-top: 20px;
   border-radius: 10px;
   box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  overflow-y: unset!important;
   & b {
     font-size: 1.2rem;
   }
 }
 
+.savanna__final-screen__word-list {
+  height: 80%;
+  overflow-y: scroll;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  padding: 1rem;
+}
 .savanna__final-screen__count {
   border-radius: 5px;
   margin-left: 10px;

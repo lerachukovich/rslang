@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import useHttp from '../../hooks/http.hook';
 import useMessage from '../../hooks/message.hook';
 import Spinner from '../../components/Spinner/Spinner';
+import Error from '../../components/Error/Error';
 import '../../styles/TextBook.page.scss';
 
 const TextBook = () => {
@@ -87,11 +88,7 @@ const TextBook = () => {
 
   if (error) {
     return (
-      <div className={'text-book__wrapper'}>
-        <div className="text-book_spinner-wrapper">
-          <span className={"text-book__error"}>😬 Ой, кажется что-то пошло не так, попробуйте обновить позже...</span>
-        </div>
-      </div>
+      <Error />
     )
   }
 
@@ -187,7 +184,7 @@ const TextBook = () => {
             Спринт
           </Link>
 
-          <Link className={'text-book__game__item'} to={'/games/savanna/play'}>
+          <Link className={'text-book__game__item'} to={{pathname: '/games/savanna/play', data: currentCollection, fromTextBook: true}}>
             Саванна
           </Link>
           <Link className={'text-book__game__item'} to={'/'}>
