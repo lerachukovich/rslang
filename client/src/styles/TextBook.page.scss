@@ -203,12 +203,6 @@ $tablet-widths: "max-width: 1279px";
   background-color: #0da4f6;
 }
 
-//@media ($tablet-widths) {
-//  .text-book__words-list {
-//    max-height: 45vh;
-//  }
-//}
-
 @media ($mobile-widths) {
   .text-book__wrapper {
     height: 100vh;
