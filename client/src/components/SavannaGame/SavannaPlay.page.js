@@ -1,7 +1,9 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import {AuthContext} from '../../context/AuthContext';
 import useHttp from '../../hooks/http.hook';
 import MathHelper from '../../helper/Math.helper';
+import Storage from '../../helper/Storage';
 import Spinner from '../Spinner/Spinner';
 import Word from './Savanna.word.component';
 import WordControl from './Savanna.word-control.component';
@@ -9,7 +11,7 @@ import Heart from './Savanna.heart.component';
 import SuccessCristal from './Savanna.succes-cristall.component';
 import FinalScreen from './Savanna.final-screen.component';
 import useSound from 'use-sound';
-import error from '../../assets/audio/error.mp3';
+import errorSound from '../../assets/audio/error.mp3';
 import correct from '../../assets/audio/correct.mp3';
 import bg1 from '../../assets/savanna-bg/savannabg-1.jpg';
 import bg2 from '../../assets/savanna-bg/savannabg-2.jpg';
@@ -30,15 +32,16 @@ const SavannaPlay = () => {
     maxGroup: 5,
     maxWordAmount: 19
   };
+  const { token, userId, isAuthenticated } = useContext(AuthContext);
   const props = useHistory();
   const data = props.location.data;
-  const [isGameBegin, setIsGameBegin] = useState(props.location.fromTextBook);
+  const [isGameBegin, setIsGameBegin] = useState(props.location.fromTextBook || false);
   const [level, setLevel] = useState('');
   let [lives, setLives] = useState(GAME_CONFIG.lives);
   const hearts = [];
   const backgrounds = [bg1, bg2, bg3, bg4];
   const [wordCollection, setWordCollection] = useState(data || null);
-  const { loading, request } = useHttp();
+  const { loading, request, error } = useHttp();
   const [currentWord, setCurrentWord] = useState(null);
   const [currentFourWord, setCurrentFourWord] = useState(null);
   const [isEnd, setEnd] = useState(false);
@@ -48,11 +51,27 @@ const SavannaPlay = () => {
   const [cristalSize, setCristalSize] = useState(10);
   let [currentStep, setCurrentStep] = useState(0);
   const [correctSound] = useSound(correct);
-  const [errorSound] = useSound(error);
+  const [playErrorSound] = useSound(errorSound);
   const [answers, setAnswers] = useState({ correct: [], unCorrect: [] });
   const [currentBackground, setCurrentBackground] = useState(backgrounds[MathHelper.getRandomNumber(1, backgrounds.length - 1)]);
   const [isSound, setIsSound] = useState(false);
   const [soundBtnClass, setSoundButtonClass] = useState('savanna__sound-control btn');
+
+  const createUserWord = async ({ userId, wordId, word }) => {
+    const rawResponse = await fetch(`/users/${userId}/words/${wordId}`, {
+      method: 'POST',
+      withCredentials: true,
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(word)
+    });
+    const content = await rawResponse.json();
+
+    console.log(content);
+  };
 
   for (let i = 0; i < lives; i += 1) {
     hearts.push(<Heart key={i}/>);
@@ -105,6 +124,13 @@ const SavannaPlay = () => {
       prevState + 20
     );
     setAnswers(prevState => ({ ...answers, correct: [...prevState.correct, el] }));
+    if (!isAuthenticated) Storage.setSettingStorage(el);
+
+    createUserWord({
+      userId: userId,
+      wordId: el.id
+    })
+    console.log(token, isAuthenticated, userId);
     if (isSound) correctSound();
   };
 
@@ -124,7 +150,7 @@ const SavannaPlay = () => {
       setBtnColorClass('waves-light btn-large  cyan darken-3');
     }, 200);
     setAnswers(prevState => ({ ...answers, unCorrect: [...prevState.unCorrect, el] }));
-    if (isSound) errorSound();
+    if (isSound) playErrorSound();
   };
 
   const chooseHandler = (e, key) => {
@@ -148,11 +174,6 @@ const SavannaPlay = () => {
     }
     setChoiceFromKey('');
   };
-
-  useEffect(() => {
-    console.log(wordCollection);
-
-  }, []);
 
   useEffect(() => {
     if (!wordCollection) {
@@ -224,13 +245,11 @@ const SavannaPlay = () => {
     setIsGameBegin(true);
   }, [level]);
 
-  // if (error) {
-  //   return (
-  //     <Error />
-  //   )
-  // }
-
-  if (isEnd) {
+  if (error) {
+    return (
+      <Error />
+    )
+  } else if (isEnd) {
     return (
       <div className={'savanna-wrapper'} style={{
         backgroundPosition: `0 ${backgroundPosition}%`,
