@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 import useHttp from '../../hooks/http.hook';
 import MathHelper from '../../helper/Math.helper';
 import Spinner from '../Spinner/Spinner';
@@ -16,6 +17,7 @@ import bg3 from '../../assets/savanna-bg/savannabg-3.jpg';
 import bg4 from '../../assets/savanna-bg/savannabg-4.jpg';
 import './savanna.scss';
 import GameLevel from './Savanna.level.component';
+import Error from '../Error/Error';
 
 const SavannaPlay = () => {
   const GAME_CONFIG = {
@@ -28,12 +30,14 @@ const SavannaPlay = () => {
     maxGroup: 5,
     maxWordAmount: 19
   };
-  const [isGameBegin, setIsGameBegin] = useState(false);
+  const props = useHistory();
+  const data = props.location.data;
+  const [isGameBegin, setIsGameBegin] = useState(props.location.fromTextBook);
   const [level, setLevel] = useState('');
   let [lives, setLives] = useState(GAME_CONFIG.lives);
   const hearts = [];
   const backgrounds = [bg1, bg2, bg3, bg4];
-  const [wordCollection, setWordCollection] = useState(null);
+  const [wordCollection, setWordCollection] = useState(data || null);
   const { loading, request } = useHttp();
   const [currentWord, setCurrentWord] = useState(null);
   const [currentFourWord, setCurrentFourWord] = useState(null);
@@ -145,9 +149,10 @@ const SavannaPlay = () => {
     setChoiceFromKey('');
   };
 
-  // useEffect(() => {
-  //   getWords();
-  // }, []);
+  useEffect(() => {
+    console.log(wordCollection);
+
+  }, []);
 
   useEffect(() => {
     if (!wordCollection) {
@@ -218,6 +223,12 @@ const SavannaPlay = () => {
     getWords(level);
     setIsGameBegin(true);
   }, [level]);
+
+  // if (error) {
+  //   return (
+  //     <Error />
+  //   )
+  // }
 
   if (isEnd) {
     return (
