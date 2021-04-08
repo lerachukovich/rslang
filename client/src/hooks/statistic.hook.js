@@ -20,8 +20,7 @@ const useStatistic = () => {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        learnedWords: 1,
-                        optional: {
+                        learnedWords: {
                             date: Date(),
                             word: obj
                         }
