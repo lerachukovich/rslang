@@ -46,7 +46,7 @@ const schemas = {
   statistics: Joi.object()
     .options({ abortEarly: false, allowUnknown: false })
     .keys({
-      learnedWords: Joi.number().integer().min(0).max(100000),
+      learnedWords: Joi.object(),
       optional: optionalScheme,
     }),
   settings: Joi.object()

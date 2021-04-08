@@ -22,7 +22,7 @@ const StatisticPage = () => {
           }
         });
         const word = await rawResponse.json();
-        console.log(word)
+        // console.log(word)
         setWordStack(prevState => [...prevState, word]);
         } catch (e) {
       }
@@ -49,23 +49,23 @@ const StatisticPage = () => {
       return;
     }
     getUserWords({ userId });
-    console.log(token, userId);
+    // console.log(token, userId);
   }, []);
 
   useEffect(() => {
     if (!wordIdCollection) {
       return;
     }
-    console.log('Вот', wordIdCollection);
+    // console.log('Вот', wordIdCollection);
     wordIdCollection.map(it => {
-      console.log(it.wordId);
+      // console.log(it.wordId);
       const { wordId } = it;
       getWord({wordId})
     })
   }, [wordIdCollection]);
 
   useEffect(() => {
-    console.log('ВОТ', wordStack);
+    // console.log('ВОТ', wordStack);
   }, [wordStack])
 
   return (
