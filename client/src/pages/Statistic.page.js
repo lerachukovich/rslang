@@ -8,8 +8,6 @@ import MathHelper from '../helper/Math.helper';
 const StatisticPage = () => {
   const auth = useContext(AuthContext);
 
-
-
   return (
     <div className="statistic-wrapper">
       <Tabs>
