@@ -14,7 +14,7 @@ const FinalScreen = ({ value }) => {
         {value.answers.correct.map((it, ind) => (
           <li className={'savanna-final-screen__word'} key={ind}>
             <button className={'btn'} onClick={() => value.soundHandler(it.audio)}><i className={'material-icons'}>surround_sound</i></button>
-            {it.word} - {it.wordTranslate}</li>
+            {it.word} - {it.wordTranslate} <button onClick={value.setHardDif} wordid={it.id}>Hard Word</button></li>
         ))}
       </ul>
       <b>Я не знаю <span

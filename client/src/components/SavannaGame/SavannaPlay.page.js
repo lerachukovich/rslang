@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useCallback, useContext } from 'react';
+import React, { useEffect, useState, useCallback, useContext, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
-import {AuthContext} from '../../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 import useHttp from '../../hooks/http.hook';
 import MathHelper from '../../helper/Math.helper';
 import Storage from '../../helper/Storage';
@@ -35,12 +35,14 @@ const SavannaPlay = () => {
   const { token, userId, isAuthenticated } = useContext(AuthContext);
   const props = useHistory();
   const data = props.location.data;
+
   const [isGameBegin, setIsGameBegin] = useState(props.location.fromTextBook || false);
   const [level, setLevel] = useState('');
   let [lives, setLives] = useState(GAME_CONFIG.lives);
   const hearts = [];
   const backgrounds = [bg1, bg2, bg3, bg4];
-  const [wordCollection, setWordCollection] = useState(data || null);
+  const [wordCollection, setWordCollection] = useState( data || null);
+  console.log(data);
   const { loading, request, error } = useHttp();
   const [currentWord, setCurrentWord] = useState(null);
   const [currentFourWord, setCurrentFourWord] = useState(null);
@@ -56,6 +58,28 @@ const SavannaPlay = () => {
   const [currentBackground, setCurrentBackground] = useState(backgrounds[MathHelper.getRandomNumber(1, backgrounds.length - 1)]);
   const [isSound, setIsSound] = useState(false);
   const [soundBtnClass, setSoundButtonClass] = useState('savanna__sound-control btn');
+  const [userWords, setUserWords] = useState(null);
+
+  const getUserWords = async ({ userId }) => {
+    const rawResponse = await fetch(`/users/${userId}/words/`, {
+      method: 'GET',
+      withCredentials: true,
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json'
+      }
+    });
+    const content = await rawResponse.json();
+    setUserWords(content);
+  };
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      return;
+    }
+    getUserWords({ userId });
+    if (data) setWordCollection(MathHelper.shuffleArray(data));
+  }, [isAuthenticated]);
 
   const createUserWord = async ({ userId, wordId, word }) => {
     const rawResponse = await fetch(`/users/${userId}/words/${wordId}`, {
@@ -69,8 +93,20 @@ const SavannaPlay = () => {
       body: JSON.stringify(word)
     });
     const content = await rawResponse.json();
+  };
 
-    console.log(content);
+  const updateUserWord = async ({ userId, wordId, word }) => {
+    const rawResponse = await fetch(`/users/${userId}/words/${wordId}`, {
+      method: 'PUT',
+      withCredentials: true,
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(word)
+    });
+    const content = await rawResponse.json();
   };
 
   for (let i = 0; i < lives; i += 1) {
@@ -112,7 +148,66 @@ const SavannaPlay = () => {
       setEnd(true);
       setIsGameBegin(false);
       window.removeEventListener('keydown', keyHandler);
+      if (props.location.fromTextBook) {
+
+        answers.correct.map(it => {
+          console.log(userWords);
+          const tmpId = userWords.filter(el => el.wordId === it.id);
+          if (tmpId.length) {
+            updateUserWord({
+              userId: userId,
+              wordId: it.id,
+              word: {
+                difficulty: tmpId[0].difficulty, optional: {
+                  correct: tmpId[0].optional.correct += 1,
+                  unCorrect: tmpId[0].optional.unCorrect
+                }
+              }
+            });
+          } else {
+            createUserWord({
+              userId: userId,
+              wordId: it.id,
+              word: {
+                difficulty: 'weak', optional: {
+                  correct: 1,
+                  unCorrect: 0,
+                }
+              }
+            });
+          }
+        });
+
+
+        answers.unCorrect.map(it => {
+          const tmpId = userWords.filter(el => el.wordId === it.id);
+          if (tmpId.length) {
+            updateUserWord({
+              userId: userId,
+              wordId: it.id,
+              word: {
+                difficulty: tmpId[0].difficulty, optional: {
+                  correct: tmpId[0].optional.correct,
+                  unCorrect: tmpId[0].optional.unCorrect += 1
+                }
+              }
+            });
+          } else {
+            createUserWord({
+              userId: userId,
+              wordId: it.id,
+              word: {
+                difficulty: 'weak', optional: {
+                  correct: 0,
+                  unCorrect: 1
+                }
+              }
+            });
+          }
+        });
+      }
     }
+
     setCurrentFourWord(generateFourWord(currentStep));
     setCurrentWord(getCurrentWord(currentStep));
   };
@@ -125,12 +220,6 @@ const SavannaPlay = () => {
     );
     setAnswers(prevState => ({ ...answers, correct: [...prevState.correct, el] }));
     if (!isAuthenticated) Storage.setSettingStorage(el);
-
-    createUserWord({
-      userId: userId,
-      wordId: el.id
-    })
-    console.log(token, isAuthenticated, userId);
     if (isSound) correctSound();
   };
 
@@ -237,9 +326,17 @@ const SavannaPlay = () => {
     setLevel(e.target.getAttribute('datalevel'));
   };
 
+  const setHardDif = (e) => {
+    updateUserWord({
+      userId: userId,
+      wordId: e.target.getAttribute('wordid'),
+      word: { difficulty: 'hard' }
+    });
+  };
+
   useEffect(() => {
     if (!level) {
-      return
+      return;
     }
     getWords(level);
     setIsGameBegin(true);
@@ -247,15 +344,15 @@ const SavannaPlay = () => {
 
   if (error) {
     return (
-      <Error />
-    )
+      <Error/>
+    );
   } else if (isEnd) {
     return (
       <div className={'savanna-wrapper'} style={{
         backgroundPosition: `0 ${backgroundPosition}%`,
         backgroundImage: `url(${currentBackground})`
       }}>
-        <FinalScreen value={{ answers, soundHandler }}/>
+        <FinalScreen value={{ answers, soundHandler, setHardDif }}/>
       </div>
     );
   } else if (!isGameBegin) {

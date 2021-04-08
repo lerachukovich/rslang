@@ -41,14 +41,14 @@ const Navbar = () => {
             Учебник
           </NavLink>
         </li>
-        {/*<li>*/}
-        {/*  <NavLink*/}
-        {/*    onClick={closeHandler}*/}
-        {/*    className="waves-effect"*/}
-        {/*    to="/vocabulary">*/}
-        {/*    Словарь*/}
-        {/*  </NavLink>*/}
-        {/*</li>*/}
+        <li>
+          <NavLink
+            onClick={closeHandler}
+            className="waves-effect"
+            to="/vocabulary">
+            Словарь
+          </NavLink>
+        </li>
         <li>
           <NavLink
             onClick={closeHandler}
@@ -88,7 +88,7 @@ const Navbar = () => {
         {/*</li>*/}
       </ul>
       <div className="header-block">
-        <div className="auth-block">        
+        <div className="auth-block">
           {auth.isAuthenticated && auth.photo && (
             <div>
               <span>{auth.name}</span>
