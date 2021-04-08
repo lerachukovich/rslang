@@ -30,13 +30,13 @@ const Navbar = () => {
         <li>
           <NavLink
               onClick={closeHandler}
-              className="waves-effect"
+              className="nav-link"
               to='/promo'>Главная страница</NavLink>
         </li>
         <li>
           <NavLink
             onClick={closeHandler}
-            className="waves-effect"
+            className="nav-link"
             to="/textbook">
             Учебник
           </NavLink>
@@ -52,7 +52,7 @@ const Navbar = () => {
         <li>
           <NavLink
             onClick={closeHandler}
-            className="waves-effect"
+            className="nav-link"
             to="/games">
             Игры
           </NavLink>
@@ -60,14 +60,14 @@ const Navbar = () => {
         <li>
           <NavLink
             onClick={closeHandler}
-            className="waves-effect"
+            className="nav-link"
             to="/statistic">Статистика
           </NavLink>
         </li>
         <li>
           <NavLink
             onClick={closeHandler}
-            className="waves-effect"
+            className="nav-link"
             to="/credits">
             Разработчики
           </NavLink>
@@ -75,7 +75,7 @@ const Navbar = () => {
         <li>
           <NavLink
             onClick={closeHandler}
-            className="waves-effect"
+            className="nav-link"
             to='/auth/login'>Войти</NavLink>
         </li>
         {/*<li>*/}
