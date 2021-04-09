@@ -118,16 +118,6 @@ const StatisticPage = () => {
               <Tab>Сложные слова</Tab>
               <Tab>Удалённые слова</Tab>
             </TabList>
-
-            <TabPanel>
-
-              {wordStack.length !== 0 &&
-              wordStack.map(it => (
-                <li>{it.word}</li>
-                )
-              )
-              }
-            </TabPanel>
             <TabPanel>
               <h2>Сложные слова из бэка</h2>
             </TabPanel>
