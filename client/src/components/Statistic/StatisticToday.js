@@ -1,10 +1,7 @@
-import React, { useState, useContext, useEffect, useCallback } from 'react';
-import Storage from '../../helper/Storage';
+import React, { useState, useEffect, useCallback } from 'react';
 import './Statistic.scss';
-import {AuthContext} from '../../context/AuthContext';
 
-const StatisticToday = () => {
-    const auth = useContext(AuthContext);
+const StatisticToday = (props) => {
     const [words, setWords] = useState([]);
     
     const playSound = url => {
@@ -13,32 +10,8 @@ const StatisticToday = () => {
     }
 
     useEffect(() => {
-        auth.isAuthenticated ? getWords() : setWords(Storage.getStorage('statistic'));
-    }, [])
-
-    const getWords = useCallback(
-        async () => {
-            try {
-                const response = await fetch(`/users/${auth.userId}/statistics`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${auth.token}`,
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    }
-                })
-                // setWords(response)
-                const today = new Date().toString();
-                const content = await response.json();
-                setWords(content.learnedWords.map(item => {
-                    if (item.date.slice(0, 15) === today.slice(0, 15)) return item.word
-                }));
-                // console.log(content.learnedWords)
-            } catch (e) {
-                
-            }
-        }, []
-    )
+        setWords(props.words)
+    }, [props.words])
 
     return (
         <div>
