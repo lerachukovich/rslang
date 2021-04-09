@@ -35,6 +35,8 @@ const SavannaPlay = () => {
   const { token, userId, isAuthenticated } = useContext(AuthContext);
   const props = useHistory();
   const data = props.location.data;
+  const page = props.location.page;
+  const group = props.location.group;
 
   const [isGameBegin, setIsGameBegin] = useState(props.location.fromTextBook || false);
   const [level, setLevel] = useState('');
@@ -159,6 +161,8 @@ const SavannaPlay = () => {
               wordId: it.id,
               word: {
                 difficulty: tmpId[0].difficulty, optional: {
+                  page: page,
+                  group: group,
                   correct: tmpId[0].optional.correct += 1,
                   unCorrect: tmpId[0].optional.unCorrect
                 }
@@ -170,6 +174,8 @@ const SavannaPlay = () => {
               wordId: it.id,
               word: {
                 difficulty: 'weak', optional: {
+                  page: page,
+                  group: group,
                   correct: 1,
                   unCorrect: 0,
                 }
@@ -187,6 +193,8 @@ const SavannaPlay = () => {
               wordId: it.id,
               word: {
                 difficulty: tmpId[0].difficulty, optional: {
+                  page: page,
+                  group: group,
                   correct: tmpId[0].optional.correct,
                   unCorrect: tmpId[0].optional.unCorrect += 1
                 }
@@ -198,6 +206,8 @@ const SavannaPlay = () => {
               wordId: it.id,
               word: {
                 difficulty: 'weak', optional: {
+                  page: page,
+                  group: group,
                   correct: 0,
                   unCorrect: 1
                 }
