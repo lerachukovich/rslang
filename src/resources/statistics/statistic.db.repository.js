@@ -10,12 +10,24 @@ const get = async (userId) => {
   return statistic;
 };
 
-const upsert = async (userId, statistic) =>
-  Statistics.findOneAndUpdate(
+const unique = (arr, obj) => {
+  for (const i of arr) {
+    if (i.word.id === obj.word.id) return arr;
+  }
+  return [...arr, obj];
+};
+
+const upsert = async (userId, word) => {
+  const stat =
+    (await Statistics.findOne({ userId }).then((data) => {
+      if (data) return data.learnedWords;
+    })) || [];
+  await Statistics.updateOne(
     { userId },
-    { $set: statistic },
+    { $set: { learnedWords: unique(stat, word) } },
     { upsert: true, new: true }
   );
+};
 
 const remove = async (userId) => Statistics.deleteOne({ userId });
 
