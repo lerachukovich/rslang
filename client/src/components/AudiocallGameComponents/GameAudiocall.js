@@ -34,7 +34,7 @@ const GameAudiocall = () => {
 
     const auth = useContext(AuthContext);
     const {request} = useHttp();
-    const {setStatistic} = useStatistic(); //import useStatistic from '../../hooks/statistic.hook.js'
+    const {setStatistic} = useStatistic();
 
     const [level, setLevel] = useState(0);
     const [data, setData] = useState(wordsCollection || []);

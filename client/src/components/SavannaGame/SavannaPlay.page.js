@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import useHttp from '../../hooks/http.hook';
 import MathHelper from '../../helper/Math.helper';
-import Storage from '../../helper/Storage';
+import useStatistic from '../../hooks/statistic.hook.js';
 import Spinner from '../Spinner/Spinner';
 import Word from './Savanna.word.component';
 import WordControl from './Savanna.word-control.component';
@@ -61,6 +61,8 @@ const SavannaPlay = () => {
   const [isSound, setIsSound] = useState(false);
   const [soundBtnClass, setSoundButtonClass] = useState('savanna__sound-control btn');
   const [userWords, setUserWords] = useState(null);
+  
+  const {setStatistic} = useStatistic();
 
   const getUserWords = async ({ userId }) => {
     const rawResponse = await fetch(`/users/${userId}/words/`, {
@@ -229,7 +231,7 @@ const SavannaPlay = () => {
       prevState + 20
     );
     setAnswers(prevState => ({ ...answers, correct: [...prevState.correct, el] }));
-    if (!isAuthenticated) Storage.setSettingStorage(el);
+    setStatistic(el, userId || null, token || null);
     if (isSound) correctSound();
   };
 
