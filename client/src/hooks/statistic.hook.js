@@ -21,7 +21,7 @@ const useStatistic = () => {
                     },
                     body: JSON.stringify({
                         learnedWords: {
-                            date: Date(),
+                            date: new Date(),
                             word: obj
                         }
                     })

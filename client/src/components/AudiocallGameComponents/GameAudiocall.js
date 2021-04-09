@@ -34,7 +34,7 @@ const GameAudiocall = () => {
 
     const auth = useContext(AuthContext);
     const {request} = useHttp();
-    const {setStatistic} = useStatistic();
+    const {setStatistic} = useStatistic(); //import useStatistic from '../../hooks/statistic.hook.js'
 
     const [level, setLevel] = useState(0);
     const [data, setData] = useState(wordsCollection || []);
@@ -65,8 +65,7 @@ const GameAudiocall = () => {
     }, [data])
 
     useEffect(() => {
-        if (level !== 0) setCurrentSample(getCurrentWords())
-        // if (level === 20) return history.push('/games/audiocall/statistic', answers);
+        if (level !== 0) setCurrentSample(getCurrentWords());
         if (level === 10) setIsEnd(true);
     }, [level])
 
@@ -95,37 +94,14 @@ const GameAudiocall = () => {
         },
         [request]
     )
-
-    // const putWordsCount = useCallback(
-    //     async (count) => {
-    //         try {
-    //             const response = await request(`/users/${auth.userId}/statistics`, 'PUT', {
-    //                 learnedWords: count,
-    //                 optional: {date: Date()}   
-    //             },
-    //             {
-    //                 'Authorization': `Bearer ${auth.token}`,
-    //                 'Accept': 'application/json',
-    //                 'Content-Type': 'application/json'
-    //             });
-    //             console.log(response);
-    //         } catch (e) {
-                
-    //         }
-    //     }
-    // )
-
+    
     const handleClick = (isCorrect) => {
         if (readyNext) return;
         if (isCorrect) {
             if (isSound) correctSound();
             setAnswers({...answers, correct: [...answers.correct, currentSample[0]]});
 
-            // Storage.setSettingStorage(currentSample[0]);
-            // const wordsCount = Storage.getStorage().length;
-            // putWordsCount(wordsCount);
-            // Setting.setSetting(currentSample[0], auth.userId || null, auth.token || null)
-            setStatistic(currentSample[0], auth.userId || null, auth.token || 0)
+            setStatistic(currentSample[0], auth.userId || null, auth.token || null);
         } else {
             if (isSound) errorSound();
             setAnswers({...answers, mistake: [...answers.mistake, currentSample[0]]});
