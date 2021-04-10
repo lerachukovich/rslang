@@ -2,7 +2,7 @@ $mobile-widths: "max-width: 767px";
 $tablet-widths: "max-width: 1279px";
 
 .savanna-promo__wrapper {
-  height: calc(100vh - 181px);
+  height: calc(100vh - 146px);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -10,12 +10,13 @@ $tablet-widths: "max-width: 1279px";
   background-size: 100% 200%;
   transition: 0.5s ease-in-out;
   background-position: 0 50%;
+  font-family: 'Nunito', sans-serif;
 }
 
 .savanna-promo__title {
   text-align: center;
-  color: #fcfcfc;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
+  filter: drop-shadow(2px 4px 6px black);
+  color: #ffffff;
 }
 
 .savanna-promo__depict {
@@ -23,10 +24,12 @@ $tablet-widths: "max-width: 1279px";
   display: block;
   width: 40%;
   text-align: center;
-  color: #fcfcfc;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
-  font-size: 1.2rem;
+  font-size: 2rem;
   letter-spacing: .1rem;
+  color: #ffffff;
+  font-weight: 700;
+  filter: drop-shadow(2px 4px 6px black);
+
 }
 
 .savanna-promo__tutorial {
@@ -34,11 +37,12 @@ $tablet-widths: "max-width: 1279px";
   display: block;
   width: 40%;
   text-align: center;
-  color: #fcfcfc;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
-  font-size: 0.9rem;
+  font-size: 1.3rem;
   letter-spacing: .1rem;
-  font-style: italic;
+  color: #ffffff;
+  font-weight: 700;
+  filter: drop-shadow(2px 4px 6px black);
+
 }
 
 .savanna-promo__tutorial__rules {
@@ -46,12 +50,12 @@ $tablet-widths: "max-width: 1279px";
   display: block;
   width: 40%;
   text-align: center;
-  color: #fcfcfc;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
-  font-size: 0.9rem;
+  font-size: 1rem;
   letter-spacing: .1rem;
-  font-style: italic;
   margin-bottom: 20px;
+  color: #ffffff;
+  font-weight: 700;
+  filter: drop-shadow(2px 4px 6px black);
 }
 
 .savanna-promo__wrapper .btn {

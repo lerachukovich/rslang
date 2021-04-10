@@ -95,14 +95,14 @@ const TextBook = () => {
   return (
     <div className={'text-book__wrapper'}>
       <h1 className={'text-book__title'}>Учебник 📕</h1>
-      <div className="text-book__button-container">
+      <div className="text-book__button-container"> Сложность:
         {new Array(5).fill().map((it, ind) => (
             <button
               key={ind}
               className={'level-btn waves-light btn'}
               onClick={chooseGroupHandler}
               datalevel={ind}>
-              Сложность: {ind + 1}
+             {ind + 1}
             </button>
           )
         )}
@@ -178,17 +178,16 @@ const TextBook = () => {
 
         <div className="text-book_game-container">
           <Link className={'text-book__game__item'} to={{pathname: '/games/audiocall/playing', wordsCollection: currentCollection}}>
-            Аудио
+            Аудиовызов
           </Link>
           <Link className={'text-book__game__item'} to={'/games/sprint/playing'}>
             Спринт
           </Link>
-
           <Link className={'text-book__game__item'} to={{pathname: '/games/savanna/play', data: currentCollection, fromTextBook: true, page: page, group: group}}>
             Саванна
           </Link>
           <Link className={'text-book__game__item'} to={'/'}>
-            ??????
+            Расставь слова
           </Link>
         </div>
       </div>

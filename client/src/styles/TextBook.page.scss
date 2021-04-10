@@ -22,15 +22,14 @@ $tablet-widths: "max-width: 1279px";
 }
 
 .text-book__wrapper {
-  @include container();
+  //@include container();
   padding: 10px;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 181px);
+  height: calc(100vh - 145px);
   justify-content: flex-start;
   align-items: center;
   background-size: 100% 100%;
-  background-position: center;
   transition: 0.5s ease-in-out;
   background-position: 0 50%;
   background-image: url("../assets/savanna-bg/savannabg-2.jpg");
@@ -40,21 +39,25 @@ $tablet-widths: "max-width: 1279px";
   text-align: center;
   font-size: 2.8rem;
   color: #fcfcfc;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
-  margin: 0;
-  margin-bottom: 1rem;
+  font-family: 'PT Serif', serif;
+  margin: 0 0 1rem;
 }
 
 .text-book__button-container {
+  font-family: 'Nunito', sans-serif;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   margin-bottom: 1rem;
+  align-items: center;
+  font-size: 1.5rem;
+  color: #ffffff;
 }
 
 .text-book__words-list {
-  height: 50vh;
-  width: 70%;
+  font-family: 'Nunito', sans-serif;
+  max-height: 52vh;
+  width: 80%;
   overflow-y: scroll;
   background-color: rgba(255, 255, 255, 0.4) !important;
   padding: 0 1rem;
@@ -83,8 +86,8 @@ $tablet-widths: "max-width: 1279px";
 
 .text-book__bottom-controls {
   position: fixed;
-  bottom: 120px;
-  width: 70%;
+  bottom: 104px;
+  width: 79%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -105,17 +108,12 @@ $tablet-widths: "max-width: 1279px";
 
 .text-book__game__item {
   display: flex;
-  font-size: 0.8rem;
-  width: 70px;
-  height: 70px;
   background-color: #cccccc;
   color: #fcfcfc;
-  border-radius: 10px;
+  border-radius: 5px;
   align-items: center;
   justify-content: center;
-  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
-  padding: 1rem;
-  border: 2px solid #fcfcfc;
+  padding: 8px 13px;
   transition: 0.3s ease-out;
 }
 
@@ -154,13 +152,13 @@ $tablet-widths: "max-width: 1279px";
 
 .text-book__word-container {
   display: flex;
-  padding: 10px;
   background-color: #fcfcfc;
   margin-bottom: 1%;
   border-radius: 10px;
-  align-items: start;
+  align-items: center;
   gap: 1rem;
   box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  overflow: hidden;
   transition: all 0.2s ease-out;
   &:hover {
     background-color: #eeeded;
@@ -183,12 +181,13 @@ $tablet-widths: "max-width: 1279px";
 
 .text__book__words-list__word-img {
   width: 20%;
-  height: 100px;
   overflow: hidden;
+  height: 109px;
 
   & img {
     width: 100%;
     height: auto;
+
   }
 }
 
@@ -228,7 +227,6 @@ $tablet-widths: "max-width: 1279px";
 
   & span {
     display: block;
-    padding-bottom: 5px;
     font-size: 0.9rem;
   }
 }
@@ -239,7 +237,6 @@ $tablet-widths: "max-width: 1279px";
   padding: 0;
   width: 34px;
   height: 34px;
-  border-radius: 50%;
   background-color: #0da4f6;
 }
 
@@ -295,7 +292,6 @@ $tablet-widths: "max-width: 1279px";
     flex-direction: column;
     align-items: center;
     position: relative;
-    width: 100%;
     bottom: unset;
   }
 
