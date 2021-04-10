@@ -12,7 +12,9 @@
 .logo {
   margin: 0;
   font-size: 3rem;
-  padding: 20px;
+  padding: 10px;
+   font-family: 'Kiwi Maru', serif;
+  font-weight: 700;
   a {
     color: #ffffff;
   }
@@ -60,9 +62,10 @@
     }
 
     .nav-log {
-      color: yellow;
+      color: white;
       margin-left: 4rem;
-      font-weight: 600;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.3rem;
     }
   }
 }

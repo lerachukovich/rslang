@@ -41,14 +41,6 @@ const Navbar = () => {
             Учебник
           </NavLink>
         </li>
-        {/*<li>*/}
-        {/*  <NavLink*/}
-        {/*    onClick={closeHandler}*/}
-        {/*    className="waves-effect"*/}
-        {/*    to="/vocabulary">*/}
-        {/*    Словарь*/}
-        {/*  </NavLink>*/}
-        {/*</li>*/}
         <li>
           <NavLink
             onClick={closeHandler}
@@ -78,17 +70,9 @@ const Navbar = () => {
             className="nav-link"
             to='/auth/login'>Войти</NavLink>
         </li>
-        {/*<li>*/}
-        {/*  <NavLink*/}
-        {/*    onClick={closeHandler}*/}
-        {/*    className="waves-effect"*/}
-        {/*    to="/settings">*/}
-        {/*    Настройки*/}
-        {/*  </NavLink>*/}
-        {/*</li>*/}
       </ul>
       <div className="header-block">
-        <div className="auth-block">        
+        <div className="auth-block">
           {auth.isAuthenticated && auth.photo && (
             <div>
               <span>{auth.name}</span>
@@ -98,12 +82,12 @@ const Navbar = () => {
           <span>
             {auth.isAuthenticated ? (
               <NavLink
-                className="waves-effect nav-log"
+                className="nav-log"
                 onClick={auth.logout}
                 to='/auth/login'>Выход</NavLink>
             ) : (
               <NavLink
-                className="waves-effect nav-log"
+                className="nav-log"
                 to='/auth/login'>Войти</NavLink>
             )}
           </span>
