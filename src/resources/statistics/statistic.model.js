@@ -9,7 +9,7 @@ const StatisticSchema = new Schema(
       required: true,
     },
     learnedWords: {
-      type: Number,
+      type: Array,
     },
     optional: {
       type: Object,

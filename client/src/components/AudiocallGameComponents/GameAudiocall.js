@@ -1,11 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useContext } from 'react';
 import {NavLink, useHistory} from 'react-router-dom';
 import useHttp from '../../hooks/http.hook';
 import GameElement from './GameElement';
 import FinalScreen from './FinalScreen';
 import MathHelper from '../../helper/Math.helper';
-import Storage from '../../helper/Storage';
 import useSound from 'use-sound';
+import {AuthContext} from '../../context/AuthContext';
+
 import error from '../../assets/audio/error.mp3';
 import correct from '../../assets/audio/correct.mp3';
 
@@ -15,6 +16,8 @@ import Roll from 'react-reveal/Roll';
 import bg1 from '../../assets/audiocall/bg-call-1.jpg';
 import bg2 from '../../assets/audiocall/bg-call-2.jpg';
 import bg3 from '../../assets/audiocall/bg-call-3.jpg';
+
+import useStatistic from '../../hooks/statistic.hook.js';
 
 const GameAudiocall = () => {
 
@@ -28,11 +31,14 @@ const GameAudiocall = () => {
 
     const props = useHistory();
     const {state, wordsCollection} = props.location;
+
+    const auth = useContext(AuthContext);
+    const {request} = useHttp();
+    const {setStatistic} = useStatistic();
+
     const [level, setLevel] = useState(0);
     const [data, setData] = useState(wordsCollection || []);
-    const {request} = useHttp();
     const [currentSample, setCurrentSample] = useState([]);
-    const history = useHistory();
     const [answers, setAnswers] = useState({
         correct: [],
         mistake: []
@@ -59,8 +65,7 @@ const GameAudiocall = () => {
     }, [data])
 
     useEffect(() => {
-        if (level !== 0) setCurrentSample(getCurrentWords())
-        // if (level === 20) return history.push('/games/audiocall/statistic', answers);
+        if (level !== 0) setCurrentSample(getCurrentWords());
         if (level === 10) setIsEnd(true);
     }, [level])
 
@@ -89,14 +94,14 @@ const GameAudiocall = () => {
         },
         [request]
     )
-
+    
     const handleClick = (isCorrect) => {
         if (readyNext) return;
         if (isCorrect) {
             if (isSound) correctSound();
             setAnswers({...answers, correct: [...answers.correct, currentSample[0]]});
 
-            Storage.setSettingStorage(currentSample[0]);
+            setStatistic(currentSample[0], auth.userId || null, auth.token || null);
         } else {
             if (isSound) errorSound();
             setAnswers({...answers, mistake: [...answers.mistake, currentSample[0]]});

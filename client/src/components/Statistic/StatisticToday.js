@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
-import Storage from '../../helper/Storage';
+import React, { useState, useEffect, useCallback } from 'react';
 import './Statistic.scss';
 
-const StatisticToday = () => {
-    const [words, setWords] = useState(Storage.getStorage('statistic') || []);
+const StatisticToday = (props) => {
+    const [words, setWords] = useState([]);
     
     const playSound = url => {
         const audio = new Audio(`/${url}`);
         audio.play();
     }
 
-    console.log(words)
+    useEffect(() => {
+        setWords(props.words)
+    }, [props.words])
 
     return (
         <div>

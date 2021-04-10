@@ -159,6 +159,24 @@ $tablet-widths: "max-width: 1279px";
   gap: 1rem;
   box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
   overflow: hidden;
+  transition: all 0.2s ease-out;
+  &:hover {
+    background-color: #eeeded;
+  }
+}
+
+.text-book__word-container.hard {
+  position: relative;
+  background-color: #eea6ad;
+  &::before {
+    content: '';
+    position: absolute;
+    right: 1rem;
+    top: calc(50% - 15px);
+    width: 30px;
+    height: 30px;
+    background-image: url("../assets/vocabulary/network.svg");
+  }
 }
 
 .text__book__words-list__word-img {
@@ -176,6 +194,28 @@ $tablet-widths: "max-width: 1279px";
 .text-book__words-list__word-translate {
   width: 15%;
 }
+
+.text-book__words-list__word-translate--vocabulary {
+  align-self: center;
+  font-size: 1.5rem;
+}
+
+.text-book__words-list__word-translate--vocabulary__attempt {
+  padding: 1%;
+  align-self: center;
+  border-radius: 5px;
+  color: #fcfcfc;
+}
+
+.text-book__words-list__word-translate--vocabulary__attempt--correct {
+  background-color: #0f790f;
+}
+
+.text-book__words-list__word-translate--vocabulary__attempt--uncorrect {
+  background-color: #d2141b;
+}
+
+
 
 .text-book__words-list__word-meaning,
 .text-book__words-list__word-example {

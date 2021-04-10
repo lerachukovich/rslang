@@ -54,7 +54,7 @@ const TextBook = () => {
   };
 
   const chooseGroupHandler = (e) => {
-    setGroup(e.target.getAttribute('datalevel'));
+    setGroup(Number(e.target.getAttribute('datalevel')));
   };
 
 
@@ -183,7 +183,7 @@ const TextBook = () => {
           <Link className={'text-book__game__item'} to={'/games/sprint/playing'}>
             Спринт
           </Link>
-          <Link className={'text-book__game__item'} to={{pathname: '/games/savanna/play', data: currentCollection, fromTextBook: true}}>
+          <Link className={'text-book__game__item'} to={{pathname: '/games/savanna/play', data: currentCollection, fromTextBook: true, page: page, group: group}}>
             Саванна
           </Link>
           <Link className={'text-book__game__item'} to={'/'}>

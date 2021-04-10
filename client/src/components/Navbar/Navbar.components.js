@@ -44,6 +44,14 @@ const Navbar = () => {
         <li>
           <NavLink
             onClick={closeHandler}
+            className="waves-effect"
+            to="/vocabulary">
+            Словарь
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            onClick={closeHandler}
             className="nav-link"
             to="/games">
             Игры
