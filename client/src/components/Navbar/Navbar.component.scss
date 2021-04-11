@@ -1,5 +1,9 @@
+.nav-link:hover {
+  background: white;
+}
+
 .header-nav {
-  background: #ee6e73;
+  background: #80cbc4;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -8,9 +12,23 @@
 .logo {
   margin: 0;
   font-size: 3rem;
-  padding: 20px;
+  padding: 10px;
+   font-family: 'Kiwi Maru', serif;
+  font-weight: 700;
   a {
     color: #ffffff;
+  }
+}
+
+.sidenav {
+  border-radius: 20% 0 0 60%;
+  background-color: #e0f2f1;
+
+  li > a {
+    color: #000;
+    font-size: 1.5rem;
+    margin: 10px 0;
+    font-family: 'Nunito', sans-serif;
   }
 }
 
@@ -19,7 +37,7 @@
 }
 
 .sidenav-close {
-  margin: 20px 30px 10px;
+  margin: 20px 0 10px 53px;
 }
 
 .header-block {
@@ -44,9 +62,41 @@
     }
 
     .nav-log {
-      color: yellow;
+      color: white;
       margin-left: 4rem;
-      font-weight: 600;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.3rem;
     }
   }
+}
+
+
+.nav-link {
+  text-decoration: none;
+  position: relative;
+  padding: 3px 0;
+  cursor: pointer;
+}
+.nav-link::before,
+.nav-link::after {
+  content: '';
+  width: 100%;
+  height: 2px;
+  background-color: #004d40;
+  position: absolute;
+  left: 0;
+  transform: scaleX(0);
+  transition: transform 0.5s;
+}
+.nav-link::before {
+  top: 0;
+  transform-origin: left;
+}
+.nav-link::after{
+  bottom: 0;
+  transform-origin: right;
+}
+.nav-link:hover::before,
+.nav-link:hover::after{
+  transform: scaleX(1);
 }

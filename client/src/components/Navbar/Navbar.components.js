@@ -30,13 +30,13 @@ const Navbar = () => {
         <li>
           <NavLink
               onClick={closeHandler}
-              className="waves-effect"
+              className="nav-link"
               to='/promo'>Главная страница</NavLink>
         </li>
         <li>
           <NavLink
             onClick={closeHandler}
-            className="waves-effect"
+            className="nav-link"
             to="/textbook">
             Учебник
           </NavLink>
@@ -52,7 +52,7 @@ const Navbar = () => {
         <li>
           <NavLink
             onClick={closeHandler}
-            className="waves-effect"
+            className="nav-link"
             to="/games">
             Игры
           </NavLink>
@@ -60,14 +60,14 @@ const Navbar = () => {
         <li>
           <NavLink
             onClick={closeHandler}
-            className="waves-effect"
+            className="nav-link"
             to="/statistic">Статистика
           </NavLink>
         </li>
         <li>
           <NavLink
             onClick={closeHandler}
-            className="waves-effect"
+            className="nav-link"
             to="/credits">
             Разработчики
           </NavLink>
@@ -75,17 +75,9 @@ const Navbar = () => {
         <li>
           <NavLink
             onClick={closeHandler}
-            className="waves-effect"
+            className="nav-link"
             to='/auth/login'>Войти</NavLink>
         </li>
-        {/*<li>*/}
-        {/*  <NavLink*/}
-        {/*    onClick={closeHandler}*/}
-        {/*    className="waves-effect"*/}
-        {/*    to="/settings">*/}
-        {/*    Настройки*/}
-        {/*  </NavLink>*/}
-        {/*</li>*/}
       </ul>
       <div className="header-block">
         <div className="auth-block">
@@ -98,12 +90,12 @@ const Navbar = () => {
           <span>
             {auth.isAuthenticated ? (
               <NavLink
-                className="waves-effect nav-log"
+                className="nav-log"
                 onClick={auth.logout}
                 to='/auth/login'>Выход</NavLink>
             ) : (
               <NavLink
-                className="waves-effect nav-log"
+                className="nav-log"
                 to='/auth/login'>Войти</NavLink>
             )}
           </span>

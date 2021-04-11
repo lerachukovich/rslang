@@ -1,13 +1,12 @@
 .login-page-wrapper {
     width: 100%;
-    height: 80vh;
+    height: 85vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .login-form {
-    width: 40%;
     width: 45%;
     text-align: center;
     box-shadow: rgba(16, 112, 177, 0.2)  10px 20px 50px;
@@ -20,10 +19,6 @@
     background-color: rgba(16, 112, 177, 0.4);
     border-radius: 20px;
     padding: 2rem;
-
-    // & *, & *::placeholder {
-    //     color: white;
-    // }
 
     input, input::placeholder, label {
         color: white;
@@ -64,7 +59,7 @@
 
 .btn-inactive {
     background-color: rgba(16, 112, 177, 0.2);
-    border-radius: 10px 10px 0 0;    
+    border-radius: 10px 10px 0 0;
     box-shadow: none;
     outline: none;
     border: none;
@@ -85,10 +80,10 @@
     padding: 1rem 2rem;
     border: 1px solid white;
     color: white;
-    border-radius: 10px; 
+    border-radius: 10px;
     outline: none;
 
     &:hover {
-        cursor: pointer;        
+        cursor: pointer;
     }
 }
