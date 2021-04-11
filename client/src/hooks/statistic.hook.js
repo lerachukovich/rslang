@@ -3,13 +3,13 @@ import Storage from '../helper/Storage';
 
 const useStatistic = () => {
 
-    const setStatistic = useCallback((obj, id = null, token = null) => {
+    const setStatistic = (obj, id = null, token = null) => {
         if (id === null) return Storage.setSettingStorage(obj);
 
         putWordsCount(obj, id, token)
-    })
+    }
 
-    const putWordsCount = useCallback(
+    const putWordsCount =
         async (obj, id, token) => {
             try {
                 await fetch(`/users/${id}/statistics`, {
@@ -27,10 +27,9 @@ const useStatistic = () => {
                     })
                 })
             } catch (e) {
-                
+
             }
-        }, []
-    )
+        }
 
     return {setStatistic}
 }

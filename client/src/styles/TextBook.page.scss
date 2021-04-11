@@ -56,7 +56,7 @@ $tablet-widths: "max-width: 1279px";
 
 .text-book__words-list {
   font-family: 'Nunito', sans-serif;
-  max-height: 52vh;
+  height: 52vh;
   width: 80%;
   overflow-y: scroll;
   background-color: rgba(255, 255, 255, 0.4) !important;
@@ -230,6 +230,108 @@ $tablet-widths: "max-width: 1279px";
     font-size: 0.9rem;
   }
 }
+// In Vocabulary start
+.text-book__info-container {
+  display: flex;
+  width: 30%;
+  justify-content: space-between;
+
+}
+
+.text-book__info__item {
+  position: relative;
+  font-size: 1.2rem;
+  color: #fcfcfc;
+  width: 30px;
+  background-size: 100% 100%;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -45px;
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.text-book__info__item:nth-child(1)::before {
+  background-size: 100% 100%;
+  background-image: url("../assets/vocabulary/level.svg");
+}
+
+.text-book__info__item:nth-child(2)::before {
+  background-size: 100% 100%;
+  background-image: url("../assets/vocabulary/blank-page.svg");
+}
+
+.text-book__info__item:nth-child(3)::before {
+  background-size: 100% 100%;
+  background-image: url("../assets/vocabulary/wordstack.svg");
+}
+
+.text-book__info__item:nth-child(4)::before {
+  background-size: 100% 100%;
+  background-image: url("../assets/vocabulary/wrongwords.svg");
+}
+
+.vocabulary__words-list__btn-container {
+  display: flex;
+  width: 20%;
+  justify-content: flex-start;
+  & button {
+    margin-left: 2rem;
+    display: block;
+    font-size: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    opacity: 0.6;
+    transition: 0.2s ease-out;
+    cursor: pointer;
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+.vocabulary__words-list__btn--delete {
+  background-image: url("../assets/vocabulary/recycle-bin.svg");
+  background-size: 70% 70%;
+}
+
+.vocabulary__words-list__btn--gohard {
+  background-image: url("../assets/vocabulary/network.svg");
+  background-size: 70% 70%;
+}
+
+
+.text-book__words-list__empty-blank {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  font-size: 1.3rem;
+  color: #222222;
+  justify-content: center;
+  align-items: center;
+  & a {
+    margin-left: 0.5rem;
+  }
+}
+
+.deleted {
+  opacity: 0.6;
+}
+
+.text-book__word-container.deleted >
+.vocabulary__words-list__btn-container {
+  display: none;
+}
+
+// In vocabulary end
 
 .text-book__words-list .btn {
   align-self: center;

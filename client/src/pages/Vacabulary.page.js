@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Spinner from '../components/Spinner/Spinner';
+import { UpdateUserWord } from '../helper/database.helper/updateUserWord.helper';
 
 const VocabularyPage = () => {
   const { token, userId, isAuthenticated } = useContext(AuthContext);
@@ -30,20 +32,30 @@ const VocabularyPage = () => {
     ;
   };
 
-  const getHardWord = async ({ wordId }) => {
-    try {
-      const rawResponse = await fetch(`/words/${wordId}`, {
-        method: 'GET',
-        withCredentials: true,
-        headers: {
-          'Accept': 'application/json'
-        }
-      });
-      const word = await rawResponse.json();
-      setHardStack(prevState => [...prevState, word]);
-    } catch (e) {
-    }
-    ;
+  const getHardWords = async ({ userId }) => {
+    const rawResponse = await fetch(`/users/${userId}/words/`, {
+      method: 'GET',
+      withCredentials: true,
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json'
+      }
+    });
+    const content = await rawResponse.json();
+    setWordIdCollection(content.filter(it => it.difficulty === 'hard'));
+  };
+
+  const getDeletedWords = async ({ userId }) => {
+    const rawResponse = await fetch(`/users/${userId}/words/`, {
+      method: 'GET',
+      withCredentials: true,
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json'
+      }
+    });
+    const content = await rawResponse.json();
+    setWordIdCollection(content.filter(it => it.optional.deleted === true));
   };
 
   const getUserWords = async ({ userId }) => {
@@ -56,7 +68,9 @@ const VocabularyPage = () => {
       }
     });
     const content = await rawResponse.json();
-    setWordIdCollection(content.filter(it => it.optional.group === group).filter(el => el.optional.page === page));
+    setWordIdCollection(content.filter(it => it.optional.group === group)
+      .filter(el => el.optional.page === page)
+      .filter(x => x.optional.deleted === false));
   };
 
   useEffect(() => {
@@ -72,16 +86,11 @@ const VocabularyPage = () => {
     }
 
     setWordStack([]);
-    wordIdCollection.map((it, ind)=> {
+    wordIdCollection.map((it, ind) => {
       const { wordId } = it;
       getWord({ wordId });
     });
 
-    const hardCollection = wordIdCollection.filter(it => it.difficulty === 'hard');
-    hardCollection.map(it => {
-      const { wordId } = it;
-      getHardWord({ wordId });
-    });
     setCorrectAnswer(wordIdCollection.reduce((acc, curr) => acc + curr.optional.correct, 0));
     setUnCorrectAnswer(wordIdCollection.reduce((acc, curr) => acc + curr.optional.unCorrect, 0));
   }, [wordIdCollection]);
@@ -99,6 +108,14 @@ const VocabularyPage = () => {
     getUserWords({ userId });
   }, [page, group]);
 
+  const showHardWords = () => {
+    getHardWords({ userId });
+  };
+
+  const showDeletedWords = () => {
+    getDeletedWords({ userId });
+  };
+
   const nextPageHandler = () => {
     if (page >= 29) {
       return;
@@ -111,6 +128,34 @@ const VocabularyPage = () => {
       return;
     }
     setPage(prevState => prevState - 1);
+  };
+
+  const setHardDif = (e) => {
+    UpdateUserWord({
+      userId: userId,
+      wordId: e.target.getAttribute('wordid'),
+      word: { difficulty: 'hard' }
+    }, token);
+    e.target.closest('li').classList.add('hard');
+  };
+
+  const setDelete = (e) => {
+    const tmp = wordIdCollection.filter(it => it.wordId === e.target.getAttribute('wordid'))
+    UpdateUserWord({
+      userId: userId,
+      wordId: e.target.getAttribute('wordid'),
+      word: {
+        difficulty: 'weak',
+        optional: {
+          page: tmp[0].optional.page,
+          group: tmp[0].optional.group,
+          correct: tmp[0].optional.correct,
+          unCorrect: tmp[0].optional.unCorrect,
+          deleted: true
+        }
+      }
+    }, token);
+    e.target.closest('li').classList.add('deleted');
   };
 
   return (
@@ -128,9 +173,11 @@ const VocabularyPage = () => {
           )
         )}
       </div>
+      <button onClick={showHardWords}>Hard</button>
+      <button onClick={showDeletedWords}>Deleted</button>
 
       <div className="text-book__words-list">
-       <ul>
+        <ul>
           {wordIdCollection && wordStack.map((it, ind) => (
               <li key={ind}
                   className={`text-book__word-container ${wordIdCollection.filter((el) => (el.wordId === it.id))[0] &&
@@ -138,42 +185,65 @@ const VocabularyPage = () => {
                 <div className="text__book__words-list__word-img">
                   <img src={`../` + it.image} alt={it.wordTranslate}/>
                 </div>
-                <div className={"text-book__words-list__word-translate text-book__words-list__word-translate--vocabulary"}>
+                <div
+                  className={'text-book__words-list__word-translate text-book__words-list__word-translate--vocabulary'}>
                   {it.word}
                 </div>
-                <div className="text-book__words-list__word-translate--vocabulary__attempt text-book__words-list__word-translate--vocabulary__attempt--correct">
+                <div
+                  className="text-book__words-list__word-translate--vocabulary__attempt text-book__words-list__word-translate--vocabulary__attempt--correct">
                   Правильно: {
                   wordIdCollection.filter((el) => (el.wordId === it.id))[0] &&
                   wordIdCollection.filter((el) => (el.wordId === it.id))[0].optional.correct
                 }
                 </div>
-                <div className="text-book__words-list__word-translate--vocabulary__attempt text-book__words-list__word-translate--vocabulary__attempt--uncorrect">
+                <div
+                  className="text-book__words-list__word-translate--vocabulary__attempt text-book__words-list__word-translate--vocabulary__attempt--uncorrect">
                   Неправильно: {
                   wordIdCollection.filter((el) => (el.wordId === it.id))[0] &&
                   wordIdCollection.filter((el) => (el.wordId === it.id))[0].optional.unCorrect
                 }
                 </div>
+                <div className={'vocabulary__words-list__btn-container'}>
+                  <button onClick={setDelete}
+                          className={'vocabulary__words-list__btn--delete'}
+                          title={'Переместить, в удаленные'}
+                          wordid={it.id}>Удалить
+                  </button>
+                  <button onClick={setHardDif}
+                          className={'vocabulary__words-list__btn--gohard'}
+                          title={'Переместить, в сложные'}
+                          wordid={it.id}>Сложное
+                  </button>
+                </div>
               </li>
             )
           )}
-          {wordStack.length === 0 && <b>Ничего пока нет</b>}
         </ul>
-        <p>{page}</p>
+        {wordStack.length === 0 && <div className={'text-book__words-list__empty-blank'}>
+          <span>
+            Ничего пока нет, играйте в мини игры в
+          </span>
+          <Link to={'/textbook'}>
+            учебнике
+          </Link>
+        </div>}
       </div>
 
       <div className={'text-book__bottom-controls'}>
         <div className={'text-book__pagination-container'}>
           <button className="text-book__pagination-btn btn"
-                  onClick={prevPageHandler}>Назад</button>
+                  onClick={prevPageHandler}>Назад
+          </button>
           <button className="text-book__pagination-btn btn"
-                  onClick={nextPageHandler}>Вперед</button>
+                  onClick={nextPageHandler}>Вперед
+          </button>
         </div>
-        <div>
-          <span>Группа: {group}</span>
-          <span>Страница: {page}</span>
-          <span>Слов в изучении: {wordStack.length}</span>
-          <span>Неправильных ответов:
-            {unCorrectAnswer && Math.floor(unCorrectAnswer/correctAnswer * 100)}%
+        <div className={'text-book__info-container'}>
+          <span className={'text-book__info__item'} title={'Сложность'}>{group + 1}</span>
+          <span className={'text-book__info__item'} title={'Страница'}>{page}</span>
+          <span className={'text-book__info__item'} title={'Слов в изучении'}>{wordStack.length}</span>
+          <span className={'text-book__info__item'} title={'Количество неправильных ответов'}>
+            {unCorrectAnswer && Math.floor(unCorrectAnswer / correctAnswer * 100)}%
           </span>
         </div>
       </div>
