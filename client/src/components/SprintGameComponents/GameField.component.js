@@ -6,8 +6,15 @@ import './Sprint.scss';
 import error from '../../assets/audio/error.mp3';
 import correct from '../../assets/audio/correct.mp3';
 import GameResult from "./Result";
+import bg1 from '../../assets/own-game-bg/own-game-bg-1.jpg';
+import bg2 from '../../assets/own-game-bg/own-game-bg-2.jpg';
+import bg3 from '../../assets/own-game-bg/own-game-bg-3.jpg';
+import bg4 from '../../assets/own-game-bg/own-game-bg-4.jpg';
+import MathHelper from "../../helper/Math.helper";
 
 const GameField = () => {
+    const background = [bg1, bg2, bg3, bg4];
+    const [currentBackground, setCurrentBackground] = useState(background[MathHelper.getRandomNumber(0, background.length - 1)]);
     const {request} = useHttp();
     const [index, setIndex] = useState(0);
     const [data, setData] = useState([]);
@@ -107,7 +114,7 @@ const GameField = () => {
         )
     } else {
         return (
-            <div className='sprint-container'>
+            <div className='sprint-container' style={{backgroundImage: `url(${currentBackground})`}}>
                 <div className='game-card'>
                     <div className='card-content-sprint'>
                         <NavLink to='/games'>
@@ -134,12 +141,12 @@ const GameField = () => {
                         <button onClick={() => {
                             handleClick(true);
                             setIndex(prev => ++prev);
-                        }} className='btn btn-large waves-effect green'>Правильно
+                        }} className='btn btn-large waves-effect correct-btn'>Правильно
                         </button>
                         <button onClick={() => {
                             handleClick(false);
                             setIndex(prev => ++prev);
-                        }} className='btn btn-large waves-effect red'>Не правильно
+                        }} className='btn btn-large waves-effect wrong-btn'>Не правильно
                         </button>
                     </div>
                 </div>
