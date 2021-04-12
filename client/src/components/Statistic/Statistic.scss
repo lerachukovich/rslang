@@ -5,9 +5,33 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        height: calc(100vh - 181px);
+        height: calc(100vh - 148px);
+
+        .collection {
+            font-family: 'Nunito', sans-serif;
+            max-height: 561px;
+            overflow: scroll;
+            &-item {
+                display: flex;
+                align-items: center;
+
+                .audio-icon {
+                    margin-right: 10px;
+                    cursor: pointer;
+                    &:hover {
+                        color: #004d40;
+                    }
+                }
+                span {
+                    margin-right: 10px;
+                    color: #004d40;
+                    font-weight: 700;
+                }
+            }
+        }
 
         .react-tabs {
+            font-family: 'Nunito', sans-serif;
             height: 95%;
             ul.react-tabs__tab-list {
                 display: flex;
@@ -19,7 +43,7 @@
                     font-size: 1.5rem;
                 }
                 li.react-tabs__tab--selected {
-                    // background-color: rgba(155, 155, 155, 0.5);                 
+                    // background-color: rgba(155, 155, 155, 0.5);
                 }
             }
             .react-tabs__tab-panel {

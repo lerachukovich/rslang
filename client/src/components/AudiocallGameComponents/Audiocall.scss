@@ -2,12 +2,33 @@
     height: 60%;
     width: 60%;
     margin: auto;
+
+    .card-action:last-child {
+        border-radius: 0 0 20px 20px;
+    }
+
     .card-main-audiocall {
+        margin-top: 50px;
         .card {
+            background: #b2dfdb;
+            border-radius: 20px;
+            font-family: 'Nunito', sans-serif;
+            text-align: center;
+            &-title {
+                font-size: 2rem;
+            }
+            &-level {
+                font-size: 1.5rem;
+            }
             &-content {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                padding: 24px 24px 0;
+                p {
+                    margin-bottom: 10px;
+                    font-size: 1.3rem;
+                }
             }
             &-words {
                 width: 80%;
@@ -19,7 +40,15 @@
                 justify-content: center;
                 width: 80%;
                 height: 40%;
+                border-radius: 20px;
+                .card-image {
+                    img {
+                        border-radius: 20px 0 0 20px;
+                    }
+                }
                 &-content {
+                    background: #4db6ac;
+                    border-radius: 0 20px 20px 0;
                     div {
                         display: flex;
                         justify-content: flex-start;
@@ -27,7 +56,7 @@
                         div {
                             display: flex;
                             flex-direction: column;
-                        }   
+                        }
                         span {
                             padding: 0.2rem;
                         }
@@ -46,11 +75,11 @@
                 flex-direction: column;
             }
         }
-    }    
+    }
 }
 
 .audiocall-promo__wrapper {
-    height: calc(100vh - 181px);
+    height: calc(100vh - 148px);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

@@ -47,7 +47,7 @@ const GameElement = ({sample, level, handleClick, readyNext}) => {
             {
                 readyNext ? (
                     <Bounce top>
-                        <div className="card blue-grey darken-1 card-audiocall">
+                        <div className="card darken-1 card-audiocall">
                             <div className="card-image">
                                 <img src={`/${answer.image}`} alt={answer.word}/>
                             </div>
@@ -99,7 +99,7 @@ const GameElement = ({sample, level, handleClick, readyNext}) => {
                                     setTadaAnim(!tadaAnim);
                                     handleClick(true);
                                 }}>
-                                    {index + 1} {item.wordTranslate}
+                                    {index + 1}: {item.wordTranslate}
                                 </button>
                             </Tada>
                         )
@@ -108,7 +108,7 @@ const GameElement = ({sample, level, handleClick, readyNext}) => {
                             item.isMistake = true;
                             setTadaAnim(!tadaAnim);
                             handleClick(false)
-                        }}>{index + 1} {item.wordTranslate}</button>
+                        }}>{index + 1}: {item.wordTranslate}</button>
                         )
                 })
             }
