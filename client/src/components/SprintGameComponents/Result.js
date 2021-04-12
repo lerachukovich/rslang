@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 const GameResult = ({ value, score }) => {
     return (
         <div className={'sprint'}>
-            <h2 className={'savanna__final-screen__title sprint__result-score'}> Ты набрал {score} очков!</h2>
+            <h2 className={'savanna__final-screen__title sprint__result-score'}> Ваш счет {score} очков!</h2>
             <b>Я знаю <span className={'savanna__final-screen__count correct'}>{value.correct.length}</span></b>
             <ul>
                 {

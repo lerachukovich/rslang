@@ -38,7 +38,7 @@ const RegisterForm = () => {
         file.append('file', image);
         file.append('upload_preset', 'rslang');
         file.append('cloud_name', 'rslang2021');
-        
+
         return await fetch('https://api.cloudinary.com/v1_1/rslang2021/image/upload', {
             method: 'post',
             body: file
@@ -100,7 +100,7 @@ const RegisterForm = () => {
                                     <div className="file-field input-field">
                                         <div className="btn btn-active">
                                             <span>Файл</span>
-                                            <input 
+                                            <input
                                                 type="file"
                                                 name="photo"
                                                 className="form-control-file"
@@ -126,9 +126,9 @@ const RegisterForm = () => {
                                     <div className="form-group" onMouseEnter={() => setIsShowPulse(true)} onMouseLeave={() => setIsShowPulse(false)}>
                                         <input
                                             type="submit"
-                                            className="form-control form-submit"
+                                            className="form-submit"
                                             id="btn"
-                                            value="Зарегистрировать"
+                                            value="Зарегистрироваться"
                                             disabled={loading}  />
                                     </div>
                                 </Pulse>
