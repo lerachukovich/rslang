@@ -15,6 +15,7 @@ const VocabularyPage = () => {
   const [correctAnswer, setCorrectAnswer] = useState(0);
   const [unCorrectAnswer, setUnCorrectAnswer] = useState(0);
   const [coefficient, setCoefficient] = useState(0);
+  const [showDeleted, setShowDeleted] = useState(true);
 
   const getWord = async ({ wordId }) => {
     try {
@@ -105,14 +106,17 @@ const VocabularyPage = () => {
   };
 
   useEffect(() => {
+    setShowDeleted(false);
     getUserWords({ userId });
   }, [page, group]);
 
   const showHardWords = () => {
+    setShowDeleted(false);
     getHardWords({ userId });
   };
 
   const showDeletedWords = () => {
+    setShowDeleted(true);
     getDeletedWords({ userId });
   };
 
@@ -140,7 +144,7 @@ const VocabularyPage = () => {
   };
 
   const setDelete = (e) => {
-    const tmp = wordIdCollection.filter(it => it.wordId === e.target.getAttribute('wordid'))
+    const tmp = wordIdCollection.filter(it => it.wordId === e.target.getAttribute('wordid'));
     UpdateUserWord({
       userId: userId,
       wordId: e.target.getAttribute('wordid'),
@@ -159,22 +163,31 @@ const VocabularyPage = () => {
   };
 
   return (
-    <div className={'text-book__wrapper'}>
+    <div className={'vocabulary__wrapper'}>
       <h1 className={'text-book__title'}>Словарь 📓</h1>
       <div className="text-book__button-container">
+        <div className={'text-book__button-container__categories'}>
+          Сложность:
         {new Array(5).fill().map((it, ind) => (
             <button
               key={ind}
               className={'level-btn waves-light btn'}
               onClick={chooseGroupHandler}
               datalevel={ind}>
-              Сложность: {ind + 1}
+              {ind + 1}
             </button>
           )
         )}
+        </div>
+        <div clasName={'text-book__button-container__categories'}>
+          <button
+            className={'level-btn waves-light red darken-2 btn'}
+            onClick={showHardWords}>Cложные</button>
+          <button
+            className={'level-btn waves-light blue-grey darken-1 btn'}
+            onClick={showDeletedWords}>Удаленные</button>
+        </div>
       </div>
-      <button onClick={showHardWords}>Hard</button>
-      <button onClick={showDeletedWords}>Deleted</button>
 
       <div className="text-book__words-list">
         <ul>
@@ -203,7 +216,7 @@ const VocabularyPage = () => {
                   wordIdCollection.filter((el) => (el.wordId === it.id))[0].optional.unCorrect
                 }
                 </div>
-                <div className={'vocabulary__words-list__btn-container'}>
+                <div className={`vocabulary__words-list__btn-container ${showDeleted && 'hide'}`}>
                   <button onClick={setDelete}
                           className={'vocabulary__words-list__btn--delete'}
                           title={'Переместить, в удаленные'}
@@ -239,8 +252,8 @@ const VocabularyPage = () => {
           </button>
         </div>
         <div className={'text-book__info-container'}>
-          <span className={'text-book__info__item'} title={'Сложность'}>{group + 1}</span>
-          <span className={'text-book__info__item'} title={'Страница'}>{page}</span>
+          <span className={`text-book__info__item ${showDeleted && 'hide'}`} title={'Сложность'}>{group + 1}</span>
+          <span className={`text-book__info__item ${showDeleted && 'hide'}`} title={'Страница'}>{page}</span>
           <span className={'text-book__info__item'} title={'Слов в изучении'}>{wordStack.length}</span>
           <span className={'text-book__info__item'} title={'Количество неправильных ответов'}>
             {unCorrectAnswer && Math.floor(unCorrectAnswer / correctAnswer * 100)}%
