@@ -21,8 +21,8 @@ $tablet-widths: "max-width: 1279px";
   font-size: 1.5rem;
 }
 
-.text-book__wrapper {
-  //@include container();
+.text-book__wrapper,
+.vocabulary__wrapper {
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -233,8 +233,8 @@ $tablet-widths: "max-width: 1279px";
 // In Vocabulary start
 .text-book__info-container {
   display: flex;
-  width: 30%;
-  justify-content: space-between;
+  width: 25%;
+  justify-content: flex-end;
 
 }
 
@@ -244,6 +244,7 @@ $tablet-widths: "max-width: 1279px";
   color: #fcfcfc;
   width: 30px;
   background-size: 100% 100%;
+  margin-right: 3rem;
   &::before {
     content: '';
     position: absolute;
@@ -331,6 +332,12 @@ $tablet-widths: "max-width: 1279px";
   display: none;
 }
 
+.vocabulary__wrapper .text-book__button-container {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+}
+
 // In vocabulary end
 
 .text-book__words-list .btn {
@@ -340,6 +347,10 @@ $tablet-widths: "max-width: 1279px";
   width: 34px;
   height: 34px;
   background-color: #0da4f6;
+}
+
+.hide {
+  opacity: 0;
 }
 
 @media ($mobile-widths) {
