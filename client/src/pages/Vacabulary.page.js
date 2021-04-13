@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import Spinner from '../components/Spinner/Spinner';
-import { UpdateUserWord } from '../helper/database.helper/updateUserWord.helper';
+import { UpdateUserWord } from '../helper/database.helper/UserWord.helper';
 
 const VocabularyPage = () => {
   const { token, userId, isAuthenticated } = useContext(AuthContext);

@@ -3,11 +3,11 @@ import Storage from '../helper/Storage';
 
 const useStatistic = () => {
 
-    const setStatistic = (obj, id = null, token = null) => {
+    const setStatistic = useCallback((obj, id = null, token = null) => {
         if (id === null) return Storage.setSettingStorage(obj);
 
         putWordsCount(obj, id, token)
-    }
+    });
 
     const putWordsCount =
         async (obj, id, token) => {
