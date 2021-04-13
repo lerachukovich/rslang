@@ -73,4 +73,6 @@ app.use((req, res, next) => next(createError(NOT_FOUND)));
 
 app.use(errorHandler);
 
+app.use(express.static(path.join(__dirname, 'client', 'build')));
+
 module.exports = app;

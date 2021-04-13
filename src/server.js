@@ -22,6 +22,9 @@ db.on('error', () => logger.error('MongoDB connection error:')).once(
   'open',
   () => {
     logger.info('Successfully connect to DB');
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+    });
     app.listen(PORT, () =>
       logger.info(`App is running on http://localhost:${PORT}`)
     );
