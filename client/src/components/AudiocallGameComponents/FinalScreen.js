@@ -22,10 +22,10 @@ const FinalScreen = ({ value }) => {
             ))}
         </ul>
         <b>Я не знаю <span
-            className={'savanna__final-screen__count uncorrect'}>{value.mistake.length}</span></b>
+            className={'savanna__final-screen__count uncorrect'}>{value.unCorrect.length}</span></b>
         <ul>
             {value.correct.length === 10 && <p>Ох, какой я красавчик :)</p>}
-            {value.mistake.map((it, ind) => (
+            {value.unCorrect.map((it, ind) => (
             <li className={'savanna-final-screen__word'} key={ind}>
                 <button className={'btn'} onClick={() => playSound(it.audio)}><i className={'material-icons'}>surround_sound</i></button>
                 {it.word} - {it.wordTranslate}</li>
