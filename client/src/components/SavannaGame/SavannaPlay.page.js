@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import useHttp from '../../hooks/http.hook';
 import MathHelper from '../../helper/Math.helper';
+import { UpdateUserWord }from '../../helper/database.helper/updateUserWord.helper';
 import useStatistic from '../../hooks/statistic.hook.js';
 import Spinner from '../Spinner/Spinner';
 import Word from './Savanna.word.component';
@@ -61,7 +62,7 @@ const SavannaPlay = () => {
   const [isSound, setIsSound] = useState(false);
   const [soundBtnClass, setSoundButtonClass] = useState('savanna__sound-control btn');
   const [userWords, setUserWords] = useState(null);
-  
+
   const {setStatistic} = useStatistic();
 
   const getUserWords = async ({ userId }) => {
@@ -88,20 +89,6 @@ const SavannaPlay = () => {
   const createUserWord = async ({ userId, wordId, word }) => {
     const rawResponse = await fetch(`/users/${userId}/words/${wordId}`, {
       method: 'POST',
-      withCredentials: true,
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(word)
-    });
-    const content = await rawResponse.json();
-  };
-
-  const updateUserWord = async ({ userId, wordId, word }) => {
-    const rawResponse = await fetch(`/users/${userId}/words/${wordId}`, {
-      method: 'PUT',
       withCredentials: true,
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -158,24 +145,26 @@ const SavannaPlay = () => {
           console.log(userWords);
           const tmpId = userWords.filter(el => el.wordId === it.id);
           if (tmpId.length) {
-            updateUserWord({
+            UpdateUserWord({
               userId: userId,
               wordId: it.id,
               word: {
                 difficulty: tmpId[0].difficulty, optional: {
+                  deleted: tmpId[0].optional.deleted,
                   page: page,
                   group: group,
                   correct: tmpId[0].optional.correct += 1,
                   unCorrect: tmpId[0].optional.unCorrect
                 }
               }
-            });
+            }, token);
           } else {
             createUserWord({
               userId: userId,
               wordId: it.id,
               word: {
                 difficulty: 'weak', optional: {
+                  deleted: false,
                   page: page,
                   group: group,
                   correct: 1,
@@ -190,24 +179,26 @@ const SavannaPlay = () => {
         answers.unCorrect.map(it => {
           const tmpId = userWords.filter(el => el.wordId === it.id);
           if (tmpId.length) {
-            updateUserWord({
+            UpdateUserWord({
               userId: userId,
               wordId: it.id,
               word: {
                 difficulty: tmpId[0].difficulty, optional: {
+                  deleted: tmpId[0].optional.deleted,
                   page: page,
                   group: group,
                   correct: tmpId[0].optional.correct,
                   unCorrect: tmpId[0].optional.unCorrect += 1
                 }
               }
-            });
+            }, token);
           } else {
             createUserWord({
               userId: userId,
               wordId: it.id,
               word: {
                 difficulty: 'weak', optional: {
+                  deleted: false,
                   page: page,
                   group: group,
                   correct: 0,
@@ -339,11 +330,11 @@ const SavannaPlay = () => {
   };
 
   const setHardDif = (e) => {
-    updateUserWord({
+    UpdateUserWord({
       userId: userId,
       wordId: e.target.getAttribute('wordid'),
       word: { difficulty: 'hard' }
-    });
+    }, token);
   };
 
   useEffect(() => {

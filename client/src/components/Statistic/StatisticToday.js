@@ -3,7 +3,7 @@ import './Statistic.scss';
 
 const StatisticToday = (props) => {
     const [words, setWords] = useState([]);
-    
+
     const playSound = url => {
         const audio = new Audio(`/${url}`);
         audio.play();
@@ -25,10 +25,8 @@ const StatisticToday = (props) => {
                         words.map((word, idx) => {
                             return (
                                 <li className="collection-item" key={idx}>
-                                    <i className="small material-icons" onClick={playSound.bind(null, word.audio)}>volume_up</i>
-                                    <span>{word.word}</span>
-                                    <span>{word.transcription}</span>
-                                    <span>{word.wordTranslate}</span>
+                                    <i className="small material-icons audio-icon" onClick={playSound.bind(null, word.audio)}>volume_up</i>
+                                    <span>{word.word} -</span><span>{word.transcription} -</span><span>{word.wordTranslate}</span>
                                 </li>
                             )
                         })

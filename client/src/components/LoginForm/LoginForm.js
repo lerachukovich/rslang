@@ -21,7 +21,7 @@ const LoginForm = () => {
         email: '',
         password: ''
     })
-    
+
     useEffect(() => {
         message(error);
         clearError();
@@ -39,7 +39,7 @@ const LoginForm = () => {
             auth.login(data.token, data.userId, data.photo, data.name);
             localStorage.setItem(storageName, JSON.stringify(new Date().toISOString()))
             history.push('/');
-        } catch (e) {     
+        } catch (e) {
         }
     }
 
@@ -84,7 +84,7 @@ const LoginForm = () => {
                                     <div className="form-group" onMouseEnter={() => setIsShowPulse(true)} onMouseLeave={() => setIsShowPulse(false)}>
                                         <input
                                             type="submit"
-                                            className="form-control form-submit"
+                                            className="form-submit"
                                             value="Войти"
                                             id="btn"
                                             disabled={loading} />

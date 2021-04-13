@@ -89,12 +89,12 @@ const GameAudiocall = () => {
                 })
                 setData(words);
             } catch (e) {
-                
+
             }
         },
         [request]
     )
-    
+
     const handleClick = (isCorrect) => {
         if (readyNext) return;
         if (isCorrect) {
@@ -132,12 +132,12 @@ const GameAudiocall = () => {
                     <Flip left when={show}>
                         <div className="row audiocall-wrapper">
                             <div className="col s12 m12 card-main-audiocall">
-                                <div className="card blue-grey darken-1">
+                                <div className="card darken-1">
                                     <div className="card-content white-text">
                                         {
                                             currentSample.length > 0 && (
-                                            <GameElement 
-                                                sample={currentSample} 
+                                            <GameElement
+                                                sample={currentSample}
                                                 level={level}
                                                 handleClick={handleClick}
                                                 readyNext={readyNext}/>
@@ -147,7 +147,7 @@ const GameAudiocall = () => {
                                     <div className="card-action">
                                         <NavLink to='/games/audiocall'>
                                             <button className="btn waves-effect waves-light red lighten-2" type="submit" name="action">Выход
-                                                <i className="material-icons left">arrow_back</i>                                
+                                                <i className="material-icons left">arrow_back</i>
                                             </button>
                                         </NavLink>
                                         {
@@ -157,7 +157,7 @@ const GameAudiocall = () => {
                                                 </button>
                                             ) : (
                                                 <button className="btn" onClick={() => {
-                                                    handleClick(false);           
+                                                    handleClick(false);
                                                 }}>Я не знаю</button>
                                             )
                                         }

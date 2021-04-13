@@ -13,6 +13,10 @@
     margin-bottom: 50px;
     padding: 20px;
     border-radius: 20px;
+    .form-control {
+        padding: 5px 0 5px 10px !important;
+        border-radius: 10px !important;
+    }
 }
 
 .card-body {
@@ -78,7 +82,7 @@
 .form-submit {
     background-color: rgba(16, 112, 177, 0.5);
     padding: 1rem 2rem;
-    border: 1px solid white;
+    border: none;
     color: white;
     border-radius: 10px;
     outline: none;
