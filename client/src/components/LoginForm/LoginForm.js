@@ -8,6 +8,8 @@ import RubberBand from 'react-reveal/RubberBand';
 import Pulse from 'react-reveal/Pulse';
 import Fade from 'react-reveal/Fade';
 
+const storageName = 'userDataRSLangLoginTime';
+
 const LoginForm = () => {
     const history = useHistory();
     const auth = useContext(AuthContext);
@@ -34,7 +36,8 @@ const LoginForm = () => {
         try {
             const data = await request('/signin', 'POST', {...form});
             // auth.login(data.token, data.userId, data.image, data.name);
-            auth.login(data.token, data.userId, data.photo, data.name)
+            auth.login(data.token, data.userId, data.photo, data.name);
+            localStorage.setItem(storageName, JSON.stringify(new Date().toISOString()))
             history.push('/');
         } catch (e) {     
         }

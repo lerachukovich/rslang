@@ -9,28 +9,26 @@ const useStatistic = () => {
         putWordsCount(obj, id, token)
     })
 
-    const putWordsCount = useCallback(
-        async (obj, id, token) => {
-            try {
-                await fetch(`/users/${id}/statistics`, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        learnedWords: {
-                            date: new Date(),
-                            word: obj
-                        }
-                    })
+    const putWordsCount = async (obj, id, token) => {
+        try {
+            await fetch(`/users/${id}/statistics`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    learnedWords: {
+                        date: new Date(),
+                        word: obj
+                    }
                 })
-            } catch (e) {
-                
-            }
-        }, []
-    )
+            })
+        } catch (e) {
+            
+        }
+    }
 
     return {setStatistic}
 }

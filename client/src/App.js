@@ -12,11 +12,12 @@ function App() {
   const {login, logout, token, userId, name, photo, timeLogin} = useAuth();
   const isAuthenticated = !!token;
 
-  console.log(timeLogin)
-
   useEffect(() => {
-    if (isAuthenticated) {
-      console.log(new Date().getTime() - new Date(timeLogin).getTime())
+    if (isAuthenticated) {                          
+      if ((new Date().getTime() - new Date(JSON.parse(localStorage.getItem('userDataRSLangLoginTime'))).getTime()) > 14400000) {
+        console.log(new Date().getTime() - new Date(JSON.parse(localStorage.getItem('userDataRSLangLoginTime'))).getTime())
+        logout();
+    }
     }
   }, [])
 

@@ -7,17 +7,14 @@ export const useAuth = () => {
     const [userId, setUserId] = useState(null);
     const [name, setName] = useState(null);
     const [photo, setPhoto] = useState(null);
-    const [timeLogin, setTimeLogin] = useState(null);
 
     const login = useCallback((jwtToken, id, picture, nicName) => {
-        const time = new Date().toISOString();
         setToken(jwtToken);
         setUserId(id);
         setName(nicName);
         setPhoto(picture)
-        setTimeLogin(time)
 
-        localStorage.setItem(storageName, JSON.stringify({token: jwtToken, userId: id, name: nicName, photo: picture, timeLogin: time}));
+        localStorage.setItem(storageName, JSON.stringify({token: jwtToken, userId: id, name: nicName, photo: picture}));
     }, [])
 
     const logout = useCallback(() => {
@@ -26,6 +23,7 @@ export const useAuth = () => {
         setName(null);
         setPhoto(null)
         localStorage.removeItem(storageName);
+        localStorage.removeItem('userDataRSLangLoginTime');
     }, [])
 
     useEffect(() => {
@@ -36,5 +34,5 @@ export const useAuth = () => {
         }
     }, [login])
 
-    return { login, logout, token, userId, name, photo, timeLogin}
+    return { login, logout, token, userId, name, photo}
 }
