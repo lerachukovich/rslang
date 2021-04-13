@@ -6,7 +6,10 @@ import {
     YAxis,
     Tooltip,
     Bar,
-    CartesianGrid
+    CartesianGrid,
+    linearGradient,
+    AreaChart,
+    Area
 } from 'recharts';
 import {format, parseISO, subDays, subMonths} from 'date-fns';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
@@ -86,7 +89,12 @@ const StatisticGlobal = ({statistic}) => {
                             data={dataMonth}  
                             width={10} 
                             height={40}>
-                            <Bar dataKey="value" fill="#8884d8" onClick={handleClick} />
+                            <defs>
+                                <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stopColor="#2451B7" stopOpacity={0.7} />
+                                    <stop offset="75%" stopColor="#2451B7" stopOpacity={0.1} />
+                                </linearGradient>
+                            </defs>
                             <XAxis dataKey="date" 
                                 tickFormatter={(str) => {
                                     const date = parseISO(str);
@@ -94,10 +102,12 @@ const StatisticGlobal = ({statistic}) => {
                                     return format(date, "MMM, d");
                                     }
                                     return "";
-                                }}/>
-                            <YAxis dataKey="value" />
-                            <CartesianGrid opacity={0.5} />
+                                }} 
+                                tickLine={false} />
+                            <YAxis dataKey="value"  axisLine={false} tickLine={false} />
+                            <CartesianGrid opacity={0.4} vertical={false} />
                             <Tooltip content={<CustomTooltip />} />
+                            <Bar dataKey="value" fill="url(#color)" onClick={handleClick} />
                         </BarChart>
                     </ResponsiveContainer>
                     {
@@ -126,16 +136,23 @@ const StatisticGlobal = ({statistic}) => {
                         <BarChart 
                             data={dataYear}  
                             width={10} 
-                            height={40}>
-                            <Bar dataKey="value" fill="#8884d8" onClick={handleClick} />
+                            height={40}>                                
+                            <defs>
+                                <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stopColor="#2451B7" stopOpacity={0.7} />
+                                    <stop offset="75%" stopColor="#2451B7" stopOpacity={0.1} />
+                                </linearGradient>
+                            </defs>
                             <XAxis dataKey="date" 
                                 tickFormatter={(str) => {
                                     const date = parseISO(str);
                                     return format(date, "MMM yyyy");
-                                }} />
-                            <YAxis dataKey="value" />
-                            <CartesianGrid opacity={0.5} />
+                                }}
+                                tickLine={false} />
+                            <YAxis dataKey="value" axisLine={false} tickLine={false} />
+                            <CartesianGrid opacity={0.4} vertical={false} />
                             <Tooltip content={<CustomTooltip />} />
+                            <Bar dataKey="value" fill="url(#color)" onClick={handleClick} />
                         </BarChart>
                     </ResponsiveContainer>
                     {

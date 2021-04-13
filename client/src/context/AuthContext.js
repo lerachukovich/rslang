@@ -9,5 +9,6 @@ export const AuthContext = createContext({
     photo: null,
     login: noop,
     logout: noop,
-    isAuthenticated: false
+    isAuthenticated: false,
+    timeLogin: null
 })

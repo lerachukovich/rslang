@@ -23,6 +23,7 @@ export const useAuth = () => {
         setName(null);
         setPhoto(null)
         localStorage.removeItem(storageName);
+        localStorage.removeItem('userDataRSLangLoginTime');
     }, [])
 
     useEffect(() => {
