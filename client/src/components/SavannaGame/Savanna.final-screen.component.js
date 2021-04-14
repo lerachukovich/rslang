@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 const FinalScreen = ({ value }) => {
@@ -14,7 +14,7 @@ const FinalScreen = ({ value }) => {
         {value.answers.correct.map((it, ind) => (
           <li className={'savanna-final-screen__word'} key={ind}>
             <button className={'btn'} onClick={() => value.soundHandler(it.audio)}><i className={'material-icons'}>surround_sound</i></button>
-            {it.word} - {it.wordTranslate} <button className='hard-word' onClick={value.setHardDif} wordid={it.id}>hard word</button></li>
+            {it.word} - {it.wordTranslate}</li>
         ))}
       </ul>
       <b>Я не знаю <span
@@ -24,7 +24,10 @@ const FinalScreen = ({ value }) => {
         {value.answers.unCorrect.map((it, ind) => (
           <li className={'savanna-final-screen__word'} key={ind}>
             <button className={'btn'} onClick={() => value.soundHandler(it.audio)}><i className={'material-icons'}>surround_sound</i></button>
-            {it.word} - {it.wordTranslate}</li>
+            {it.word} - {it.wordTranslate}
+            {value.isFromTextBook && <button className={'savanna__final-screen__word-list__btn--gohard'} onClick={value.setHardDif} wordid={it.id} title={'Переместить в сложные'}>hard
+              word</button>}
+          </li>
         ))}
       </ul>
     </div>

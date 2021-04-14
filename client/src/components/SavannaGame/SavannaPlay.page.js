@@ -39,6 +39,7 @@ const SavannaPlay = () => {
   const data = props.location.data;
   const page = props.location.page;
   const group = props.location.group;
+  const isFromTextBook = props.location.fromTextBook;
 
   const [isGameBegin, setIsGameBegin] = useState(props.location.fromTextBook || false);
   const [level, setLevel] = useState('');
@@ -327,7 +328,7 @@ const SavannaPlay = () => {
         backgroundPosition: `0 ${backgroundPosition}%`,
         backgroundImage: `url(${currentBackground})`
       }}>
-        <FinalScreen value={{ answers, soundHandler, setHardDif }}/>
+        <FinalScreen value={{ answers, soundHandler, setHardDif, isFromTextBook }}/>
       </div>
     );
   } else if (!isGameBegin) {

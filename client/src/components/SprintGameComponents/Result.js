@@ -9,15 +9,15 @@ const GameResult = ({ value, score }) => {
             <ul>
                 {
                     value.correct.map(el => {
-                        return <li className={'savanna-final-screen__word'}>{el[0]} - {el[1]}</li>
+                        return <li className={'savanna-final-screen__word'}>{el.word} - {el.wordTranslate}</li>
                     })
                 }
             </ul>
-            <b>Я не знаю <span className={'savanna__final-screen__count uncorrect'}>{value.wrong.length}</span></b>
+            <b>Я не знаю <span className={'savanna__final-screen__count uncorrect'}>{value.unCorrect.length}</span></b>
             <ul>
                 {
-                    value.wrong.map(el => {
-                        return <li className={'savanna-final-screen__word'}>{el[0]} - {el[1]}</li>
+                    value.unCorrect.map(el => {
+                        return <li className={'savanna-final-screen__word'}>{el.word} - {el.wordTranslate}</li>
                     })
                 }
             </ul>

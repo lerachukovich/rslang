@@ -180,13 +180,16 @@ const TextBook = () => {
 
         {auth.isAuthenticated && (
           <div className="text-book_game-container">
-            <Link className={'text-book__game__item'} to={{pathname: '/games/audiocall/playing', wordsCollection: currentCollection, fromTextBook: true, page: page, group: group}}>
+            <Link className={'text-book__game__item'}
+                  to={{pathname: '/games/audiocall/playing', wordsCollection: currentCollection, fromTextBook: true, page: page, group: group}}>
               Аудиовызов
             </Link>
-            <Link className={'text-book__game__item'} to={'/games/sprint/playing'}>
+            <Link className={'text-book__game__item'}
+                  to={{pathname: '/games/sprint/playing', data: currentCollection, fromTextBook: true, page: page, group: group}}>
               Спринт
             </Link>
-            <Link className={'text-book__game__item'} to={{pathname: '/games/savanna/play', data: currentCollection, fromTextBook: true, page: page, group: group}}>
+            <Link className={'text-book__game__item'}
+                  to={{pathname: '/games/savanna/play', data: currentCollection, fromTextBook: true, page: page, group: group}}>
               Саванна
             </Link>
             <Link className={'text-book__game__item'} to={'/'}>
