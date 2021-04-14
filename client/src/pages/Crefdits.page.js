@@ -9,7 +9,7 @@ const CreditsPage = () => {
     const developers = [
         {
             name: 'Алексей',
-            text: 'Бэкэнд, игра Аудиовызов, авторизация',
+            text: 'Бэкэнд, игра Аудиовызов, авторизация, статистика',
             img_source: alex
         },
         {
@@ -19,7 +19,7 @@ const CreditsPage = () => {
         },
         {
             name: 'Олег',
-            text: 'Роутинг, Игра Саванна',
+            text: 'Роутинг, Игра Саванна, учебник, словарь',
             img_source: oleg
         },
         {

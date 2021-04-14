@@ -11,7 +11,6 @@ import AuthPage from './pages/Auth.page';
 import GameField from "./components/SprintGameComponents/GameField.component";
 import Audiocall from './components/AudiocallGameComponents/Audiocall';
 import GameAudiocall from './components/AudiocallGameComponents/GameAudiocall';
-import Statistic from './components/AudiocallGameComponents/Statistic';
 import SavannaPromo from './pages/SavannaPromo.page';
 import SavannaPlay from './components/SavannaGame/SavannaPlay.page';
 import SprintWelcome from "./components/SprintGameComponents/SprintWelcome.component";

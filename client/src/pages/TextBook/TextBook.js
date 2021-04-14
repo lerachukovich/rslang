@@ -1,12 +1,14 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useHttp from '../../hooks/http.hook';
 import useMessage from '../../hooks/message.hook';
 import Spinner from '../../components/Spinner/Spinner';
 import Error from '../../components/Error/Error';
+import {AuthContext} from '../../context/AuthContext';
 import '../../styles/TextBook.page.scss';
 
 const TextBook = () => {
+  const auth = useContext(AuthContext);
   const [group, setGroup] = useState(0);
   const [page, setPage] = useState(0);
   const [currentCollection, setCurrentCollection] = useState(null);
@@ -176,20 +178,22 @@ const TextBook = () => {
           </button>}
         </div>
 
-        <div className="text-book_game-container">
-          <Link className={'text-book__game__item'} to={{pathname: '/games/audiocall/playing', wordsCollection: currentCollection, fromTextBook: true, page: page, group: group}}>
-            Аудиовызов
-          </Link>
-          <Link className={'text-book__game__item'} to={'/games/sprint/playing'}>
-            Спринт
-          </Link>
-          <Link className={'text-book__game__item'} to={{pathname: '/games/savanna/play', data: currentCollection, fromTextBook: true, page: page, group: group}}>
-            Саванна
-          </Link>
-          <Link className={'text-book__game__item'} to={'/'}>
-            Расставь слова
-          </Link>
-        </div>
+        {auth.isAuthenticated && (
+          <div className="text-book_game-container">
+            <Link className={'text-book__game__item'} to={{pathname: '/games/audiocall/playing', wordsCollection: currentCollection, fromTextBook: true, page: page, group: group}}>
+              Аудиовызов
+            </Link>
+            <Link className={'text-book__game__item'} to={'/games/sprint/playing'}>
+              Спринт
+            </Link>
+            <Link className={'text-book__game__item'} to={{pathname: '/games/savanna/play', data: currentCollection, fromTextBook: true, page: page, group: group}}>
+              Саванна
+            </Link>
+            <Link className={'text-book__game__item'} to={'/'}>
+              Расставь слова
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

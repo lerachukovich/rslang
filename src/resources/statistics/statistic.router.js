@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
 
 router.put('/', validator(statistics, 'body'), async (req, res) => {
   await statisticService.upsert(req.userId, req.body);
-  // console.log(statistic.learnedWords);
+  // console.log(statistic);
   res.status(OK).json({ message: 'sended' });
 });
 
