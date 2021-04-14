@@ -281,12 +281,7 @@ const OwnGameMain = () => {
     } else if(gameIsFinished) {
         return (
             <div className={'savanna-promo__wrapper'} style={{backgroundImage: `url(${currentBackground})`}}>
-                <FinalScreen
-                    correctAnswers={correctAnswers}
-                    wrongAnswers={wrongAnswers}
-                    wordCollection={wordCollection}
-                    soundHandler={soundHandler}
-                />            
+                <FinalScreen value={answers}/>            
             </div>
         )
     }
