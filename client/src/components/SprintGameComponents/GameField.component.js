@@ -52,7 +52,6 @@ const GameField = () => {
 
 
   useEffect(() => {
-    console.log(data);
     if (!isFromTextBook) {
       getWords();
     }
@@ -163,7 +162,6 @@ const GameField = () => {
         });
         setData(words);
       } catch (e) {
-        console.log(e);
       }
     },
     [request]
@@ -177,12 +175,9 @@ const GameField = () => {
       setCurrentWord(words[0][index]);
       setCurrentTranslate(words[1][index + 1]);
     }
-    console.log('foo', words);
   };
 
   const handleClick = (userAnswer, e) => {
-
-    console.log(userAnswer, e.target.getAttribute('worddata'));
     const currentWordObj = data.filter(it => it.word ===  e.target.getAttribute('worddata'))
     showWord();
     isCorrect(userAnswer, currentWordObj[0]);
@@ -212,9 +207,17 @@ const GameField = () => {
     }, 1000);
   };
 
+  const setHardDif = (e) => {
+    UpdateUserWord({
+      userId: userId,
+      wordId: e.target.getAttribute('wordid'),
+      word: { difficulty: 'hard' }
+    }, token);
+  };
+
   if (endGame) {
     return (
-      <GameResult score={score} value={answers}/>
+      <GameResult value={{answers, score, setHardDif, isFromTextBook}}/>
     );
   } else {
     return (
