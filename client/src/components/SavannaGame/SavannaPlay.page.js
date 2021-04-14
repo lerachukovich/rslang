@@ -353,7 +353,7 @@ const SavannaPlay = () => {
         </button>
 
         {currentWord &&
-        <Word value={{ healthHandler, refreshFieldHandler, wordCollection, currentWord, currentStep }}/>}
+        <Word value={{ healthHandler, refreshFieldHandler, failureTurn, wordCollection, currentWord, currentStep }}/>}
         {!wordCollection && <Spinner className={'savanna__spinner'}/>}
         {currentFourWord &&
         <WordControl value={{ btnColorClass, wordCollection, currentFourWord, currentStep, chooseHandler }}/>}

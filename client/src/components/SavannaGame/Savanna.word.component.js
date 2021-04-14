@@ -18,9 +18,11 @@ const Word = ({ value }) => {
 
   useEffect(() => {
     if (wordPosition === MAX_WORD_POSITION) {
+      const id1 = value.wordCollection.filter(it => it.word === value.currentWord);
       clearInterval(intervalId);
-      value.healthHandler();
-      value.refreshFieldHandler();
+      // value.healthHandler();
+      // value.refreshFieldHandler();
+      value.failureTurn(id1[0]);
     }
   }, [wordPosition]);
 
