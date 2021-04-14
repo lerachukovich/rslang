@@ -1,12 +1,14 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useHttp from '../../hooks/http.hook';
 import useMessage from '../../hooks/message.hook';
 import Spinner from '../../components/Spinner/Spinner';
 import Error from '../../components/Error/Error';
+import {AuthContext} from '../../context/AuthContext';
 import '../../styles/TextBook.page.scss';
 
 const TextBook = () => {
+  const auth = useContext(AuthContext);
   const [group, setGroup] = useState(0);
   const [page, setPage] = useState(0);
   const [currentCollection, setCurrentCollection] = useState(null);
@@ -95,7 +97,7 @@ const TextBook = () => {
   return (
     <div className={'text-book__wrapper'}>
       <h1 className={'text-book__title'}>Учебник 📕</h1>
-      <div className="text-book__button-container"> Сложность:
+      <div className="text-book__button-container"> <span>Сложность:</span>
         {new Array(5).fill().map((it, ind) => (
             <button
               key={ind}
@@ -176,20 +178,30 @@ const TextBook = () => {
           </button>}
         </div>
 
-        <div className="text-book_game-container">
-          <Link className={'text-book__game__item'} to={{pathname: '/games/audiocall/playing', wordsCollection: currentCollection}}>
-            Аудиовызов
-          </Link>
-          <Link className={'text-book__game__item'} to={'/games/sprint/playing'}>
-            Спринт
-          </Link>
-          <Link className={'text-book__game__item'} to={{pathname: '/games/savanna/play', data: currentCollection, fromTextBook: true, page: page, group: group}}>
-            Саванна
-          </Link>
-          <Link className={'text-book__game__item'} to={'/'}>
-            Расставь слова
-          </Link>
+        <div className={'text-book__info-container'}>
+          <span className={"text-book__info__item"} title={'Сложность'}>{group + 1}</span>
+          <span className={"text-book__info__item"} title={'Страница'}>{page}</span>
         </div>
+
+        {auth.isAuthenticated && (
+          <div className="text-book_game-container">
+            <Link className={'text-book__game__item'}
+                  to={{pathname: '/games/audiocall/playing', wordsCollection: currentCollection, fromTextBook: true, page: page, group: group}}>
+              Аудиовызов
+            </Link>
+            <Link className={'text-book__game__item'}
+                  to={{pathname: '/games/sprint/playing', data: currentCollection, fromTextBook: true, page: page, group: group}}>
+              Спринт
+            </Link>
+            <Link className={'text-book__game__item'}
+                  to={{pathname: '/games/savanna/play', data: currentCollection, fromTextBook: true, page: page, group: group}}>
+              Саванна
+            </Link>
+            <Link className={'text-book__game__item'} to={{pathname: '/games/owngame/play', data: currentCollection, fromTextBook: true, page: page, group: group}}>
+              Расставь слова
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

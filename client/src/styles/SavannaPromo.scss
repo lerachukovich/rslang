@@ -2,7 +2,7 @@ $mobile-widths: "max-width: 767px";
 $tablet-widths: "max-width: 1279px";
 
 .savanna-promo__wrapper {
-  height: calc(100vh - 146px);
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

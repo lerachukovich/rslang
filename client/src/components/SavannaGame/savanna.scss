@@ -2,7 +2,7 @@ $mobile-widths: "max-width: 767px";
 $tablet-widths: "max-width: 1279px";
 
 .savanna-wrapper {
-  height: calc(100vh - 148px);
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -129,15 +129,6 @@ $tablet-widths: "max-width: 1279px";
   &:hover {
     background-color: rgba(0, 0 , 0, 0.1);
   }
-  & button {
-    margin-right: 13px;
-    padding: 0;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background-color: #0da4f6;
-    border: none;
-  }
   .hard-word {
     margin-left: 10px;
     font-size: 11px;
@@ -146,6 +137,29 @@ $tablet-widths: "max-width: 1279px";
   }
 }
 
+.savanna__final-screen__word-list__btn--gohard {
+  margin-left: 2rem;
+  display: block;
+  font-size: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  opacity: 0.6;
+  transition: 0.2s ease-out;
+  cursor: pointer;
+  background-image: url("../../assets/vocabulary/network.svg");
+  background-size: 70% 70%;
+  align-self: flex-end!important;
+  justify-self: flex-end!important;
+  background-color: transparent!important;
+  &:hover {
+    opacity: 1;
+  }
+}
 .savanna_final-screen__quote {
   text-align: center;
   font-style: italic;
@@ -267,6 +281,10 @@ $time: 1;
 
   .savanna__final-screen-wrapper {
     width: 90%;
+  }
+
+  .dank-ass-loader {
+    bottom: -35%!important;
   }
 }
 

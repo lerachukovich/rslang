@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useCallback, useContext, useMemo } from 'react';
+import React, { useEffect, useState, useCallback, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import useHttp from '../../hooks/http.hook';
 import MathHelper from '../../helper/Math.helper';
-import { UpdateUserWord }from '../../helper/database.helper/updateUserWord.helper';
+import { UpdateUserWord, CreateUserWord }from '../../helper/database.helper/UserWord.helper';
+import {GetUserWords} from '../../helper/database.helper/getUserWords.helper';
 import useStatistic from '../../hooks/statistic.hook.js';
 import Spinner from '../Spinner/Spinner';
 import Word from './Savanna.word.component';
@@ -38,6 +39,7 @@ const SavannaPlay = () => {
   const data = props.location.data;
   const page = props.location.page;
   const group = props.location.group;
+  const isFromTextBook = props.location.fromTextBook;
 
   const [isGameBegin, setIsGameBegin] = useState(props.location.fromTextBook || false);
   const [level, setLevel] = useState('');
@@ -45,7 +47,6 @@ const SavannaPlay = () => {
   const hearts = [];
   const backgrounds = [bg1, bg2, bg3, bg4];
   const [wordCollection, setWordCollection] = useState( data || null);
-  console.log(data);
   const { loading, request, error } = useHttp();
   const [currentWord, setCurrentWord] = useState(null);
   const [currentFourWord, setCurrentFourWord] = useState(null);
@@ -65,40 +66,13 @@ const SavannaPlay = () => {
 
   const {setStatistic} = useStatistic();
 
-  const getUserWords = async ({ userId }) => {
-    const rawResponse = await fetch(`/users/${userId}/words/`, {
-      method: 'GET',
-      withCredentials: true,
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Accept': 'application/json'
-      }
-    });
-    const content = await rawResponse.json();
-    setUserWords(content);
-  };
-
   useEffect(() => {
     if (!isAuthenticated) {
       return;
     }
-    getUserWords({ userId });
+    GetUserWords({ userId }, token, setUserWords);
     if (data) setWordCollection(MathHelper.shuffleArray(data));
   }, [isAuthenticated]);
-
-  const createUserWord = async ({ userId, wordId, word }) => {
-    const rawResponse = await fetch(`/users/${userId}/words/${wordId}`, {
-      method: 'POST',
-      withCredentials: true,
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(word)
-    });
-    const content = await rawResponse.json();
-  };
 
   for (let i = 0; i < lives; i += 1) {
     hearts.push(<Heart key={i}/>);
@@ -142,7 +116,6 @@ const SavannaPlay = () => {
       if (props.location.fromTextBook) {
 
         answers.correct.map(it => {
-          console.log(userWords);
           const tmpId = userWords.filter(el => el.wordId === it.id);
           if (tmpId.length) {
             UpdateUserWord({
@@ -159,7 +132,7 @@ const SavannaPlay = () => {
               }
             }, token);
           } else {
-            createUserWord({
+            CreateUserWord({
               userId: userId,
               wordId: it.id,
               word: {
@@ -171,7 +144,7 @@ const SavannaPlay = () => {
                   unCorrect: 0,
                 }
               }
-            });
+            }, token);
           }
         });
 
@@ -193,7 +166,7 @@ const SavannaPlay = () => {
               }
             }, token);
           } else {
-            createUserWord({
+            CreateUserWord({
               userId: userId,
               wordId: it.id,
               word: {
@@ -205,7 +178,7 @@ const SavannaPlay = () => {
                   unCorrect: 1
                 }
               }
-            });
+            }, token);
           }
         });
       }
@@ -355,7 +328,7 @@ const SavannaPlay = () => {
         backgroundPosition: `0 ${backgroundPosition}%`,
         backgroundImage: `url(${currentBackground})`
       }}>
-        <FinalScreen value={{ answers, soundHandler, setHardDif }}/>
+        <FinalScreen value={{ answers, soundHandler, setHardDif, isFromTextBook }}/>
       </div>
     );
   } else if (!isGameBegin) {
@@ -380,7 +353,7 @@ const SavannaPlay = () => {
         </button>
 
         {currentWord &&
-        <Word value={{ healthHandler, refreshFieldHandler, wordCollection, currentWord, currentStep }}/>}
+        <Word value={{ healthHandler, refreshFieldHandler, failureTurn, wordCollection, currentWord, currentStep }}/>}
         {!wordCollection && <Spinner className={'savanna__spinner'}/>}
         {currentFourWord &&
         <WordControl value={{ btnColorClass, wordCollection, currentFourWord, currentStep, chooseHandler }}/>}

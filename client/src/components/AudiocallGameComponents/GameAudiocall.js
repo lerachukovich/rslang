@@ -18,6 +18,8 @@ import bg2 from '../../assets/audiocall/bg-call-2.jpg';
 import bg3 from '../../assets/audiocall/bg-call-3.jpg';
 
 import useStatistic from '../../hooks/statistic.hook.js';
+import { CreateUserWord, UpdateUserWord } from '../../helper/database.helper/UserWord.helper';
+import { GetUserWords } from '../../helper/database.helper/getUserWords.helper';
 
 const GameAudiocall = () => {
 
@@ -31,8 +33,10 @@ const GameAudiocall = () => {
 
     const props = useHistory();
     const {state, wordsCollection} = props.location;
+    const isFromTextBook = props.location.fromTextBook;
 
     const auth = useContext(AuthContext);
+    const { isAuthenticated, userId, token } = useContext(AuthContext);
     const {request} = useHttp();
     const {setStatistic} = useStatistic();
 
@@ -41,7 +45,7 @@ const GameAudiocall = () => {
     const [currentSample, setCurrentSample] = useState([]);
     const [answers, setAnswers] = useState({
         correct: [],
-        mistake: []
+        unCorrect: []
     });
     const [readyNext, setReadyNext] = useState(false);
     const [show, setShow] = useState(true);
@@ -53,6 +57,20 @@ const GameAudiocall = () => {
     const [correctSound] = useSound(correct);
     const [errorSound] = useSound(error);
     const [isSound, setIsSound] = useState(true);
+
+    // Connect with vocabulary
+    const [userWords, setUserWords] = useState(null);
+    const page = props.location.page;
+    const group = props.location.group;
+
+    useEffect(() => {
+        if (!isAuthenticated) {
+            return;
+        }
+        GetUserWords({ userId }, token, setUserWords);
+    }, [isAuthenticated]);
+
+    // Connect with vocabulary
 
     useEffect(() => {
         if (data.length === 0) getWords();
@@ -66,7 +84,78 @@ const GameAudiocall = () => {
 
     useEffect(() => {
         if (level !== 0) setCurrentSample(getCurrentWords());
-        if (level === 10) setIsEnd(true);
+        if (level === 10) {
+            if (props.location.fromTextBook) {
+
+                answers.correct.map(it => {
+                    const tmpId = userWords.filter(el => el.wordId === it.id);
+                    if (tmpId.length) {
+                        UpdateUserWord({
+                            userId: auth.userId,
+                            wordId: it.id,
+                            word: {
+                                difficulty: tmpId[0].difficulty, optional: {
+                                    deleted: tmpId[0].optional.deleted,
+                                    page: page,
+                                    group: group,
+                                    correct: tmpId[0].optional.correct += 1,
+                                    unCorrect: tmpId[0].optional.unCorrect
+                                }
+                            }
+                        }, auth.token);
+                    } else {
+                        CreateUserWord({
+                            userId: auth.userId,
+                            wordId: it.id,
+                            word: {
+                                difficulty: 'weak', optional: {
+                                    deleted: false,
+                                    page: page,
+                                    group: group,
+                                    correct: 1,
+                                    unCorrect: 0,
+                                }
+                            }
+                        }, auth.token);
+                    }
+                });
+
+
+                answers.unCorrect.map(it => {
+                    const tmpId = userWords.filter(el => el.wordId === it.id);
+                    if (tmpId.length) {
+                        UpdateUserWord({
+                            userId: auth.userId,
+                            wordId: it.id,
+                            word: {
+                                difficulty: tmpId[0].difficulty, optional: {
+                                    deleted: tmpId[0].optional.deleted,
+                                    page: page,
+                                    group: group,
+                                    correct: tmpId[0].optional.correct,
+                                    unCorrect: tmpId[0].optional.unCorrect += 1
+                                }
+                            }
+                        }, auth.token);
+                    } else {
+                        CreateUserWord({
+                            userId: auth.userId,
+                            wordId: it.id,
+                            word: {
+                                difficulty: 'weak', optional: {
+                                    deleted: false,
+                                    page: page,
+                                    group: group,
+                                    correct: 0,
+                                    unCorrect: 1
+                                }
+                            }
+                        }, auth.token);
+                    }
+                });
+            }
+            setIsEnd(true);
+        }
     }, [level])
 
     const getCurrentWords = () => {
@@ -104,7 +193,7 @@ const GameAudiocall = () => {
             setStatistic(currentSample[0], auth.userId || null, auth.token || null);
         } else {
             if (isSound) errorSound();
-            setAnswers({...answers, mistake: [...answers.mistake, currentSample[0]]});
+            setAnswers({...answers, unCorrect: [...answers.unCorrect, currentSample[0]]});
         }
 
         setReadyNext(true);
@@ -119,10 +208,18 @@ const GameAudiocall = () => {
         }, 500)
     }
 
+    const setHardDif = (e) => {
+        UpdateUserWord({
+            userId: userId,
+            wordId: e.target.getAttribute('wordid'),
+            word: { difficulty: 'hard' }
+        }, token);
+    };
+
     if (isEnd) {
         return (
             <div className={'audiocall-promo__wrapper'} style={{backgroundImage: `url(${currentBackground})`}}>
-                <FinalScreen value={answers}/>
+                <FinalScreen value={{answers, setHardDif, isFromTextBook}}/>
             </div>
         )
     } else {

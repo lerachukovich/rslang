@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/Credits.page.scss';
-import lera from '../assets/lera.png';
+import lera from '../assets/lera.jpeg';
 import alex from '../assets/alex.png';
 import olga from '../assets/olga.png';
 import oleg from '../assets/oleg.png';
@@ -9,7 +9,7 @@ const CreditsPage = () => {
     const developers = [
         {
             name: 'Алексей',
-            text: 'Бэкэнд, игра Аудиовызов, авторизация',
+            text: 'Бэкэнд, игра Аудиовызов, авторизация, статистика',
             img_source: alex
         },
         {
@@ -19,12 +19,12 @@ const CreditsPage = () => {
         },
         {
             name: 'Олег',
-            text: 'Роутинг, Игра Саванна',
+            text: 'Роутинг, Игра Саванна, учебник, словарь, дизайн UI элементов',
             img_source: oleg
         },
         {
             name: 'Ольга',
-            text: 'Учебник, своя игра',
+            text: 'Своя игра',
             img_source: olga
         }
     ]

@@ -9,8 +9,10 @@ router.get('/', async (req, res) => {
   res.status(OK).send(statistic.toResponse());
 });
 
-router.put('/', validator(statistics, 'body'), async (req) => {
+router.put('/', validator(statistics, 'body'), async (req, res) => {
   await statisticService.upsert(req.userId, req.body);
+  // console.log(statistic);
+  res.status(OK).json({ message: 'sended' });
 });
 
 module.exports = router;

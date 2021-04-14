@@ -1,5 +1,5 @@
 .sprint-welcome-wrapper {
-  height: calc(100vh - 148px);
+  height: 100vh;
   background-size: cover;
 }
 
@@ -13,6 +13,8 @@
 
 .sprint-container {
   font-family: 'Nunito', sans-serif;
+  height: 100vh;
+
 
   .game-container {
     position: relative;
@@ -104,7 +106,7 @@
   width: 40%;
   background-color: #ffffff;
   padding: 20px;
-  margin: 70px auto;
+  margin: 50px auto;
   border-radius: 10px;
   box-shadow: rgba(16, 112, 177, 0.2)  5px 20px 50px;
 }

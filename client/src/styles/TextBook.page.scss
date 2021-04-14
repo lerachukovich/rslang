@@ -24,10 +24,10 @@ $tablet-widths: "max-width: 1279px";
 
 .text-book__wrapper,
 .vocabulary__wrapper {
+  height: 100vh;
   padding: 10px;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 145px);
   justify-content: flex-start;
   align-items: center;
   background-size: 100% 100%;
@@ -161,6 +161,7 @@ $tablet-widths: "max-width: 1279px";
   box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
   overflow: hidden;
   transition: all 0.2s ease-out;
+
   &:hover {
     background-color: #eeeded;
   }
@@ -169,6 +170,7 @@ $tablet-widths: "max-width: 1279px";
 .text-book__word-container.hard {
   position: relative;
   background-color: #eea6ad;
+
   &::before {
     content: '';
     position: absolute;
@@ -217,7 +219,6 @@ $tablet-widths: "max-width: 1279px";
 }
 
 
-
 .text-book__words-list__word-meaning,
 .text-book__words-list__word-example {
   width: 33%;
@@ -231,6 +232,7 @@ $tablet-widths: "max-width: 1279px";
     font-size: 0.9rem;
   }
 }
+
 // In Vocabulary start
 .text-book__info-container {
   display: flex;
@@ -246,6 +248,7 @@ $tablet-widths: "max-width: 1279px";
   width: 30px;
   background-size: 100% 100%;
   margin-right: 3rem;
+
   &::before {
     content: '';
     position: absolute;
@@ -280,6 +283,7 @@ $tablet-widths: "max-width: 1279px";
   display: flex;
   width: 20%;
   justify-content: flex-start;
+
   & button {
     margin-left: 2rem;
     display: block;
@@ -294,6 +298,7 @@ $tablet-widths: "max-width: 1279px";
     opacity: 0.6;
     transition: 0.2s ease-out;
     cursor: pointer;
+
     &:hover {
       opacity: 1;
     }
@@ -319,6 +324,7 @@ $tablet-widths: "max-width: 1279px";
   color: #222222;
   justify-content: center;
   align-items: center;
+
   & a {
     margin-left: 0.5rem;
   }
@@ -364,6 +370,22 @@ $tablet-widths: "max-width: 1279px";
     margin-bottom: 10px;
   }
 
+  .text-book__button-container span {
+    width: 100% !important;
+    text-align: center;
+  }
+
+  .text-book__button-container__categories {
+    margin: 0 auto;
+  }
+
+  .text-book__button-container__categories span {
+    display: block;
+    margin: 0 auto;
+    //width: 100%;
+    text-align: center;
+  }
+
   .text-book__words-list {
     width: 90%;
     max-height: 60vh;
@@ -403,27 +425,56 @@ $tablet-widths: "max-width: 1279px";
   }
 
   .text-book__bottom-controls {
+    width: 100%;
     flex-direction: column;
     align-items: center;
     position: relative;
-    bottom: unset;
+    bottom: 65px;
+    padding-top: 70px;
   }
 
   .text-book__pagination-container {
     margin-bottom: 2rem;
   }
+  .text-book__wrapper .text-book__info-container {
+    margin-bottom: 50px;
+    width: 70%;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 0.6rem;
+    backdrop-filter: blur(4px);
+    border-radius: 5px;
+  }
+
+  .vocabulary__wrapper .text-book__info-container {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 0.6rem;
+    backdrop-filter: blur(4px);
+    border-radius: 5px;
+  }
 
   .text-book_game-container {
     display: flex;
-    width: 90%;
+    width: 100%;
 
     & .text-book__game__item {
-      width: 60px;
-      height: 60px;
+      font-size: 0.8rem;
+      width: 70px;
+      height: 45px;
     }
   }
 
   .text-book_spinner-wrapper {
-    height: 60vh;
+    height: 55vh;
+  }
+
+  .vocabulary__words-list__btn-container {
+    width: 100%;
+    justify-content: center;
+
+    & button {
+      margin-left: 0;
+      margin-bottom: 10px;
+    }
   }
 }

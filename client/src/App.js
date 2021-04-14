@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import useRoutes from './routes';
 import Navbar from './components/Navbar/Navbar.components';
 import 'materialize-css';
+import './App.css';
 
 import { useAuth } from './hooks/auth.hook';
 import { AuthContext } from './context/AuthContext';
 import Footer from "./components/Footer/Footer.component";
 
 function App() {
-  const {login, logout, token, userId, name, photo} = useAuth();
+  const {login, logout, token, userId, name, photo, timeLogin} = useAuth();
   const isAuthenticated = !!token;
+
+  useEffect(() => {
+    if ((new Date().getTime() - new Date(JSON.parse(localStorage.getItem('userDataRSLangLoginTime'))).getTime()) > 14400000) {
+      console.log(new Date().getTime() - new Date(JSON.parse(localStorage.getItem('userDataRSLangLoginTime'))).getTime())
+      logout();
+    }
+  }, [])
 
   const routes = useRoutes(true);
   return (
@@ -21,8 +29,8 @@ function App() {
         <Navbar/>
         <div className={'main-wrapper'}>
           {routes}
+          <Footer />
         </div>
-        <Footer />
       </Router>
     </AuthContext.Provider>
   );
