@@ -24,10 +24,10 @@ $tablet-widths: "max-width: 1279px";
 
 .text-book__wrapper,
 .vocabulary__wrapper {
+  height: 100vh;
   padding: 10px;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 145px);
   justify-content: flex-start;
   align-items: center;
   background-size: 100% 100%;
@@ -429,7 +429,8 @@ $tablet-widths: "max-width: 1279px";
     flex-direction: column;
     align-items: center;
     position: relative;
-    bottom: unset;
+    bottom: 65px;
+    padding-top: 70px;
   }
 
   .text-book__pagination-container {
@@ -459,7 +460,7 @@ $tablet-widths: "max-width: 1279px";
     & .text-book__game__item {
       font-size: 0.8rem;
       width: 70px;
-      height: 70px;
+      height: 45px;
     }
   }
 

@@ -18,6 +18,10 @@
   a {
     color: #ffffff;
   }
+
+  @media (max-width:500px) {
+    font-size: 1.5rem;
+  }
 }
 
 .sidenav {

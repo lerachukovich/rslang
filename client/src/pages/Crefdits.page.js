@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/Credits.page.scss';
-import lera from '../assets/lera.png';
+import lera from '../assets/lera.jpeg';
 import alex from '../assets/alex.png';
 import olga from '../assets/olga.png';
 import oleg from '../assets/oleg.png';
