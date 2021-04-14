@@ -13,11 +13,9 @@ function App() {
   const isAuthenticated = !!token;
 
   useEffect(() => {
-    if (isAuthenticated) {                          
-      if ((new Date().getTime() - new Date(JSON.parse(localStorage.getItem('userDataRSLangLoginTime'))).getTime()) > 14400000) {
-        console.log(new Date().getTime() - new Date(JSON.parse(localStorage.getItem('userDataRSLangLoginTime'))).getTime())
-        logout();
-    }
+    if ((new Date().getTime() - new Date(JSON.parse(localStorage.getItem('userDataRSLangLoginTime'))).getTime()) > 14400000) {
+      console.log(new Date().getTime() - new Date(JSON.parse(localStorage.getItem('userDataRSLangLoginTime'))).getTime())
+      logout();
     }
   }, [])
 

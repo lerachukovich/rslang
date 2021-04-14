@@ -41,14 +41,16 @@ const Navbar = () => {
             Учебник
           </NavLink>
         </li>
-        <li>
-          <NavLink
-            onClick={closeHandler}
-            className="waves-effect"
-            to="/vocabulary">
-            Словарь
-          </NavLink>
-        </li>
+        {auth.isAuthenticated && (
+          <li>
+            <NavLink
+              onClick={closeHandler}
+              className="waves-effect"
+              to="/vocabulary">
+              Словарь
+            </NavLink>
+          </li>
+        )}
         <li>
           <NavLink
             onClick={closeHandler}
@@ -71,12 +73,6 @@ const Navbar = () => {
             to="/credits">
             Разработчики
           </NavLink>
-        </li>
-        <li>
-          <NavLink
-            onClick={closeHandler}
-            className="nav-link"
-            to='/auth/login'>Войти</NavLink>
         </li>
       </ul>
       <div className="header-block">
