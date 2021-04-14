@@ -33,6 +33,7 @@ const GameAudiocall = () => {
 
     const props = useHistory();
     const {state, wordsCollection} = props.location;
+    const isFromTextBook = props.location.fromTextBook;
 
     const auth = useContext(AuthContext);
     const { isAuthenticated, userId, token } = useContext(AuthContext);
@@ -207,10 +208,18 @@ const GameAudiocall = () => {
         }, 500)
     }
 
+    const setHardDif = (e) => {
+        UpdateUserWord({
+            userId: userId,
+            wordId: e.target.getAttribute('wordid'),
+            word: { difficulty: 'hard' }
+        }, token);
+    };
+
     if (isEnd) {
         return (
             <div className={'audiocall-promo__wrapper'} style={{backgroundImage: `url(${currentBackground})`}}>
-                <FinalScreen value={answers}/>
+                <FinalScreen value={{answers, setHardDif, isFromTextBook}}/>
             </div>
         )
     } else {

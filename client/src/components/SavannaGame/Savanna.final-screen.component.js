@@ -31,7 +31,7 @@ const FinalScreen = ({ value }) => {
               {value.isFromTextBook &&
               <button className={'savanna__final-screen__word-list__btn--gohard'} onClick={value.setHardDif}
                       wordid={it.id} title={'Переместить в сложные'}>Сложное слово
-                word</button>}
+              </button>}
             </li>
           ))}
         </ul>
