@@ -38,6 +38,7 @@ const OwnGameMain = () => {
 
     const props = useHistory();
     const { data, page, group } = props.location;
+    const isFromTextBook = props.location.fromTextBook;
     const {setStatistic} = useStatistic();    
     const auth = useContext(AuthContext);
     const { isAuthenticated, userId, token } = useContext(AuthContext);
@@ -253,6 +254,14 @@ const OwnGameMain = () => {
         audio.play();
       };
 
+      const setHardDif = (e) => {
+        UpdateUserWord({
+            userId: userId,
+            wordId: e.target.getAttribute('wordid'),
+            word: { difficulty: 'hard' }
+        }, token);
+    };
+
     if (!isGameStarted) {
         return (
         <div className={'savanna-promo__wrapper'} style={{backgroundImage: `url(${currentBackground})`}}>
@@ -281,7 +290,7 @@ const OwnGameMain = () => {
     } else if(gameIsFinished) {
         return (
             <div className={'savanna-promo__wrapper'} style={{backgroundImage: `url(${currentBackground})`}}>
-                <FinalScreen value={answers}/>            
+                <FinalScreen value={{answers, setHardDif, isFromTextBook}}/>            
             </div>
         )
     }
