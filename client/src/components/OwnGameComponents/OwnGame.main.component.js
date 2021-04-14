@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback, useContext} from 'react';
 import GameLevels from './OwnGame.levels.component';
 import Sentence from './OwnGame.sentence.component';
 import Options from './OwnGame.options.component';
@@ -14,6 +14,11 @@ import FinalScreen from './OwnGame.results.component';
 import error from '../../assets/audio/error.mp3';
 import correct from '../../assets/audio/correct.mp3';
 import useSound from 'use-sound';
+import { useHistory } from 'react-router';
+import useStatistic from '../../hooks/statistic.hook';
+import { CreateUserWord, UpdateUserWord } from '../../helper/database.helper/UserWord.helper';
+import {AuthContext} from '../../context/AuthContext';
+import { GetUserWords } from '../../helper/database.helper/getUserWords.helper';
 
 const OwnGameMain = () => {
 
@@ -31,10 +36,16 @@ const OwnGameMain = () => {
 
     const backgrounds = [bg1, bg2, bg3, bg4];
 
+    const props = useHistory();
+    const { data, page, group } = props.location;
+    const {setStatistic} = useStatistic();    
+    const auth = useContext(AuthContext);
+    const { isAuthenticated, userId, token } = useContext(AuthContext);
+
     const [currentBackground, setCurrentBackground] = useState(backgrounds[MathHelper.getRandomNumber(0, backgrounds.length - 1)]);
     const [level, setLevel] = useState('');
     const [isGameStarted, setIsGameStarted] = useState(false);
-    const [wordCollection, setWordCollection] = useState(null);
+    const [wordCollection, setWordCollection] = useState(data || null);
     const { loading, request } = useHttp();
     const [currentStep, setCurrentStep] = useState(0);
     const [options, setOptions] = useState([]);
@@ -50,9 +61,21 @@ const OwnGameMain = () => {
     const [correctSound] = useSound(correct);
     const [errorSound] = useSound(error);
     const [isSound, setIsSound] = useState(false);
+    
+    const [answers, setAnswers] = useState({
+        correct: [],
+        unCorrect: []
+    });
+    const [userWords, setUserWords] = useState(null);
+    
+    useEffect(() => {
+        if (!isAuthenticated) {
+            return;
+        }
+        GetUserWords({ userId }, token, setUserWords);
+    }, [isAuthenticated]);
 
     const getLevel = (e) => {
-        console.log(e);
         setLevel(e.target.getAttribute('datalevel'));
     };
 
@@ -67,6 +90,10 @@ const OwnGameMain = () => {
     );
 
     useEffect(() => {
+        if (Array.isArray(wordCollection) && wordCollection.length > 0) {
+            setIsGameStarted(true);
+            return;
+        }
         if (!level) {
           return;
         }
@@ -76,7 +103,6 @@ const OwnGameMain = () => {
 
     const getCurrentSentence = (currentStep) => {
         if(wordCollection) {
-            console.log(wordCollection[currentStep].textExample);
             setCurrentRightAnswer(wordCollection[currentStep].word);
             setTranslation(wordCollection[currentStep].textExampleTranslate);
             return wordCollection[currentStep].textExample;
@@ -106,6 +132,10 @@ const OwnGameMain = () => {
         }
       }, [wordCollection]);
 
+    const getObj = (arr, finder) => {
+        return arr.find(item => item.word === finder);
+    }
+
     const checkAnswer = (e) => {
         if(e.target.id === currentRightAnswer) {
             if(isSound) {
@@ -114,6 +144,8 @@ const OwnGameMain = () => {
             setCurrentStep((currentStep)=>currentStep + 1);
             if(!wrongAnswers.includes(currentRightAnswer)) {
                 setCorrectAnswers((correctAnswers)=> [...correctAnswers, e.target.id])
+                setAnswers({...answers, correct: [...answers.correct, getObj(wordCollection, e.target.id)]});
+                setStatistic(getObj(wordCollection, e.target.id), auth.userId || null, auth.token || null);
             }
             setCurrentWrongAnswers([]);
         } else {
@@ -121,6 +153,7 @@ const OwnGameMain = () => {
                 errorSound();
             }
             if(!wrongAnswers.includes(currentRightAnswer)) {
+                setAnswers({...answers, unCorrect: [...answers.unCorrect, getObj(wordCollection, currentRightAnswer)]});
                 setWrongAnswers((wrongAnswers)=> [...wrongAnswers, currentRightAnswer])
             }
             if(livesCount.length >= 1) {
@@ -141,6 +174,75 @@ const OwnGameMain = () => {
             setOptions(generateFourOptions(currentStep));
             setCurrentSentence(getCurrentSentence(currentStep));
         } else if(currentStep > WORDS_LIMIT.maxWordAmount) {
+            if (props.location.fromTextBook) {
+
+                answers.correct.map(it => {
+                    const tmpId = userWords.filter(el => el.wordId === it.id);
+                    if (tmpId.length) {
+                        UpdateUserWord({
+                            userId: auth.userId,
+                            wordId: it.id,
+                            word: {
+                                difficulty: tmpId[0].difficulty, optional: {
+                                    deleted: tmpId[0].optional.deleted,
+                                    page: page,
+                                    group: group,
+                                    correct: tmpId[0].optional.correct += 1,
+                                    unCorrect: tmpId[0].optional.unCorrect
+                                }
+                            }
+                        }, auth.token);
+                    } else {
+                        CreateUserWord({
+                            userId: auth.userId,
+                            wordId: it.id,
+                            word: {
+                                difficulty: 'weak', optional: {
+                                    deleted: false,
+                                    page: page,
+                                    group: group,
+                                    correct: 1,
+                                    unCorrect: 0,
+                                }
+                            }
+                        }, auth.token);
+                    }
+                });
+
+
+                answers.unCorrect.map(it => {
+                    const tmpId = userWords.filter(el => el.wordId === it.id);
+                    if (tmpId.length) {
+                        UpdateUserWord({
+                            userId: auth.userId,
+                            wordId: it.id,
+                            word: {
+                                difficulty: tmpId[0].difficulty, optional: {
+                                    deleted: tmpId[0].optional.deleted,
+                                    page: page,
+                                    group: group,
+                                    correct: tmpId[0].optional.correct,
+                                    unCorrect: tmpId[0].optional.unCorrect += 1
+                                }
+                            }
+                        }, auth.token);
+                    } else {
+                        CreateUserWord({
+                            userId: auth.userId,
+                            wordId: it.id,
+                            word: {
+                                difficulty: 'weak', optional: {
+                                    deleted: false,
+                                    page: page,
+                                    group: group,
+                                    correct: 0,
+                                    unCorrect: 1
+                                }
+                            }
+                        }, auth.token);
+                    }
+                });
+            }
             setGameIsFinished(true);
         };
 

@@ -189,7 +189,7 @@ const TextBook = () => {
             <Link className={'text-book__game__item'} to={{pathname: '/games/savanna/play', data: currentCollection, fromTextBook: true, page: page, group: group}}>
               Саванна
             </Link>
-            <Link className={'text-book__game__item'} to={'/'}>
+            <Link className={'text-book__game__item'} to={{pathname: '/games/owngame/play', data: currentCollection, fromTextBook: true, page: page, group: group}}>
               Расставь слова
             </Link>
           </div>
