@@ -97,7 +97,7 @@ const TextBook = () => {
   return (
     <div className={'text-book__wrapper'}>
       <h1 className={'text-book__title'}>Учебник 📕</h1>
-      <div className="text-book__button-container"> Сложность:
+      <div className="text-book__button-container"> <span>Сложность:</span>
         {new Array(5).fill().map((it, ind) => (
             <button
               key={ind}
@@ -176,6 +176,11 @@ const TextBook = () => {
           >
             Вперед
           </button>}
+        </div>
+
+        <div className={'text-book__info-container'}>
+          <span className={"text-book__info__item"} title={'Сложность'}>{group + 1}</span>
+          <span className={"text-book__info__item"} title={'Страница'}>{page}</span>
         </div>
 
         {auth.isAuthenticated && (

@@ -94,10 +94,6 @@ const VocabularyPage = () => {
     setUnCorrectAnswer(wordIdCollection.reduce((acc, curr) => acc + curr.optional.unCorrect, 0));
   }, [wordIdCollection]);
 
-  useEffect(() => {
-    console.log(wordStack, wordIdCollection);
-  }, [wordStack]);
-
   const chooseGroupHandler = (e) => {
     setGroup(Number(e.target.getAttribute('datalevel')));
     setPage(0);
@@ -165,7 +161,7 @@ const VocabularyPage = () => {
       <h1 className={'text-book__title'}>Словарь 📓</h1>
       <div className="text-book__button-container">
         <div className={'text-book__button-container__categories'}>
-          Сложность:
+          <span>Сложность:</span>
         {new Array(5).fill().map((it, ind) => (
             <button
               key={ind}
@@ -177,7 +173,7 @@ const VocabularyPage = () => {
           )
         )}
         </div>
-        <div clasName={'text-book__button-container__categories'}>
+        <div className={'text-book__button-container__categories'}>
           <button
             className={'level-btn waves-light red darken-2 btn'}
             onClick={showHardWords}>Cложные</button>
