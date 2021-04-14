@@ -1,12 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { SoundHandler } from '../../helper/Sound.helper';
 
 const FinalScreen = ({ value }) => {
     const {answers} = value;
-    useEffect(() => {
-        console.log(value.isFromTextBook)
-    }, []);
 
     return (
         <div className={'savanna__final-screen-wrapper'}>
