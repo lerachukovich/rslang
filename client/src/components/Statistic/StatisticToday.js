@@ -26,7 +26,7 @@ const StatisticToday = (props) => {
                             return (
                                 <li className="collection-item" key={idx}>
                                     <i className="small material-icons audio-icon" onClick={playSound.bind(null, word.audio)}>volume_up</i>
-                                    <span>{word.word} -</span><span>{word.transcription} -</span><span>{word.wordTranslate}</span>
+                                    <span>{word.word}</span><span>{word.transcription}</span><span>{word.wordTranslate}</span>
                                 </li>
                             )
                         })
