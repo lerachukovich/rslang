@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { SettingContext } from '../../context/SettingContext';
 
 const FinalScreen = ({ value }) => {
+  const setting = useContext(SettingContext);
 
   return (
     <div className={'savanna__final-screen-wrapper'}>
@@ -15,7 +17,7 @@ const FinalScreen = ({ value }) => {
             <li className={'savanna-final-screen__word'} key={ind}>
               <button className={'btn'} onClick={() => value.soundHandler(it.audio)}><i
                 className={'material-icons'}>surround_sound</i></button>
-              {it.word} - {it.wordTranslate}</li>
+              {it.word}{setting.showTranslate && <span>- {it.wordTranslate}</span>}</li>
           ))}
         </ul>
         <b>Я не знаю <span
@@ -27,7 +29,7 @@ const FinalScreen = ({ value }) => {
             <li className={'savanna-final-screen__word'} key={ind}>
               <button className={'btn'} onClick={() => value.soundHandler(it.audio)}><i
                 className={'material-icons'}>surround_sound</i></button>
-              {it.word} - {it.wordTranslate}
+              {it.word}{setting.showTranslate && <span>- {it.wordTranslate}</span>}
               {value.isFromTextBook &&
               <button className={'savanna__final-screen__word-list__btn--gohard'} onClick={value.setHardDif}
                       wordid={it.id} title={'Переместить в сложные'}>Сложное слово

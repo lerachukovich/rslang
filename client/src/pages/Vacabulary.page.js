@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import { SettingContext } from '../context/SettingContext';
 import { Link } from 'react-router-dom';
 import { UpdateUserWord } from '../helper/database.helper/UserWord.helper';
 
 const VocabularyPage = () => {
+  const setting = useContext(SettingContext);
   const { token, userId, isAuthenticated } = useContext(AuthContext);
   const [group, setGroup] = useState(0);
   const [page, setPage] = useState(0);
@@ -173,14 +175,16 @@ const VocabularyPage = () => {
           )
         )}
         </div>
-        <div className={'text-book__button-container__categories'}>
-          <button
-            className={'level-btn waves-light red darken-2 btn'}
-            onClick={showHardWords}>Cложные</button>
-          <button
-            className={'level-btn waves-light blue-grey darken-1 btn'}
-            onClick={showDeletedWords}>Удаленные</button>
-        </div>
+        {setting.showButton && (
+          <div className={'text-book__button-container__categories'}>
+            <button
+              className={'level-btn waves-light red darken-2 btn'}
+              onClick={showHardWords}>Cложные</button>
+            <button
+              className={'level-btn waves-light blue-grey darken-1 btn'}
+              onClick={showDeletedWords}>Удаленные</button>
+          </div>
+        )}
       </div>
 
       <div className="text-book__words-list">

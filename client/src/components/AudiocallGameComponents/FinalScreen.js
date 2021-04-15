@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { SettingContext } from '../../context/SettingContext';
 import { SoundHandler } from '../../helper/Sound.helper';
 
 const FinalScreen = ({ value }) => {
+    const setting = useContext(SettingContext);
     const {answers} = value;
 
     return (
@@ -15,7 +17,7 @@ const FinalScreen = ({ value }) => {
             {answers.correct.map((it, ind) => (
             <li className={'savanna-final-screen__word'} key={ind}>
                 <button className={'btn'} onClick={() => SoundHandler(it.audio)}><i className={'material-icons'}>surround_sound</i></button>
-                {it.word} - {it.wordTranslate}</li>
+                {it.word}{setting.showTranslate && <span>- {it.wordTranslate}</span>}</li>
             ))}
         </ul>
         <b>Я не знаю <span
@@ -25,7 +27,7 @@ const FinalScreen = ({ value }) => {
             {answers.unCorrect.map((it, ind) => (
             <li className={'savanna-final-screen__word'} key={ind}>
                 <button className={'btn'} onClick={() => SoundHandler(it.audio)}><i className={'material-icons'}>surround_sound</i></button>
-                {it.word} - {it.wordTranslate}
+                {it.word}{setting.showTranslate && <span>- {it.wordTranslate}</span>}
                 {value.isFromTextBook && <button className={'savanna__final-screen__word-list__btn--gohard'} onClick={value.setHardDif}
                          wordid={it.id} title={'Переместить в сложные'}>Сложное слово</button>}
             </li>
