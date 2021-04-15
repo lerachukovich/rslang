@@ -74,6 +74,14 @@ const Navbar = () => {
             Разработчики
           </NavLink>
         </li>
+        <li>
+          <NavLink
+            onClick={closeHandler}
+            className="nav-link"
+            to="/settings">
+            Настройки
+          </NavLink>
+        </li>
       </ul>
       <div className="header-block">
         <div className="auth-block">

@@ -87,3 +87,16 @@
     transition: 0.5s ease-in-out;
     background-position: 0 100%;
 }
+
+.audiocall__sound-btn {    
+  position: absolute!important;
+  left: 10%;
+  top: 15%;
+  background-color: #0da4f6;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  &:hover {
+    background-color: #61dafb;
+  }
+}

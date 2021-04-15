@@ -7,12 +7,14 @@ import useMessage from '../../hooks/message.hook';
 import RubberBand from 'react-reveal/RubberBand';
 import Pulse from 'react-reveal/Pulse';
 import Fade from 'react-reveal/Fade';
+import { SettingContext } from '../../context/SettingContext';
 
 const storageName = 'userDataRSLangLoginTime';
 
 const LoginForm = () => {
     const history = useHistory();
     const auth = useContext(AuthContext);
+    const setting = useContext(SettingContext);
     const message = useMessage();
     const {loading, request, error, clearError} = useHtt();
     const [isShowPulse, setIsShowPulse] = useState(false);
@@ -37,7 +39,8 @@ const LoginForm = () => {
             const data = await request('/signin', 'POST', {...form});
             // auth.login(data.token, data.userId, data.image, data.name);
             auth.login(data.token, data.userId, data.photo, data.name);
-            localStorage.setItem(storageName, JSON.stringify(new Date().toISOString()))
+            localStorage.setItem(storageName, JSON.stringify(new Date().toISOString()));
+            setting.getSetting(data.userId, data.token)
             history.push('/');
         } catch (e) {
         }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
     ResponsiveContainer,
     BarChart,
@@ -13,6 +13,7 @@ import {
 } from 'recharts';
 import {format, parseISO, subDays, subMonths} from 'date-fns';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
+import { SettingContext } from '../../context/SettingContext';
 
 const getArrayWords = (arr, length) => {
     return arr.reduce((a, cur) => {
@@ -55,6 +56,8 @@ const StatisticGlobal = ({statistic}) => {
     const [dataYear, setDataYear] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
     const [words, setWords] = useState([]);
+
+    const setting = useContext(SettingContext);
 
     useEffect(() => {
         if (statistic.join && statistic.length > 0) {
@@ -120,7 +123,11 @@ const StatisticGlobal = ({statistic}) => {
                                                 <i className="small material-icons" onClick={playSound.bind(null, word.audio)}>volume_up</i>
                                                 <span>{word.word}</span>
                                                 <span>{word.transcription}</span>
-                                                <span>{word.wordTranslate}</span>
+                                                {
+                                                    setting.showTranslate && (
+                                                        <span>{word.wordTranslate}</span>
+                                                    )
+                                                }
                                             </li>
                                         )
                                     })
@@ -165,7 +172,11 @@ const StatisticGlobal = ({statistic}) => {
                                                 <i className="small material-icons" onClick={playSound.bind(null, word.audio)}>volume_up</i>
                                                 <span>{word.word}</span>
                                                 <span>{word.transcription}</span>
-                                                <span>{word.wordTranslate}</span>
+                                                {
+                                                    setting.showTranslate && (
+                                                        <span>{word.wordTranslate}</span>
+                                                    )
+                                                }
                                             </li>
                                         )
                                     })
