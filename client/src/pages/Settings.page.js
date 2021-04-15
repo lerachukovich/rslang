@@ -56,7 +56,7 @@ const SettingsPage = () => {
           </div>
         </div>
         <div className="setting-counter">
-          <span>Показывать кнопки "Сложные слова", "Удалённые слова"</span>
+          <span>Показывать кнопки "Сложные слова", "Удалённые слова" в словаре</span>
           <div className="switch">
             <label>
               Выкл

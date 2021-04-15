@@ -1,9 +1,11 @@
-import React, { useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState} from 'react';
 import Tada from 'react-reveal/Tada';
 import Bounce from 'react-reveal/Bounce';
 import Wobble from 'react-reveal/Wobble';
+import { SettingContext } from '../../context/SettingContext';
 
 const GameElement = ({sample, level, handleClick, readyNext}) => {
+    const setting = useContext(SettingContext);
     const answer = sample[0];
     const [sampleWords, setSampleWords] = useState([]);
     const [isPlaySound, setIsPlaySound] = useState(false)
@@ -71,7 +73,7 @@ const GameElement = ({sample, level, handleClick, readyNext}) => {
                                     </Wobble>
                                     <div>
                                         <span dangerouslySetInnerHTML={{__html: answer.textExample}} />
-                                        <span>{answer.textExampleTranslate}</span>
+                                        {setting.showTranslate && (<span>{answer.textExampleTranslate}</span>)}
                                     </div>
                                 </div>
                             </div>

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import { SettingContext } from '../../context/SettingContext';
 import { SoundHandler } from '../../helper/Sound.helper';
 
 const GameResult = ({ value }) => {
+  const setting = useContext(SettingContext);
   const {answers, score } = value;
 
   return (
@@ -14,7 +16,7 @@ const GameResult = ({ value }) => {
           {
             answers.correct.map(el => {
               return <li className={'savanna-final-screen__word'}><button className={'btn'} onClick={() => SoundHandler(el.audio)}><i
-                className={'material-icons'}>surround_sound</i></button>{el.word} - {el.wordTranslate}</li>;
+                className={'material-icons'}>surround_sound</i></button>{el.word}{setting.showTranslate && (<span> - {el.wordTranslate}</span>)}</li>;
             })
           }
         </ul>
@@ -29,7 +31,7 @@ const GameResult = ({ value }) => {
                         onClick={() => SoundHandler(el.audio)}><i
                   className={'material-icons'}>surround_sound</i>
                 </button>
-                {el.word} - {el.wordTranslate}
+                {el.word}{setting.showTranslate && (<span> - {el.wordTranslate}</span>)}
                 {value.isFromTextBook && <button className={'savanna__final-screen__word-list__btn--gohard'}
                         onClick={value.setHardDif}
                         wordid={el.id} title={'Переместить в сложные'}>Сложное слово
