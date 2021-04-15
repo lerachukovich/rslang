@@ -15,8 +15,11 @@ import MathHelper from '../../helper/Math.helper';
 import { AuthContext } from '../../context/AuthContext';
 import { GetUserWords } from '../../helper/database.helper/getUserWords.helper';
 import { CreateUserWord, UpdateUserWord } from '../../helper/database.helper/UserWord.helper';
+import { SettingContext } from '../../context/SettingContext';
 
 const GameField = () => {
+  const setting = useContext(SettingContext);
+
   // Connect to vocabulary
   const { token, userId, isAuthenticated } = useContext(AuthContext);
   const props = useHistory();
@@ -41,6 +44,8 @@ const GameField = () => {
   const [score, setScore] = useState(0);
   const [gameTimer, setGameTimer] = useState(60);
   const [endGame, setEndGame] = useState(false);
+
+  const [isSound, setIsSound] = useState(setting.isSound);
 
   const [answers, setAnswers] = useState({
     correct: [],
@@ -186,16 +191,16 @@ const GameField = () => {
   const isCorrect = (answer, obj) => {
     if (words[1][words[0].indexOf(currentWord)] === currentTranslate && answer) {
       setScore(score + 10);
-      correctSound();
+      if (isSound) correctSound();
       setAnswers({ ...answers, correct: [...answers.correct, obj] });
       setStatistic(obj, userId || null, token || null);
     } else if (words[1][words[0].indexOf(currentWord)] !== currentTranslate && !answer) {
       setScore(score + 10);
-      correctSound();
+      if (isSound) correctSound();
       setAnswers({ ...answers, correct: [...answers.correct, obj] });
       setStatistic(obj, userId || null, token || null);
     } else {
-      errorSound();
+      if (isSound) errorSound();
       setAnswers({ ...answers, unCorrect: [...answers.unCorrect, obj] });
     }
   };
@@ -260,6 +265,9 @@ const GameField = () => {
           </div>
         </div>
         <div className={'empty'}>.</div>
+        <button className={`audiocall__sound-btn btn ${!isSound && 'red lighten-2'}`} onClick={() => setIsSound(!isSound)}>
+            <i className="material-icons">music_note</i>
+        </button>
       </div>
     );
   }

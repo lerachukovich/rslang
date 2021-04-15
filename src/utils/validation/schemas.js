@@ -52,7 +52,7 @@ const schemas = {
   settings: Joi.object()
     .options({ abortEarly: false, allowUnknown: false })
     .keys({
-      wordsPerDay: Joi.number().integer().min(1).max(1000),
+      setting: Joi.object(),
       optional: optionalScheme,
     }),
 };

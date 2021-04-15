@@ -8,12 +8,9 @@ const SettingsSchema = new Schema(
       type: String,
       required: true,
     },
-    wordsPerDay: {
-      type: Number,
-    },
-    optional: {
+    setting: {
       type: Object,
-      required: false,
+      required: true,
     },
   },
   { collection: 'setting' }

@@ -22,17 +22,21 @@ import bg4 from '../../assets/savanna-bg/savannabg-4.jpg';
 import './savanna.scss';
 import GameLevel from './Savanna.level.component';
 import Error from '../Error/Error';
+import { SettingContext } from '../../context/SettingContext';
 
 const SavannaPlay = () => {
+  //Settings
+  const setting = useContext(SettingContext);
+
   const GAME_CONFIG = {
     attempts: 10,
-    lives: 5,
+    lives: setting.life,
     wordCards: 4
   };
   const WORDS_LIMIT = {
     maxPages: 29,
     maxGroup: 5,
-    maxWordAmount: 19
+    maxWordAmount: setting.wordsCount
   };
   const { token, userId, isAuthenticated } = useContext(AuthContext);
   const props = useHistory();
@@ -40,6 +44,7 @@ const SavannaPlay = () => {
   const page = props.location.page;
   const group = props.location.group;
   const isFromTextBook = props.location.fromTextBook;
+
 
   const [isGameBegin, setIsGameBegin] = useState(props.location.fromTextBook || false);
   const [level, setLevel] = useState('');
@@ -60,7 +65,7 @@ const SavannaPlay = () => {
   const [playErrorSound] = useSound(errorSound);
   const [answers, setAnswers] = useState({ correct: [], unCorrect: [] });
   const [currentBackground, setCurrentBackground] = useState(backgrounds[MathHelper.getRandomNumber(1, backgrounds.length - 1)]);
-  const [isSound, setIsSound] = useState(false);
+  const [isSound, setIsSound] = useState(setting.isSound);
   const [soundBtnClass, setSoundButtonClass] = useState('savanna__sound-control btn');
   const [userWords, setUserWords] = useState(null);
 

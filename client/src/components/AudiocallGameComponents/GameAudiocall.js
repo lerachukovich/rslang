@@ -20,13 +20,15 @@ import bg3 from '../../assets/audiocall/bg-call-3.jpg';
 import useStatistic from '../../hooks/statistic.hook.js';
 import { CreateUserWord, UpdateUserWord } from '../../helper/database.helper/UserWord.helper';
 import { GetUserWords } from '../../helper/database.helper/getUserWords.helper';
+import { SettingContext } from '../../context/SettingContext';
 
 const GameAudiocall = () => {
+    const setting = useContext(SettingContext);
 
     const WORDS_LIMIT = {
         maxPages: 29,
         maxGroup: 5,
-        maxWordAmount: 19
+        maxWordAmount: setting.wordsCount
     };
 
     const background = [bg1, bg2, bg3]
@@ -56,7 +58,7 @@ const GameAudiocall = () => {
 
     const [correctSound] = useSound(correct);
     const [errorSound] = useSound(error);
-    const [isSound, setIsSound] = useState(true);
+    const [isSound, setIsSound] = useState(setting.isSound);
 
     // Connect with vocabulary
     const [userWords, setUserWords] = useState(null);
@@ -84,7 +86,7 @@ const GameAudiocall = () => {
 
     useEffect(() => {
         if (level !== 0) setCurrentSample(getCurrentWords());
-        if (level === 10) {
+        if (level === WORDS_LIMIT.maxWordAmount) {
             if (props.location.fromTextBook) {
 
                 answers.correct.map(it => {
@@ -264,7 +266,7 @@ const GameAudiocall = () => {
                         </div>
                     </Flip>
                 </Roll>
-                <button className={`savanna__sound-control btn ${!isSound && 'red lighten-2'}`} onClick={() => setIsSound(!isSound)}>
+                <button className={`audiocall__sound-btn btn ${!isSound && 'red lighten-2'}`} onClick={() => setIsSound(!isSound)}>
                     <i className="material-icons">music_note</i>
                 </button>
             </div>
