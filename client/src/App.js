@@ -3,6 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import useRoutes from './routes';
 import Navbar from './components/Navbar/Navbar.components';
 import 'materialize-css';
+import './App.css';
 
 import { useAuth } from './hooks/auth.hook';
 import { AuthContext } from './context/AuthContext';
@@ -38,9 +39,9 @@ function App() {
         <Router>
           <Navbar/>
           <div className={'main-wrapper'}>
-            {routes}
+            {routes}    
+            <Footer />
           </div>
-          <Footer />
         </Router>
       </SettingContext.Provider>
     </AuthContext.Provider>
