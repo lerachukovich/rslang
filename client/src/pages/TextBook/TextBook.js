@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import useHttp from '../../hooks/http.hook';
 import useMessage from '../../hooks/message.hook';
 import Spinner from '../../components/Spinner/Spinner';
@@ -8,9 +8,10 @@ import {AuthContext} from '../../context/AuthContext';
 import '../../styles/TextBook.page.scss';
 
 const TextBook = () => {
+  let {groupPar, pagePar} = useParams();
   const auth = useContext(AuthContext);
-  const [group, setGroup] = useState(0);
-  const [page, setPage] = useState(0);
+  const [group, setGroup] = useState(Number(groupPar));
+  let [page, setPage] = useState(Number(pagePar));
   const [currentCollection, setCurrentCollection] = useState(null);
   const { loading, request, error } = useHttp();
   const [isSoundPlay, setIsSoundPlay] = useState(false);
@@ -94,20 +95,31 @@ const TextBook = () => {
     )
   }
 
+  const increaseGroup = () => {
+    if (group >= 4) return
+    setGroup(prevState => prevState + 1);
+  }
+
+  const decreaseGroup = () => {
+    if (group <= 0) return
+    setGroup(prevState => prevState - 1);
+  }
+
   return (
     <div className={'text-book__wrapper'}>
       <h1 className={'text-book__title'}>Учебник 📕</h1>
-      <div className="text-book__button-container"> <span>Сложность:</span>
-        {new Array(5).fill().map((it, ind) => (
-            <button
-              key={ind}
-              className={'level-btn waves-light btn'}
-              onClick={chooseGroupHandler}
-              datalevel={ind}>
-             {ind + 1}
-            </button>
-          )
-        )}
+      <div className={'text-book__button-container'}>
+        <span>Сложность:</span>
+        <Link className="level-btn waves-light btn"
+              onClick={decreaseGroup}
+              to={`/textbook/${group}/0}`}>
+          -
+        </Link>
+        <Link className="level-btn waves-light red darken-2 btn"
+              onClick={increaseGroup}
+              to={`/textbook/${group + 1}/0`}>
+          +
+        </Link>
       </div>
 
       {loading &&
@@ -121,7 +133,7 @@ const TextBook = () => {
           {currentCollection && currentCollection.map((it, ind) => (
               <li key={ind} className={'text-book__word-container'}>
                 <div className="text__book__words-list__word-img">
-                  <img src={`../` + it.image} alt={it.wordTranslate}/>
+                  <img src={`../../` + it.image} alt={it.wordTranslate}/>
                 </div>
 
                 <div className="text-book__words-list__word-translate">
@@ -160,22 +172,22 @@ const TextBook = () => {
 
       <div className={'text-book__bottom-controls'}>
         <div className={'text-book__pagination-container'}>
-          {!loading && <button className="text-book__pagination-btn btn"
-                               onClick={prevPageHandler}>
-            Назад
-          </button>}
-          {loading && <button className="text-book__pagination-btn btn disabled"
-          >
-            Назад
-          </button>}
-          {!loading && <button className="text-book__pagination-btn btn"
-                               onClick={nextPageHandler}>
-            Вперед
-          </button>}
-          {loading && <button className="text-book__pagination-btn btn disabled"
-          >
-            Вперед
-          </button>}
+          {!loading && <Link className="text-book__pagination-btn btn"
+                 onClick={prevPageHandler}
+                 to={`/textbook/${group}/${page - 1}`}>Назад
+          </Link>}
+          {loading && <Link className="text-book__pagination-btn btn disabled"
+                            >Назад
+          </Link>}
+
+          {!loading && <Link className="text-book__pagination-btn btn"
+                 onClick={nextPageHandler}
+                 to={`/textbook/${group}/${page + 1}`}
+          >Вперед
+          </Link>}
+          {loading && <Link className="text-book__pagination-btn btn disabled"
+          >Вперед
+          </Link>}
         </div>
 
         <div className={'text-book__info-container'}>

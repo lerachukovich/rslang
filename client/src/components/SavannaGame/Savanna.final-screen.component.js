@@ -38,7 +38,8 @@ const FinalScreen = ({ value }) => {
           ))}
         </ul>
       </div>
-      <Link to="/games" className={'savanna__final-screen__next-button btn'}>Продолжить</Link>
+      {value.isFromTextBook && <Link to="/textbook/0/0" className={'savanna__final-screen__next-button btn'}>Продолжить</Link>}
+      {!value.isFromTextBook && <Link to="/games" className={'savanna__final-screen__next-button btn'}>Продолжить</Link>}
     </div>
   );
 };
