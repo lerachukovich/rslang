@@ -23,21 +23,24 @@ import './savanna.scss';
 import GameLevel from './Savanna.level.component';
 import Error from '../Error/Error';
 import { SettingContext } from '../../context/SettingContext';
+import useMessage from '../../hooks/message.hook';
 
 const SavannaPlay = () => {
   //Settings
   const setting = useContext(SettingContext);
 
   const GAME_CONFIG = {
-    attempts: 10,
+    attempts: setting.wordsCount,
     lives: setting.life,
     wordCards: 4
   };
   const WORDS_LIMIT = {
     maxPages: 29,
     maxGroup: 5,
-    maxWordAmount: setting.wordsCount
+    maxWordAmount: 19
   };
+
+  const message = useMessage();
   const { token, userId, isAuthenticated } = useContext(AuthContext);
   const props = useHistory();
   const data = props.location.data;
@@ -70,7 +73,6 @@ const SavannaPlay = () => {
   const [userWords, setUserWords] = useState(null);
 
   const {setStatistic} = useStatistic();
-
   useEffect(() => {
     if (!isAuthenticated) {
       return;
@@ -98,7 +100,7 @@ const SavannaPlay = () => {
     let tmp = [];
     tmp = [...tmp, wordCollection[currentStep]];
     do {
-      tmp = [...tmp, wordCollection[MathHelper.getRandomNumber(currentStep + 1, WORDS_LIMIT.maxWordAmount)]];
+      tmp = [...tmp, wordCollection[MathHelper.getRandomNumber(0, WORDS_LIMIT.maxWordAmount)]];
       tmp = new Set(tmp);
       tmp = [...tmp];
     } while (tmp.length < GAME_CONFIG.wordCards);
@@ -114,7 +116,7 @@ const SavannaPlay = () => {
 
   const refreshFieldHandler = () => {
     setCurrentStep(currentStep += 1);
-    if (currentStep === GAME_CONFIG.attempts || lives < 1) {
+    if (currentStep === GAME_CONFIG.attempts - 1 || lives < 1) {
       setEnd(true);
       setIsGameBegin(false);
       window.removeEventListener('keydown', keyHandler);
@@ -195,7 +197,7 @@ const SavannaPlay = () => {
 
   const successTurn = (el) => {
     refreshFieldHandler();
-    setBackGroundPosition(prevState => prevState - 10);
+    setBackGroundPosition(prevState => prevState - 5);
     setCristalSize(prevState =>
       prevState + 20
     );
@@ -211,7 +213,7 @@ const SavannaPlay = () => {
     if (backgroundPosition === 100) {
       setBackGroundPosition(prevState => prevState + 0);
     } else {
-      setBackGroundPosition(prevState => prevState + 10);
+      setBackGroundPosition(prevState => prevState + 5);
     }
     setCristalSize(prevState =>
       prevState - 20
@@ -255,6 +257,12 @@ const SavannaPlay = () => {
   }, [wordCollection]);
 
   useEffect(() => {
+    setIsSound(setting.isSound);
+    if (isSound) {
+      setSoundButtonClass('savanna__sound-control btn red lighten-2')
+    } else {
+      setSoundButtonClass('savanna__sound-control btn')
+    }
 
     window.addEventListener('keydown', keyHandler);
 
@@ -297,8 +305,10 @@ const SavannaPlay = () => {
   const soundControlHandler = () => {
     setIsSound(!isSound);
     if (!isSound) {
+      message('Звук включен');
       setSoundButtonClass('savanna__sound-control btn red lighten-2');
     } else {
+      message('Звук выключен');
       setSoundButtonClass('savanna__sound-control btn');
     }
   };
