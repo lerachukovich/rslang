@@ -15,8 +15,11 @@ import MathHelper from '../../helper/Math.helper';
 import { AuthContext } from '../../context/AuthContext';
 import { GetUserWords } from '../../helper/database.helper/getUserWords.helper';
 import { CreateUserWord, UpdateUserWord } from '../../helper/database.helper/UserWord.helper';
+import { SettingContext } from '../../context/SettingContext';
 
 const GameField = () => {
+  const setting = useContext(SettingContext);
+
   // Connect to vocabulary
   const { token, userId, isAuthenticated } = useContext(AuthContext);
   const props = useHistory();
@@ -25,6 +28,7 @@ const GameField = () => {
   const group = props.location.group;
   const isFromTextBook = props.location.fromTextBook;
   const [userWords, setUserWords] = useState(null);
+  const [showButtons, setShowButtons] = useState(false);
   // Connect to vocabulary
 
   // Add statistic
@@ -41,6 +45,8 @@ const GameField = () => {
   const [score, setScore] = useState(0);
   const [gameTimer, setGameTimer] = useState(60);
   const [endGame, setEndGame] = useState(false);
+
+  const [isSound, setIsSound] = useState(setting.isSound);
 
   const [answers, setAnswers] = useState({
     correct: [],
@@ -186,16 +192,16 @@ const GameField = () => {
   const isCorrect = (answer, obj) => {
     if (words[1][words[0].indexOf(currentWord)] === currentTranslate && answer) {
       setScore(score + 10);
-      correctSound();
+      if (isSound) correctSound();
       setAnswers({ ...answers, correct: [...answers.correct, obj] });
       setStatistic(obj, userId || null, token || null);
     } else if (words[1][words[0].indexOf(currentWord)] !== currentTranslate && !answer) {
       setScore(score + 10);
-      correctSound();
+      if (isSound) correctSound();
       setAnswers({ ...answers, correct: [...answers.correct, obj] });
       setStatistic(obj, userId || null, token || null);
     } else {
-      errorSound();
+      if (isSound) errorSound();
       setAnswers({ ...answers, unCorrect: [...answers.unCorrect, obj] });
     }
   };
@@ -233,6 +239,7 @@ const GameField = () => {
               tick();
               showWord();
               setIndex(prev => prev + 1);
+              setShowButtons(true);
             }} className="btn waves-effect waves-light" type="submit" name="action">Старт
               <i className="material-icons right">exit_to_app</i>
             </button>
@@ -244,22 +251,28 @@ const GameField = () => {
           <p className='word'>{currentWord}</p>
           <p className='word'>{currentTranslate} </p>
 
-          <div className="buttons">
-            <button onClick={(e) => {
-              handleClick(true, e);
-              setIndex(prev => ++prev);
-            }} className='btn btn-large waves-effect correct-btn'
-                    worddata={currentWord}>Правильно
-            </button>
-            <button onClick={(e) => {
-              handleClick(false, e);
-              setIndex(prev => ++prev);
-            }} className='btn btn-large waves-effect wrong-btn'
-                    worddata={currentWord}>Не правильно
-            </button>
-          </div>
+          {showButtons && (
+              <div className="buttons">
+                <button onClick={(e) => {
+                  handleClick(true, e);
+                  setIndex(prev => ++prev);
+                }} className='btn btn-large waves-effect correct-btn'
+                        worddata={currentWord}>Правильно
+                </button>
+                <button onClick={(e) => {
+                  handleClick(false, e);
+                  setIndex(prev => ++prev);
+                }} className='btn btn-large waves-effect wrong-btn'
+                        worddata={currentWord}>Не правильно
+                </button>
+              </div>
+          )}
+
         </div>
         <div className={'empty'}>.</div>
+        <button className={`audiocall__sound-btn btn ${!isSound && 'red lighten-2'}`} onClick={() => setIsSound(!isSound)}>
+            <i className="material-icons">music_note</i>
+        </button>
       </div>
     );
   }

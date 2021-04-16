@@ -1,15 +1,20 @@
 .audiocall-wrapper {
     height: 60%;
     width: 60%;
-    margin: auto;
+    margin: 80px auto 160px;
+
+    @media (max-width: 655px) {
+        width: 90%;
+        font-size: 1rem;
+    }
 
     .card-action:last-child {
         border-radius: 0 0 20px 20px;
     }
 
     .card-main-audiocall {
-        //margin-top: 50px;
         .card {
+            box-shadow: none;
             background: #b2dfdb;
             border-radius: 20px;
             font-family: 'Nunito', sans-serif;
@@ -24,7 +29,7 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                padding: 24px 24px 0;
+                padding: 15px;
                 p {
                     margin-bottom: 10px;
                     font-size: 1.3rem;
@@ -33,22 +38,26 @@
             &-words {
                 width: 80%;
                 display: flex;
-                justify-content: space-around;
+                justify-content: center;
+                flex-wrap: wrap;
             }
             &-audiocall {
                 display: flex;
+                flex-direction: column;
                 justify-content: center;
+                align-items: center;
                 width: 80%;
                 height: 40%;
                 border-radius: 20px;
+                background: #4db6ac;
                 .card-image {
                     img {
-                        border-radius: 20px 0 0 20px;
+                        //border-radius: 20px 0 0 20px;
                     }
                 }
                 &-content {
                     background: #4db6ac;
-                    border-radius: 0 20px 20px 0;
+                    border-radius: 20px;
                     div {
                         display: flex;
                         justify-content: flex-start;
@@ -68,7 +77,8 @@
                 }
             }
             &-image {
-                max-width: 100%;
+                max-width: 60%;
+                padding-top: 15px;
             }
             &-get_level {
                 display: flex;
@@ -78,12 +88,43 @@
     }
 }
 
+.word-btn {
+    padding: 0 10px;
+    margin: 0 10px 10px 0;
+    @media (max-width: 400px) {
+        font-size: 9px;
+    }
+}
+
+.audiocall-level {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
 .audiocall-promo__wrapper {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    background-size: 100% 200%;
+    background-size: cover;
     transition: 0.5s ease-in-out;
     background-position: 0 100%;
+}
+
+.audiocall__sound-btn {
+  position: absolute!important;
+  left: 10%;
+  top: 15%;
+  background-color: #0da4f6;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+    @media (max-width: 700px) {
+        top: 2%;
+    }
+  &:hover {
+    background-color: #61dafb;
+  }
 }

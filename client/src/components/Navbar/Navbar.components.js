@@ -37,7 +37,7 @@ const Navbar = () => {
           <NavLink
             onClick={closeHandler}
             className="nav-link"
-            to="/textbook">
+            to="/textbook/0/0">
             Учебник
           </NavLink>
         </li>
@@ -46,7 +46,7 @@ const Navbar = () => {
             <NavLink
               onClick={closeHandler}
               className="waves-effect"
-              to="/vocabulary">
+              to="/vocabulary/0/0">
               Словарь
             </NavLink>
           </li>
@@ -72,6 +72,14 @@ const Navbar = () => {
             className="nav-link"
             to="/credits">
             Разработчики
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            onClick={closeHandler}
+            className="nav-link"
+            to="/settings">
+            Настройки
           </NavLink>
         </li>
       </ul>

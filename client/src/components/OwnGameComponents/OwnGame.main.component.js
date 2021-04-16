@@ -19,19 +19,22 @@ import useStatistic from '../../hooks/statistic.hook';
 import { CreateUserWord, UpdateUserWord } from '../../helper/database.helper/UserWord.helper';
 import {AuthContext} from '../../context/AuthContext';
 import { GetUserWords } from '../../helper/database.helper/getUserWords.helper';
+import { SettingContext } from '../../context/SettingContext';
 
 const OwnGameMain = () => {
+    //Settings
+    const setting = useContext(SettingContext);
 
     const GAME_CONFIG = {
         attempts: 10,
-        lives: 5,
+        lives: setting.life,
         wordCards: 4
       };
 
     const WORDS_LIMIT = {
         maxPages: 29,
         maxGroup: 5,
-        maxWordAmount: 19
+        maxWordAmount: setting.wordsCount
     };
 
     const backgrounds = [bg1, bg2, bg3, bg4];
@@ -42,6 +45,7 @@ const OwnGameMain = () => {
     const {setStatistic} = useStatistic();    
     const auth = useContext(AuthContext);
     const { isAuthenticated, userId, token } = useContext(AuthContext);
+
 
     const [currentBackground, setCurrentBackground] = useState(backgrounds[MathHelper.getRandomNumber(0, backgrounds.length - 1)]);
     const [level, setLevel] = useState('');
@@ -61,7 +65,7 @@ const OwnGameMain = () => {
     const [livesCount, setLivesCount] = useState(new Array(GAME_CONFIG.lives).fill('live'));
     const [correctSound] = useSound(correct);
     const [errorSound] = useSound(error);
-    const [isSound, setIsSound] = useState(false);
+    const [isSound, setIsSound] = useState(setting.isSound);
     
     const [answers, setAnswers] = useState({
         correct: [],
@@ -272,7 +276,7 @@ const OwnGameMain = () => {
         return (
             <div className={'savanna-promo__wrapper own-game-play'} style={{backgroundImage: `url(${currentBackground})`}}>
                 <div className="settings-buttons">
-                    <button className={`btn ${isSound ? 'savanna__sound-control red lighten-2' : 'savanna__sound-control'} `} onClick={()=>setIsSound(!isSound)}><i className={'material-icons'}>music_note</i>
+                    <button className={`btn ${isSound ? 'savanna__sound-control' : 'savanna__sound-control red lighten-2'} `} onClick={()=>setIsSound(!isSound)}><i className={'material-icons'}>music_note</i>
                     </button>
                     <button className={`btn ${translationIsOpened ? 'savanna__sound-control red lighten-2' : 'savanna__sound-control'} `} onClick={()=>setTranslationIsOpened(!translationIsOpened)} ><i className={'material-icons'}>help</i>
                     </button>                

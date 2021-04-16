@@ -1,12 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import { Link } from 'react-router-dom';
+import { SettingContext } from '../context/SettingContext';
+import { Link, useParams } from 'react-router-dom';
 import { UpdateUserWord } from '../helper/database.helper/UserWord.helper';
 
 const VocabularyPage = () => {
+  const setting = useContext(SettingContext);
+  let {groupPar, pagePar} = useParams();
   const { token, userId, isAuthenticated } = useContext(AuthContext);
-  const [group, setGroup] = useState(0);
-  const [page, setPage] = useState(0);
+
+  const [group, setGroup] = useState(Number(groupPar));
+  let [page, setPage] = useState(Number(pagePar));
+
   const [wordIdCollection, setWordIdCollection] = useState(null);
   const [wordStack, setWordStack] = useState([]);
   const [hardStack, setHardStack] = useState([]);
@@ -73,7 +78,7 @@ const VocabularyPage = () => {
   };
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isAuthenticated || !groupPar) {
       return;
     }
     getUserWords({ userId });
@@ -94,10 +99,15 @@ const VocabularyPage = () => {
     setUnCorrectAnswer(wordIdCollection.reduce((acc, curr) => acc + curr.optional.unCorrect, 0));
   }, [wordIdCollection]);
 
-  const chooseGroupHandler = (e) => {
-    setGroup(Number(e.target.getAttribute('datalevel')));
-    setPage(0);
-  };
+  const increaseGroup = () => {
+    if (group >= 4) return
+    setGroup(prevState => prevState + 1);
+  }
+
+  const decreaseGroup = () => {
+    if (group <= 0) return
+    setGroup(prevState => prevState - 1);
+  }
 
   useEffect(() => {
     setShowDeleted(false);
@@ -123,7 +133,7 @@ const VocabularyPage = () => {
 
   const prevPageHandler = () => {
     if (page <= 0) {
-      return;
+      return
     }
     setPage(prevState => prevState - 1);
   };
@@ -156,31 +166,37 @@ const VocabularyPage = () => {
     e.target.closest('li').classList.add('deleted');
   };
 
+  useEffect(() => {
+    groupPar = group + 1
+  }, [group])
+
   return (
     <div className={'vocabulary__wrapper'}>
       <h1 className={'text-book__title'}>Словарь 📓</h1>
       <div className="text-book__button-container">
         <div className={'text-book__button-container__categories'}>
           <span>Сложность:</span>
-        {new Array(5).fill().map((it, ind) => (
+          <Link className="level-btn waves-light btn"
+                onClick={decreaseGroup}
+                to={`/vocabulary/${group}/0}`}>
+            -
+          </Link>
+          <Link className="level-btn waves-light red darken-2 btn"
+                onClick={increaseGroup}
+                to={`/vocabulary/${group + 1}/0`}>
+            +
+          </Link>
+        </div>
+        {setting.showButton && (
+          <div className={'text-book__button-container__categories'}>
             <button
-              key={ind}
-              className={'level-btn waves-light btn'}
-              onClick={chooseGroupHandler}
-              datalevel={ind}>
-              {ind + 1}
-            </button>
-          )
+              className={'level-btn waves-light red darken-2 btn'}
+              onClick={showHardWords}>Cложные</button>
+            <button
+              className={'level-btn waves-light blue-grey darken-1 btn'}
+              onClick={showDeletedWords}>Удаленные</button>
+          </div>
         )}
-        </div>
-        <div className={'text-book__button-container__categories'}>
-          <button
-            className={'level-btn waves-light red darken-2 btn'}
-            onClick={showHardWords}>Cложные</button>
-          <button
-            className={'level-btn waves-light blue-grey darken-1 btn'}
-            onClick={showDeletedWords}>Удаленные</button>
-        </div>
       </div>
 
       <div className="text-book__words-list">
@@ -190,11 +206,11 @@ const VocabularyPage = () => {
                   className={`text-book__word-container ${wordIdCollection.filter((el) => (el.wordId === it.id))[0] &&
                   wordIdCollection.filter((el) => (el.wordId === it.id))[0].difficulty}`}>
                 <div className="text__book__words-list__word-img">
-                  <img src={`../` + it.image} alt={it.wordTranslate}/>
+                  <img src={`../../` + it.image} alt={it.wordTranslate}/>
                 </div>
                 <div
                   className={'text-book__words-list__word-translate text-book__words-list__word-translate--vocabulary'}>
-                  {it.word}
+                  {it.word} - {it.wordTranslate}
                 </div>
                 <div
                   className="text-book__words-list__word-translate--vocabulary__attempt text-book__words-list__word-translate--vocabulary__attempt--correct">
@@ -230,7 +246,7 @@ const VocabularyPage = () => {
           <span>
             Ничего пока нет, играйте в мини игры в
           </span>
-          <Link to={'/textbook'}>
+          <Link to={`/textbook/${group}/${page}`}>
             учебнике
           </Link>
         </div>}
@@ -238,16 +254,20 @@ const VocabularyPage = () => {
 
       <div className={'text-book__bottom-controls'}>
         <div className={'text-book__pagination-container'}>
-          <button className="text-book__pagination-btn btn"
-                  onClick={prevPageHandler}>Назад
-          </button>
-          <button className="text-book__pagination-btn btn"
-                  onClick={nextPageHandler}>Вперед
-          </button>
+
+          <Link className="text-book__pagination-btn btn"
+                onClick={prevPageHandler}
+                 to={`/vocabulary/${group}/${page - 1}`}>Назад
+          </Link>
+          <Link className="text-book__pagination-btn btn"
+                onClick={nextPageHandler}
+                to={`/vocabulary/${group}/${page + 1}`}
+                 >Вперед
+          </Link>
         </div>
         <div className={'text-book__info-container'}>
           <span className={`text-book__info__item ${showDeleted && 'hide'}`} title={'Сложность'}>{group + 1}</span>
-          <span className={`text-book__info__item ${showDeleted && 'hide'}`} title={'Страница'}>{page}</span>
+          <span className={`text-book__info__item ${showDeleted && 'hide'}`} title={'Страница'}>{page + 1}</span>
           <span className={'text-book__info__item'} title={'Слов в изучении'}>{wordStack.length}</span>
           <span className={'text-book__info__item'} title={'Количество неправильных ответов'}>
             {unCorrectAnswer && Math.floor(unCorrectAnswer / correctAnswer * 100)}%

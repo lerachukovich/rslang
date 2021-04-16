@@ -1,9 +1,11 @@
-import React, { useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState} from 'react';
 import Tada from 'react-reveal/Tada';
 import Bounce from 'react-reveal/Bounce';
 import Wobble from 'react-reveal/Wobble';
+import { SettingContext } from '../../context/SettingContext';
 
 const GameElement = ({sample, level, handleClick, readyNext}) => {
+    const setting = useContext(SettingContext);
     const answer = sample[0];
     const [sampleWords, setSampleWords] = useState([]);
     const [isPlaySound, setIsPlaySound] = useState(false)
@@ -71,7 +73,7 @@ const GameElement = ({sample, level, handleClick, readyNext}) => {
                                     </Wobble>
                                     <div>
                                         <span dangerouslySetInnerHTML={{__html: answer.textExample}} />
-                                        <span>{answer.textExampleTranslate}</span>
+                                        {setting.showTranslate && (<span>{answer.textExampleTranslate}</span>)}
                                     </div>
                                 </div>
                             </div>
@@ -95,20 +97,20 @@ const GameElement = ({sample, level, handleClick, readyNext}) => {
                     if (item.wordTranslate === answer.wordTranslate) {
                         return (
                             <Tada spy={tadaAnim}>
-                                <button key={index} id={index + 1} className={`btn btn-large waves-effect ${readyNext && 'green darken-3'}`} onClick={() => {
+                                <button key={index} id={index + 1} className={`word-btn btn btn-large waves-effect ${readyNext && 'green darken-3'}`} onClick={() => {
                                     setTadaAnim(!tadaAnim);
                                     handleClick(true);
                                 }}>
-                                    {index + 1}: {item.wordTranslate}
+                                    {item.wordTranslate}
                                 </button>
                             </Tada>
                         )
                     } else return (
-                        <button key={index} id={index + 1} className={`btn btn-large waves-effect ${item.isMistake && 'red'}`} onClick={() => {
+                        <button key={index} id={index + 1} className={`word-btn btn btn-large waves-effect ${item.isMistake && 'red'}`} onClick={() => {
                             item.isMistake = true;
                             setTadaAnim(!tadaAnim);
                             handleClick(false)
-                        }}>{index + 1}: {item.wordTranslate}</button>
+                        }}>{item.wordTranslate}</button>
                         )
                 })
             }

@@ -12,7 +12,7 @@
 
 .dev-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: wrap;
     padding-bottom: 80px;
 
@@ -22,7 +22,7 @@
         width: 45%;
         box-shadow: rgba(16, 112, 177, 0.2)  5px 20px 50px;
         padding: 30px;
-        margin-bottom: 50px;
+        margin: 0 20px 50px 10px;
         border-radius: 20px;
         @media (max-width: 800px) {
         width: 100%;

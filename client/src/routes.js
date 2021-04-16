@@ -27,10 +27,10 @@ const useRoutes = (isAuthenticated) => {
         <Route path="/promo" exact>
           <PromoPage/>
         </Route>
-        <Route path="/textbook" exact>
+        <Route path="/textbook/:groupPar/:pagePar" exact>
           <TextBook/>
         </Route>
-        <Route path="/vocabulary" exact>
+        <Route path="/vocabulary/:groupPar/:pagePar" exact>
           <VocabularyPage/>
         </Route>
         <Route path="/games" exact>
