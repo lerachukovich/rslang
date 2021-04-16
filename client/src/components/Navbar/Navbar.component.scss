@@ -38,6 +38,9 @@
 
 .sidenav-trigger {
   margin: 20px;
+  @media (max-width: 380px) {
+    margin: 15px;
+  }
 }
 
 .sidenav-close {

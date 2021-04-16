@@ -25,13 +25,13 @@ const SprintWelcome = () => {
                 </div>
                 <div className='card-action'>
                     <NavLink to='/games'>
-                        <button className="btn waves-effect waves-light" type="submit" name="action">Выход
+                        <button className="word-btn btn waves-effect waves-light" type="submit" name="action">Выход
                             <i className="material-icons left">arrow_back</i>
                         </button>
                     </NavLink>
                     <NavLink to='/games/sprint/playing'>
-                        <button className="btn waves-effect waves-light pulse" type="submit" name="action">Начать игру
-                            <i className="material-icons right">exit_to_app</i>
+                        <button className="word-btn btn waves-effect waves-light pulse" type="submit" name="action">Начать игру
+                            <i className="material-icons start-icon right">exit_to_app</i>
                         </button>
                     </NavLink>
 

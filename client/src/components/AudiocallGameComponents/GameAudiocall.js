@@ -245,17 +245,17 @@ const GameAudiocall = () => {
                                     </div>
                                     <div className="card-action">
                                         <NavLink to='/games/audiocall'>
-                                            <button className="btn waves-effect waves-light red lighten-2" type="submit" name="action">Выход
+                                            <button className="word-btn btn waves-effect waves-light red lighten-2" type="submit" name="action">Выход
                                                 <i className="material-icons left">arrow_back</i>
                                             </button>
                                         </NavLink>
                                         {
                                             readyNext ? (
-                                                <button className="btn" onClick={goNext}>
+                                                <button className="btn word-btn" onClick={goNext}>
                                                     <i className="material-icons">forward</i>
                                                 </button>
                                             ) : (
-                                                <button className="btn" onClick={() => {
+                                                <button className="btn word-btn" onClick={() => {
                                                     handleClick(false);
                                                 }}>Я не знаю</button>
                                             )
