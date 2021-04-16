@@ -9,7 +9,7 @@ const SettingsPage = () => {
   const [showTranslate, setShowTranslate] = useState(null);
   const [showButton, setShowButton] = useState(null);
   const [wordsCount, setWordsCount] = useState(null);
-  const [life, setLife] = useState();
+  const [life, setLife] = useState(null);
 
   useEffect(() => {
     setIsSound(setting.isSound)
@@ -24,9 +24,9 @@ const SettingsPage = () => {
   const [showSubmit, setShowSubmit] = useState(false);
 
   return(
-    <div className="login-page-wrapper">
-      <div className="card text-white bg-primary mb-3 login-form">
-        <h3>Настройки</h3>
+    <div className="login-page-wrapper colored">
+      <div className="settings-container card text-white bg-primary mb-3 login-form">
+        <h3 className={'settings-title'}>Настройки</h3>
         <div className="setting-counter">
           <span>Звуковые эффекты</span>
           <div className="switch">

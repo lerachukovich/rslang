@@ -36,8 +36,8 @@ const PromoCard = () => {
     return (
         <div className='cards-container'>
             {
-                features.map(card => {
-                    return <div className='promo-card'>
+                features.map((card ,ind )=> {
+                    return <div className='promo-card' key={ind}>
                         <h4>{card.title}</h4>
                         <img className='top-img' src={card.img_source} alt='card icon'/>
                         <p className='card-text'>{card.text}</p>

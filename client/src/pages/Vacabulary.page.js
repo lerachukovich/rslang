@@ -14,10 +14,8 @@ const VocabularyPage = () => {
 
   const [wordIdCollection, setWordIdCollection] = useState(null);
   const [wordStack, setWordStack] = useState([]);
-  const [hardStack, setHardStack] = useState([]);
   const [correctAnswer, setCorrectAnswer] = useState(0);
   const [unCorrectAnswer, setUnCorrectAnswer] = useState(0);
-  const [coefficient, setCoefficient] = useState(0);
   const [showDeleted, setShowDeleted] = useState(true);
 
   const getWord = async ({ wordId }) => {

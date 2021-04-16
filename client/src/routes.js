@@ -4,7 +4,7 @@ import StartLearnPage from './pages/TextBook/TextBook';
 import VocabularyPage from './pages/Vacabulary.page';
 import GamesPage from './pages/Games.page';
 import StatisticPage from './pages/Statistic.page';
-import CreditsPage from './pages/Crefdits.page';
+import CreditsPage from './pages/Credits.page';
 import SettingsPage from './pages/Settings.page';
 import PromoPage from './pages/Promo.page';
 import AuthPage from './pages/Auth.page';

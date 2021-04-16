@@ -176,7 +176,7 @@ const TextBook = () => {
                  onClick={prevPageHandler}
                  to={`/textbook/${group}/${page - 1}`}>Назад
           </Link>}
-          {loading && <Link className="text-book__pagination-btn btn disabled"
+          {loading && <Link to={'#'} className="text-book__pagination-btn btn disabled"
                             >Назад
           </Link>}
 
@@ -185,7 +185,7 @@ const TextBook = () => {
                  to={`/textbook/${group}/${page + 1}`}
           >Вперед
           </Link>}
-          {loading && <Link className="text-book__pagination-btn btn disabled"
+          {loading && <Link to={'#'} className="text-book__pagination-btn btn disabled"
           >Вперед
           </Link>}
         </div>

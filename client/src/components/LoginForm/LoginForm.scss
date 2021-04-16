@@ -1,9 +1,15 @@
+$mobile-widths: "max-width: 767px";
+$tablet-widths: "max-width: 1279px";
+
 .login-page-wrapper {
     width: 100%;
-    height: 85vh;
+    height: 100vh!important;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-position: 0 50%;
+    background-size: 100% 100%;
+    background-image: url("../../assets/savanna-bg/savannabg-2.jpg");
 }
 
 .login-form {
@@ -89,5 +95,11 @@
 
     &:hover {
         cursor: pointer;
+    }
+}
+
+@media ($mobile-widths) {
+    .login-form {
+        width: 90%;
     }
 }
