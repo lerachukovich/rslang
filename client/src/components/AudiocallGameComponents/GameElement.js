@@ -95,20 +95,20 @@ const GameElement = ({sample, level, handleClick, readyNext}) => {
                     if (item.wordTranslate === answer.wordTranslate) {
                         return (
                             <Tada spy={tadaAnim}>
-                                <button key={index} id={index + 1} className={`btn btn-large waves-effect ${readyNext && 'green darken-3'}`} onClick={() => {
+                                <button key={index} id={index + 1} className={`word-btn btn btn-large waves-effect ${readyNext && 'green darken-3'}`} onClick={() => {
                                     setTadaAnim(!tadaAnim);
                                     handleClick(true);
                                 }}>
-                                    {index + 1}: {item.wordTranslate}
+                                    {item.wordTranslate}
                                 </button>
                             </Tada>
                         )
                     } else return (
-                        <button key={index} id={index + 1} className={`btn btn-large waves-effect ${item.isMistake && 'red'}`} onClick={() => {
+                        <button key={index} id={index + 1} className={`word-btn btn btn-large waves-effect ${item.isMistake && 'red'}`} onClick={() => {
                             item.isMistake = true;
                             setTadaAnim(!tadaAnim);
                             handleClick(false)
-                        }}>{index + 1}: {item.wordTranslate}</button>
+                        }}>{item.wordTranslate}</button>
                         )
                 })
             }

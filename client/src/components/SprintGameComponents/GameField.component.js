@@ -28,6 +28,7 @@ const GameField = () => {
   const group = props.location.group;
   const isFromTextBook = props.location.fromTextBook;
   const [userWords, setUserWords] = useState(null);
+  const [showButtons, setShowButtons] = useState(false);
   // Connect to vocabulary
 
   // Add statistic
@@ -238,6 +239,7 @@ const GameField = () => {
               tick();
               showWord();
               setIndex(prev => prev + 1);
+              setShowButtons(true);
             }} className="btn waves-effect waves-light" type="submit" name="action">Старт
               <i className="material-icons right">exit_to_app</i>
             </button>
@@ -249,20 +251,23 @@ const GameField = () => {
           <p className='word'>{currentWord}</p>
           <p className='word'>{currentTranslate} </p>
 
-          <div className="buttons">
-            <button onClick={(e) => {
-              handleClick(true, e);
-              setIndex(prev => ++prev);
-            }} className='btn btn-large waves-effect correct-btn'
-                    worddata={currentWord}>Правильно
-            </button>
-            <button onClick={(e) => {
-              handleClick(false, e);
-              setIndex(prev => ++prev);
-            }} className='btn btn-large waves-effect wrong-btn'
-                    worddata={currentWord}>Не правильно
-            </button>
-          </div>
+          {showButtons && (
+              <div className="buttons">
+                <button onClick={(e) => {
+                  handleClick(true, e);
+                  setIndex(prev => ++prev);
+                }} className='btn btn-large waves-effect correct-btn'
+                        worddata={currentWord}>Правильно
+                </button>
+                <button onClick={(e) => {
+                  handleClick(false, e);
+                  setIndex(prev => ++prev);
+                }} className='btn btn-large waves-effect wrong-btn'
+                        worddata={currentWord}>Не правильно
+                </button>
+              </div>
+          )}
+
         </div>
         <div className={'empty'}>.</div>
         <button className={`audiocall__sound-btn btn ${!isSound && 'red lighten-2'}`} onClick={() => setIsSound(!isSound)}>

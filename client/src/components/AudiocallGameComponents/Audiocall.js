@@ -25,12 +25,12 @@ const Audiocall = () => {
                         </div>
                         <div className="card-get_level">
                             <div className="card-content">
-                                <span className="card-level">Выберите сложность:</span>
+                                <span className="card-level">Выберите уровень сложности:</span>
                             </div>
-                            <div className="card-action">
+                            <div className="card-action audiocall-level">
                                 {new Array(6).fill().map((_, idx) => (
                                     <NavLink to={{pathname: "/games/audiocall/playing", state: idx}} key={idx}>
-                                        <button className="btn waves-effect waves-light level-btn" type="submit" name="action">Уровень: {idx + 1}
+                                        <button className="btn waves-effect waves-light level-btn" type="submit" name="action">{idx + 1}
                                             <i className="material-icons right">exit_to_app</i>
                                         </button>
                                     </NavLink>
