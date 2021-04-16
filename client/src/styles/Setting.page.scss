@@ -1,3 +1,6 @@
+$mobile-widths: "max-width: 767px";
+$tablet-widths: "max-width: 1279px";
+
 .setting-counter {
     display: flex;
     align-items: center;
@@ -6,5 +9,27 @@
 
     &__list {
         display: flex;
+    }
+}
+
+.login-page-wrapper.colored {
+    height: 100vh;
+    background-size: 100% 100%;
+    background-position: 0 50%;
+    background-image: url("../assets/savanna-bg/savannabg-4.jpg");
+}
+
+@media ($mobile-widths) {
+    .settings-container {
+        padding-top: 0!important;
+        width: 90% !important;
+        margin-bottom: 0!important;
+    }
+
+    .settings-title {
+        margin: 0;
+        padding-top: 5px;
+        font-size: 1rem;
+        color: #0da4f6;
     }
 }

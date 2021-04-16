@@ -27,8 +27,8 @@ const CreditsPage = () => {
       <h1 className='dev-title'>Наши разработчики</h1>
         <div className='dev-container'>
             {
-                developers.map(dev => {
-                    return <div className='dev-card'>
+                developers.map((dev, ind) => {
+                    return <div className='dev-card' key={ind}>
                         <img className='dev-img' src={dev.img_source} alt="developer"/>
                         <h3>{dev.name}</h3>
                         <p>{dev.text}</p>

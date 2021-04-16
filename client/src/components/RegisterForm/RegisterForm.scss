@@ -1,9 +1,15 @@
+$mobile-widths: "max-width: 767px";
+$tablet-widths: "max-width: 1279px";
+
 .register-page-wrapper {
     width: 100%;
-    height: 80vh;
+    height: 100vh!important;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-position: 0 50%;
+    background-size: 100% 100%;
+    background-image: url("../../assets/savanna-bg/savannabg-2.jpg");
 }
 
 .register-form {
@@ -25,4 +31,10 @@
 
 .btn-white {
     color: white !important;
+}
+
+@media ($mobile-widths) {
+    .register-form {
+        width: 90% !important;
+    }
 }
