@@ -13,7 +13,7 @@ const WordControl = ({ value }) => {
   }, [value.btnColorClass]);
 
   return (
-    <div className="savanna__word-panel">
+    <div className="savanna__word-panel scoped">
       {currentSet.map((it, ind) => (
         <button onClick={value.chooseHandler} className={btnColor} key={ind + 1}
                 data={it.wordTranslate} dataid={ind + 1}>{ind + 1} : {it.wordTranslate}</button>

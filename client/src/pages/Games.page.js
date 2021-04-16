@@ -45,8 +45,8 @@ const GamesPage = () => {
       <h1 className='games-title'>Наши игры</h1>
         <div className='games-container'>
             {
-                games.map(game => {
-                    return <div className='game-card'>
+                games.map((game, ind )=> {
+                    return <div className='game-card' key={ind}>
                         <NavLink className='game-name' to={game.url}>{game.name}</NavLink>
                         <img className='game-img' src={game.img_source} alt="game image"/>
                         <p>{game.text}</p>

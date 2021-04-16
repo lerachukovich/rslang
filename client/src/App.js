@@ -19,7 +19,6 @@ function App() {
 
   useEffect(() => {
     if ((new Date().getTime() - new Date(JSON.parse(localStorage.getItem('userDataRSLangLoginTime'))).getTime()) > 14400000) {
-      console.log(new Date().getTime() - new Date(JSON.parse(localStorage.getItem('userDataRSLangLoginTime'))).getTime())
       logout();
     }
   }, [])
@@ -39,7 +38,7 @@ function App() {
         <Router>
           <Navbar/>
           <div className={'main-wrapper'}>
-            {routes}    
+            {routes}
             <Footer />
           </div>
         </Router>

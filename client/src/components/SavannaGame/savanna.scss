@@ -17,7 +17,7 @@ $tablet-widths: "max-width: 1279px";
   margin-right: 10px;
   display: flex;
   flex-direction: row;
-  align-items: end;
+  align-items: flex-end;
   justify-content: flex-end;
   min-height: 30px;
 }
@@ -270,6 +270,10 @@ $time: 1;
   .savanna__heart {
     width: 20px;
     height: 20px;
+  }
+
+  .savanna-wrapper .savanna__word-panel.scoped {
+    margin-top: 0;
   }
 
   .savanna__word-panel {
