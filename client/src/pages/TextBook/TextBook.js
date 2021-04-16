@@ -153,9 +153,9 @@ const TextBook = () => {
                 </div>
                 {!isSoundPlay && <button
                   className={'btn'}
-                  onClick={() => soundHandler([new Audio(it.audio),
-                    new Audio(it.audioExample),
-                    new Audio(it.audioMeaning)])}
+                  onClick={() => soundHandler([new Audio(`../../${it.audio}`),
+                                                      new Audio(`../../${it.audioExample}`),
+                                                      new Audio(`../../${it.audioMeaning}`)])}
                   title={'Listen'}>
                   <i className={'material-icons'}>surround_sound</i>
                 </button>}
