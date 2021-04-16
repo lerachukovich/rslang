@@ -23,7 +23,9 @@ const PromoPage = () => {
                 <PromoCard />
             </div>
             <div className='video'>
-                <h1>Здесь будет видео</h1>
+                <iframe width={'100%'} height={'500px'} style={{borderRadius: '20px'}}
+                        src="https://www.youtube.com/embed/gjbpKBgmnNM">
+                </iframe>
             </div>
         </div>
     )
