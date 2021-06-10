@@ -9,5 +9,6 @@ This application was implemented using the following technologies:
 - Node JS
 - Mongo DB
 - Express JS
+- Leaflet
 
 API - https://react-learnwords-example.herokuapp.com/doc/#
